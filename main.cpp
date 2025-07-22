@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 13:26:40 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/22 14:15:45 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/22 17:53:45 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,34 @@
 #include <vector>
 #include <string>
 #include <cstring>
-#include <thread>
+#include <fcntl.h>
 #include <unistd.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <poll.h>
+#include <list>
 
-void handle_client(int client_socket)
+#define errExit(msg)    do { perror(msg); exit(EXIT_FAILURE); \
+                               } while (0)
+#define BUFFER_SIZE 1024
+#define MAX_CLIENTS 10
+
+int handle_client(int client_socket)
 {
-    std::cout << "New client connected. Socket: " << client_socket << std::endl;
-
     char buffer[1024] = {0};
-    while (std::string(buffer) != std::string("exit"))
+    int bytes_received = read(client_socket, buffer, 1024);
+    if (bytes_received > 0)
     {
-        memset(buffer, 0, sizeof(buffer));
-        int bytes_received = read(client_socket, buffer, 1024);
-        if (bytes_received <= 0) {
-            std::cout << "Client (socket " << client_socket << ") is disconnected." << std::endl;
-            break;
-        }
-
-        std::cout << "Message from client (socket " << client_socket << "): " << buffer << std::endl;
-        
+        std::cout << "Message from socket " << client_socket << ": " << buffer << std::endl;
         std::string response = "Responce.\n";
         send(client_socket, response.c_str(), response.length(), 0);
     }
-    close(client_socket);
+    else
+    {
+        std::cout << "Client (socket " << client_socket << ") is disconnected or with error." << std::endl;
+        return (-1);
+    }
+    return (0);
 }
 
 int main(int argc, char **argv)
@@ -56,6 +59,14 @@ int main(int argc, char **argv)
         return 1;
     }
 
+    int opt = 1;
+    if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)) < 0) {
+        std::cerr << "setsockopt" << std::endl;
+        close(server_fd);
+        return 1;
+    }
+    fcntl(server_fd, F_SETFL, O_NONBLOCK);
+
     sockaddr_in server_addr;
     server_addr.sin_family = AF_INET;
     server_addr.sin_addr.s_addr = INADDR_ANY;
@@ -64,30 +75,67 @@ int main(int argc, char **argv)
     if (bind(server_fd, (struct sockaddr*)&server_addr, sizeof(server_addr)) < 0)
     {
         std::cerr << "Error of binding" << std::endl;
+        close(server_fd);
         return 1;
     }
 
     if (listen(server_fd, 3) < 0)
     {
         std::cerr << "Error of listen" << std::endl;
+        close(server_fd);
         return 1;
     }
 
     std::cout << "Wait for connections..." << std::endl;
 
+    std::vector<struct pollfd> fds;
+    fds.push_back({server_fd, POLLIN, 0});
+
     while (true)
     {
-        sockaddr_in client_addr;
-        socklen_t client_len = sizeof(client_addr);
+        int poll_count = poll(fds.data(), fds.size(), -1);
         
-        int client_socket = accept(server_fd, (struct sockaddr*)&client_addr, &client_len);
-        if (client_socket < 0) {
-            std::cerr << "Error accept connection" << std::endl;
-            continue;
+        if (poll_count < 0)
+        {
+            std::cerr << "poll" << std::endl;
+            break;
         }
 
-        std::thread client_thread(handle_client, client_socket);
-        client_thread.detach();
+        for (size_t i = 0; i < fds.size(); ++i)
+        {
+            if (fds[i].revents & POLLIN)
+            {
+                if (fds[i].fd == server_fd)
+                {
+                    sockaddr_in client_addr;
+                    socklen_t client_len = sizeof(client_addr);
+                    int client_fd = accept(server_fd, (struct sockaddr*)&client_addr, &client_len);
+
+                    if (client_fd < 0)
+                    {
+                        std::cerr << "Error accept connection" << std::endl;
+                        continue;
+                    }
+                    fcntl(client_fd, F_SETFL, O_NONBLOCK);
+                    if (fds.size() - 1 < MAX_CLIENTS) {
+                        std::cout << "New client connected. Socket: " << client_fd << std::endl;
+                        fds.push_back({client_fd, POLLIN, 0});
+                    } else {
+                        std::cerr << "Max count of connections!" << std::endl;
+                        close(client_fd);
+                    }
+                }
+                else
+                {
+                    if (handle_client(fds[i].fd) != 0)
+                    {
+                        close(fds[i].fd);
+                        fds.erase(fds.begin() + i);
+                        i--;
+                    }
+                }
+            }
+        }
     }
     close(server_fd);
 
