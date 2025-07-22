@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 13:26:40 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/22 17:53:45 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/22 17:56:50 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@
 #include <poll.h>
 #include <list>
 
-#define errExit(msg)    do { perror(msg); exit(EXIT_FAILURE); \
-                               } while (0)
 #define BUFFER_SIZE 1024
 #define MAX_CLIENTS 10
 
@@ -60,7 +58,8 @@ int main(int argc, char **argv)
     }
 
     int opt = 1;
-    if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)) < 0) {
+    if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)) < 0)
+    {
         std::cerr << "setsockopt" << std::endl;
         close(server_fd);
         return 1;
@@ -117,10 +116,13 @@ int main(int argc, char **argv)
                         continue;
                     }
                     fcntl(client_fd, F_SETFL, O_NONBLOCK);
-                    if (fds.size() - 1 < MAX_CLIENTS) {
+                    if (fds.size() - 1 < MAX_CLIENTS)
+                    {
                         std::cout << "New client connected. Socket: " << client_fd << std::endl;
                         fds.push_back({client_fd, POLLIN, 0});
-                    } else {
+                    } 
+                    else
+                    {
                         std::cerr << "Max count of connections!" << std::endl;
                         close(client_fd);
                     }
