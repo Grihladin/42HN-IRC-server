@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 13:26:40 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/22 17:56:50 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/22 18:10:32 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,14 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <poll.h>
-#include <list>
 
-#define BUFFER_SIZE 1024
-#define MAX_CLIENTS 10
+#define BUFFER_SIZE 10240
+#define MAX_CLIENTS 10240
 
 int handle_client(int client_socket)
 {
-    char buffer[1024] = {0};
-    int bytes_received = read(client_socket, buffer, 1024);
+    char buffer[BUFFER_SIZE] = {0};
+    int bytes_received = read(client_socket, buffer, BUFFER_SIZE);
     if (bytes_received > 0)
     {
         std::cout << "Message from socket " << client_socket << ": " << buffer << std::endl;
