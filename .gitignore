@@ -41,3 +41,9 @@
 *.dwo
 
 ircserv
+
+# system generated files
+.DS_STORE
+DS_STORE
+.vscode
+vscode
