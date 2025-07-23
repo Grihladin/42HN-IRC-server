@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 13:26:40 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/23 11:54:51 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/23 12:00:34 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int main(int argc, char **argv)
     {
         std::cerr << "Error: " << e.what() << std::endl;
     }
-    
-    
+
     return 0;
 }
