@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 13:26:40 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/23 16:44:59 by macbook          ###   ########.fr       */
+/*   Updated: 2025/07/23 17:36:37 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,20 @@ int main(int argc, char **argv)
         std::cerr << "Error: " << e.what() << std::endl;
     }
 
-    std::vector<std::string> args = {"Sasha"};
-	Command cmd("NICK", args);
+    // std::vector<std::string> args = {"Sasha"};
+	// Command cmd("NICK", args);
 
-	std::cout << "Command: " << cmd.getCommand() << "\n";
-	std::cout << "Arguments count: " << cmd.argCount() << "\n";
+	// std::cout << "Command: " << cmd.getCommand() << "\n";
+	// std::cout << "Arguments count: " << cmd.argCount() << "\n";
 
-	const auto &arguments = cmd.getArgs();
-	for (const auto &arg : arguments)
-	{
-		std::cout << "Arg: " << arg << "\n";
-	}
-    if(cmd.getCommand() == "NICK")
-    {
-        std::cout << "We have NICK here" << "\n";
-    }
+	// const auto &arguments = cmd.getArgs();
+	// for (const auto &arg : arguments)
+	// {
+	// 	std::cout << "Arg: " << arg << "\n";
+	// }
+    // if(cmd.getCommand() == "NICK")
+    // {
+    //     std::cout << "We have NICK here" << "\n";
+    // }
     return 0;
 }
