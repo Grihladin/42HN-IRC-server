@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   IrcServerCommands.cpp                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 13:40:56 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/23 13:42:38 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/23 16:46:08 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "IrcServer.hpp"
+#include "../Include/IrcServer.hpp"
 
 void IrcServer::ircCommandPass()
 {

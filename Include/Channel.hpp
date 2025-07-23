@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 19:17:28 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/22 19:24:57 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/23 16:55:17 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,9 @@ class Channel
         std::string                 name;
         std::vector<std::string>    users;
 	public:
-		Channel(void);
-		Channel(const Channel& other);
-		Channel &operator=(const Channel &other);
-		virtual ~Channel();
+		Channel(const Channel& other) = default;
+		Channel& operator=(const Channel&) = default;
+		virtual ~Channel() = default;;
 
 		Channel(std::string name);
 

@@ -6,11 +6,11 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 22:47:06 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/23 16:29:41 by macbook          ###   ########.fr       */
+/*   Updated: 2025/07/23 16:46:03 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "User.hpp"
+#include "../Include/User.hpp"
 
 std::string User::getNickName()
 {

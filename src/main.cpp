@@ -6,12 +6,12 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 13:26:40 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/23 16:38:46 by macbook          ###   ########.fr       */
+/*   Updated: 2025/07/23 16:44:59 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "IrcServer.hpp"
-#include "Command.hpp"
+#include "../Include/IrcServer.hpp"
+#include "../Include/Command.hpp"
 
 int main(int argc, char **argv)
 {

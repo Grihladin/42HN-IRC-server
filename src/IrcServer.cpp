@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   IrcServer.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:33:58 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/23 13:41:37 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/23 16:48:57 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "IrcServer.hpp"
+#include "../Include/IrcServer.hpp"
 
 int IrcServer::handle_client(int client_socket)
 {
@@ -43,11 +43,19 @@ IrcServer::IrcServer(const IrcServer& other)
 {
     *this = other;
 }
-
 IrcServer& IrcServer::operator=(const IrcServer &other)
 {
-    *this = other;
-    return (*this);
+    if (this != &other)
+    {
+        this->server_fd = other.server_fd;
+        this->socket_fds = other.socket_fds;
+        this->users = other.users;
+        this->messages = other.messages;
+        this->channels = other.channels;
+        std::memcpy(this->buffer, other.buffer, BUFFER_SIZE);
+        this->password = other.password;
+    }
+    return *this;
 }
 
 IrcServer::~IrcServer()

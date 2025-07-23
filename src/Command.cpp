@@ -1,4 +1,4 @@
-#include "Command.hpp"
+#include "../Include/Command.hpp"
 
 Command::Command(std::string rawCommand,
 	std::vector<std::string> arguments) : command(std::move(rawCommand)),
