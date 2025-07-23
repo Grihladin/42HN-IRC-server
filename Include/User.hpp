@@ -15,7 +15,7 @@ class User
 	std::string getNickName();
 
   private:
-	bool _isAuthenticated; 
+	// bool _isAuthenticated; 
 	std::string _nickname;
 	std::string _username;
 	std::string _hostname;
