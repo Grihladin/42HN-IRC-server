@@ -1,4 +1,5 @@
 #pragma once
+#include "Nickname.hpp"
 #include <cstddef>
 #include <iostream>
 #include <optional>
@@ -8,10 +9,12 @@
 class Client
 {
   public:
-	Client();
-    void setNickName(std::string NickName);
-
+	Client() = default;
+	// Setters
+	void setNickName(const std::string &nickname);
+	// Getters
+	std::string getNickName();
 
   private:
-	std::string _NickName;
+	std::string _nickname;
 };

@@ -19,6 +19,7 @@ std::string Client::getNickName()
 
 void Client::setNickName(const std::string &nickname)
 {
+    //needs checking that if user with this nickname exists on server
 	if (nickname.empty() || nickname.size() > 9)
 	{
 		throw std::invalid_argument("Nickname must be 1-9 characters long.");
