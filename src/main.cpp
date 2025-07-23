@@ -6,12 +6,12 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 13:26:40 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/23 15:34:48 by macbook          ###   ########.fr       */
+/*   Updated: 2025/07/23 16:38:46 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "IrcServer.hpp"
-#include "ParsedCommand.hpp"
+#include "Command.hpp"
 
 int main(int argc, char **argv)
 {
@@ -32,7 +32,7 @@ int main(int argc, char **argv)
     }
 
     std::vector<std::string> args = {"Sasha"};
-	ParsedCommand cmd("NICK", args);
+	Command cmd("NICK", args);
 
 	std::cout << "Command: " << cmd.getCommand() << "\n";
 	std::cout << "Arguments count: " << cmd.argCount() << "\n";

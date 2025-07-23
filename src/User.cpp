@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Client.cpp                                         :+:      :+:    :+:   */
+/*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 22:47:06 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/22 22:52:27 by macbook          ###   ########.fr       */
+/*   Updated: 2025/07/23 16:29:41 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Client.hpp"
+#include "User.hpp"
 
-std::string Client::getNickName()
+std::string User::getNickName()
 {
     return _nickname;
 }
 
-void Client::setNickName(const std::string &nickname)
+void User::setNickName(const std::string &nickname)
 {
     //needs checking that if user with this nickname exists on server
 	if (nickname.empty() || nickname.size() > 9)

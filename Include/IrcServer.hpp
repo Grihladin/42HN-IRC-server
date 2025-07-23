@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:27:49 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/23 12:20:16 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/23 13:42:55 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,21 @@ class IrcServer
         int addChannel();
         int sendMessageToChannel();
         int sendMessageToUser();
+
+		//Methods for IRC commands
+		void ircCommandPass();
+		void ircCommandNick();
+		void ircCommandUser();
+		void ircCommandOper();
+		void ircCommandQuit();
+		void ircCommandJoin();
+		void ircCommandPart();
+		void ircCommandMode();
+		void ircCommandTopic();
+		void ircCommandList();
+		void ircCommandInvite();
+		void ircCommandKick();
+		void ircCommandPrivMsg();
 	public:
 		IrcServer(void);
 		IrcServer(const IrcServer& other);

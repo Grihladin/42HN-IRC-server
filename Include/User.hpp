@@ -1,15 +1,14 @@
 #pragma once
-#include "Nickname.hpp"
 #include <cstddef>
 #include <iostream>
 #include <optional>
 #include <string>
 #include <vector>
 
-class Client
+class User
 {
   public:
-	Client() = default;
+	User() = default;
 	// Setters
 	void setNickName(const std::string &nickname);
 	// Getters
