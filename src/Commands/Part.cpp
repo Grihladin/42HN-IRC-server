@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Part.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:51:36 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/24 16:45:58 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/24 19:59:41 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // Parameters: <channel>{,<channel>}
 
-void IrcServer::ircCommandPart(Command& command)
+int IrcServer::ircCommandPart(Command& command)
 {
     std::cout << "Executor: " << command.getCommand() << std::endl;
     std::vector<struct paramstruct> params = command.getParams();
@@ -35,4 +35,5 @@ void IrcServer::ircCommandPart(Command& command)
             // users.push_back(*getUserByFd(command.getUserFd()));
         }
     }
+    return (0);
 }

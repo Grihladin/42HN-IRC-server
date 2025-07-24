@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 16:32:10 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/24 19:19:09 by macbook          ###   ########.fr       */
+/*   Updated: 2025/07/24 20:00:47 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ public:
     size_t paramCount() const;
     void setUserFd(int client_socket);
     void setParams(const std::vector<paramstruct>& params);
+    void addParam(struct paramstruct& newparam);
     void setCommand(std::string newcommand);
     const std::string& getCommand(void) const;
     int getUserFd(void) const;

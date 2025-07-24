@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Pass.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:51:58 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/24 19:09:21 by macbook          ###   ########.fr       */
+/*   Updated: 2025/07/24 19:59:37 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,13 @@
 // 		return "Wrong password.\n";
 // }
 
-void IrcServer::ircCommandPass(Command& command)
+int IrcServer::ircCommandPass(Command& command)
 {
-    // if()
-    // {
-
-    // }
+    //We get password of server
+    //
     std::cout << "Executor: " << command.getCommand() << std::endl;
+    addUser(command.getUserFd());
+    getUserByFd(command.getUserFd())->setAuthenticated();
+    //Reply has to be sent from here
+    return (0);
 }

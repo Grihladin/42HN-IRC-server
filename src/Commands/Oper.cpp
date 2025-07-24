@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   Oper.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:51:02 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/24 16:51:30 by macbook          ###   ########.fr       */
+/*   Updated: 2025/07/24 19:59:45 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Include/IrcServer.hpp"
 
-void IrcServer::ircCommandOper(Command& command)
+int IrcServer::ircCommandOper(Command& command)
 {
     std::cout << "Executor: " << command.getCommand() << std::endl;
+    return (0);
 }

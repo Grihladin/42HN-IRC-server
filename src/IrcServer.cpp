@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IrcServer.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:33:58 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/24 19:06:28 by macbook          ###   ########.fr       */
+/*   Updated: 2025/07/24 19:51:07 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int IrcServer::handle_client(int client_socket)
         std::cout << "Message from socket " << client_socket << ": " << buffer << std::endl;
         std::string response = "Responce.\n";
         // send(client_socket, response.c_str(), response.length(), 0);
-        Command newcommand = commandParser(std::string(buffer));
+        Command newcommand = commandParser(std::string(buffer), client_socket);
         commandExecutor(newcommand);
     }
     else
@@ -109,7 +109,6 @@ void IrcServer::listenSocket(void)
 						std::cout << "New client connected. Socket: " << client_fd << std::endl;
 						socket_fds.push_back({client_fd, POLLIN, 0});
 						// ADD USER FUNCTION NEEDED HERE
-						addUser(client_fd);
 					}
 					else
 					{

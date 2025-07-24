@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   Nick.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:50:32 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/24 16:50:58 by macbook          ###   ########.fr       */
+/*   Updated: 2025/07/24 19:59:49 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Include/IrcServer.hpp"
 
-void IrcServer::ircCommandNick(Command& command)
+int IrcServer::ircCommandNick(Command& command)
 {
     std::cout << "Executor: " << command.getCommand() << std::endl;
+    return (0);
 }

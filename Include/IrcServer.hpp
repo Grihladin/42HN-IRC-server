@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IrcServer.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:27:49 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/24 19:16:21 by macbook          ###   ########.fr       */
+/*   Updated: 2025/07/24 20:16:49 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,22 +54,31 @@ class IrcServer
         int sendMessageToUser();
 		const Command commandParser(std::string rawdata, int client_socket);
 		void commandExecutor(Command& command);
-
+		bool isUserExist(int fd);
+		bool isChannelExist(std::string chname);
+		//Getters
+		std::string getPassword() const;
+		bool isUserAuthenticated(int client_fd) const;
+		bool isUserRegistered(int client_fd) const; //Checks that realname, nickname, servername, hostname and username is entered
+		//Setters
+		int setUsername(std::string username, int client_fd);
+		int setNickname(std::string nickname, int client_fd); // Check unique nickname true or not return according error code
+		int setRealname(std::string Realname, int client_fd);
 		//Methods for IRC commands
-		void ircCommandPass(Command& command);
-		void ircCommandNick(Command& command);
-		void ircCommandUser(Command& command);
-		void ircCommandOper(Command& command);
-		void ircCommandQuit(Command& command);
-		void ircCommandJoin(Command& command);
-		void ircCommandPart(Command& command);
-		void ircCommandMode(Command& command);
-		void ircCommandTopic(Command& command);
-		void ircCommandList(Command& command);
-		void ircCommandInvite(Command& command);
-		void ircCommandKick(Command& command);
-		void ircCommandPrivMsg(Command& command);
-		void (IrcServer::*executors[COMMANDS_COUNT])(Command& command) = {\
+		int ircCommandPass(Command& command);
+		int ircCommandNick(Command& command);
+		int ircCommandUser(Command& command);
+		int ircCommandOper(Command& command);
+		int ircCommandQuit(Command& command);
+		int ircCommandJoin(Command& command);
+		int ircCommandPart(Command& command);
+		int ircCommandMode(Command& command);
+		int ircCommandTopic(Command& command);
+		int ircCommandList(Command& command);
+		int ircCommandInvite(Command& command);
+		int ircCommandKick(Command& command);
+		int ircCommandPrivMsg(Command& command);
+		int (IrcServer::*executors[COMMANDS_COUNT])(Command& command) = {\
 			&IrcServer::ircCommandPass,
 			&IrcServer::ircCommandNick,
 			&IrcServer::ircCommandUser,
