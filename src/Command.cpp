@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 11:23:28 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/24 13:39:15 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/24 17:54:39 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 Command::Command(std::string rawCommand,
 	std::vector<struct paramstruct> arguments, int fd) : command(std::move(rawCommand)),
-	params(std::move(arguments)),
-	user_fd(fd)
+	params(std::move(arguments))
 {
+	user_fd = fd;
     std::cout << "Command created with command: " << command << "\n";
 }
 

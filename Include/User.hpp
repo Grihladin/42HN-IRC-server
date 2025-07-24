@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 11:03:05 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/24 15:04:43 by macbook          ###   ########.fr       */
+/*   Updated: 2025/07/24 17:38:10 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ class User
 	void setSocketFd(int fd);
 	void setAuthenticated();
 	// Getters
-	void setSocketFd(int fd);
-	void setAuthenticated();
 	std::string getNickName();
 	bool isAuthenticated() const;
 	int getSocketFd() const;

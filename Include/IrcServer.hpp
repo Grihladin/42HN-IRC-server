@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:27:49 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/24 15:00:00 by macbook          ###   ########.fr       */
+/*   Updated: 2025/07/24 17:51:35 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ class IrcServer
         int handle_client(int client_socket);
         int addUser();
 		int addUser(int client_fd);
-        int addUser(int client_fd);
         int addChannel();
         int sendMessageToChannel();
         int sendMessageToUser();
@@ -100,19 +99,6 @@ class IrcServer
 		};
 
 		User* getUserByFd(int fd);
-		std::string ircCommandPass(const char* buffer, User* currentUser);
-		void ircCommandNick();
-		void ircCommandUser();
-		void ircCommandOper();
-		void ircCommandQuit();
-		void ircCommandJoin();
-		void ircCommandPart();
-		void ircCommandMode();
-		void ircCommandTopic();
-		void ircCommandList();
-		void ircCommandInvite();
-		void ircCommandKick();
-		void ircCommandPrivMsg();
 	public:
 		IrcServer(void);
 		IrcServer(const IrcServer& other);
@@ -122,7 +108,6 @@ class IrcServer
         IrcServer(std::string port, std::string password);
         void listenSocket(void);
 		//Getters
-		User* getUserByFd(int fd);
 };
 
 #endif

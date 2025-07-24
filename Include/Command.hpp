@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 16:32:10 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/24 13:38:59 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/24 17:53:01 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ class Command {
 public:
     Command() = default;
     Command(std::string rawCommand, std::vector<struct paramstruct> arguments, int fd);
-	Command& operator=(const Command&) = default;
+	// Command& operator=(const Command&) = default;
     const std::vector<struct paramstruct>& getParams() const;
     size_t paramCount() const;
 

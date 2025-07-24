@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:33:58 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/24 16:42:17 by macbook          ###   ########.fr       */
+/*   Updated: 2025/07/24 17:37:07 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,28 +188,6 @@ int IrcServer::openSocket(std::string port)
     std::cout << "Wait for connections..." << std::endl;
     socket_fds.push_back({server_fd, POLLIN, 0});
     return (0);
-}
-
-int IrcServer::addUser(int client_fd)
-{
-	User	newUser;
-
-	newUser.setSocketFd(client_fd);
-	users.push_back(newUser);
-	std::cout << "New user added" << client_fd << std::endl;
-	return (0);
-}
-
-User *IrcServer::getUserByFd(int fd)
-{
-	for (size_t i = 0; i < users.size(); ++i)
-	{
-		if (users[i].getSocketFd() == fd)
-		{
-			return (&users[i]);
-		}
-	}
-	return (nullptr);
 }
 
 int IrcServer::addUser(int client_fd)

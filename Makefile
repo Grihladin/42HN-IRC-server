@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+         #
+#    By: macbook <macbook@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/22 13:24:12 by psenko            #+#    #+#              #
-#    Updated: 2025/07/24 11:43:38 by psenko           ###   ########.fr        #
+#    Updated: 2025/07/24 17:56:41 by macbook          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,9 +20,21 @@ SOURCES=src/main.cpp \
 			src/Message.cpp \
 			src/User.cpp \
 			src/Command.cpp \
-			src/IrcServerCommands.cpp \
 			src/IrcServerParser.cpp \
-			src/IrcServerCommandExecutor.cpp
+			src/IrcServerCommandExecutor.cpp \
+			src/Commands/Invite.cpp \
+			src/Commands/Join.cpp \
+			src/Commands/Kick.cpp \
+			src/Commands/List.cpp \
+			src/Commands/Mode.cpp \
+			src/Commands/Nick.cpp \
+			src/Commands/Oper.cpp \
+			src/Commands/Part.cpp \
+			src/Commands/PrivMsg.cpp \
+			src/Commands/Quit.cpp \
+			src/Commands/Topic.cpp \
+			src/Commands/User.cpp \
+			src/Commands/Pass.cpp \
 
 HEADER=Include/Channel.hpp \
 		Include/Command.hpp \
