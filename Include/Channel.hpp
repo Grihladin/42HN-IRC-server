@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 19:17:28 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/24 08:57:19 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/24 16:44:55 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,14 @@ class Channel
 	Channel(const Channel &other) = default;
 	Channel &operator=(const Channel &) = default;
 	virtual ~Channel() = default;
-	;
 
 	Channel(std::string name);
+	std::string	getName(void) const;
+	std::string	getTopic(void) const;
+	
+	void addUserToChannel(int user_fd);
+	void delUserFromChannel(int user_fd);
+	bool isUser(int user_fd);
 };
 
 #endif

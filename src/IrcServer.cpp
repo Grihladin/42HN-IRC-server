@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IrcServer.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:33:58 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/24 17:37:07 by macbook          ###   ########.fr       */
+/*   Updated: 2025/07/24 16:50:05 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,10 +201,11 @@ int IrcServer::addUser(int client_fd)
 
 User* IrcServer::getUserByFd(int fd)
 {
-	for (size_t i = 0; i < users.size(); ++i)
+    std::list<User>::iterator iter;
+	for (iter = users.begin(); iter != users.end(); ++iter)
 	{
-		if (users[i].getSocketFd() == fd)
-			return (&users[i]);
+		if ((*iter).getSocketFd() == fd)
+			return (&(*iter));
 	}
 	return (nullptr);
 }

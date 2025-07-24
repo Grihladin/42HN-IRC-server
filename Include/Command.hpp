@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 16:32:10 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/24 17:53:01 by macbook          ###   ########.fr       */
+/*   Updated: 2025/07/24 16:16:42 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,11 @@ public:
 
     void setCommand(std::string newcommand);
     const std::string& getCommand(void) const;
+    int getUserFd(void) const;
 
 private:
-    std::string         prefix;
-    std::string         command;
-    std::vector<struct paramstruct>  params;
-    int                 user_fd;
+    std::string         _prefix;
+    std::string         _command;
+    std::vector<struct paramstruct>  _params;
+    int                 _user_fd;
 };

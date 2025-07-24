@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IrcServer.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:27:49 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/24 17:51:35 by macbook          ###   ########.fr       */
+/*   Updated: 2025/07/24 16:36:10 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <string>
 # include <iostream>
 # include <vector>
+# include <list>
 # include <cstring>
 # include <fcntl.h>
 # include <unistd.h>
@@ -36,7 +37,7 @@ class IrcServer
 	private:
         int                         server_fd;
         std::vector<struct pollfd>  socket_fds;
-        std::vector<User>           users;
+        std::list<User>           	users;
         std::vector<Message>        messages;
         std::vector<Channel>        channels;
         char                        buffer[BUFFER_SIZE] = {0};
