@@ -3,12 +3,13 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: macbook <macbook@student.42.fr>            +#+  +:+       +#+         #
+#    By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/07/22 13:24:12 by psenko            #+#    #+#              #
-#    Updated: 2025/07/24 17:56:41 by macbook          ###   ########.fr        #
+#    Created: Invalid date        by                   #+#    #+#              #
+#    Updated: 2025/07/24 21:15:03 by auplisas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
 
 CC=c++
 NAME=ircserv
