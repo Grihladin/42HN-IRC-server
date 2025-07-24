@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   User.hpp                                           :+:      :+:    :+:   */
+/*   Param.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/24 11:03:05 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/24 11:10:20 by psenko           ###   ########.fr       */
+/*   Created: 2025/07/24 11:02:57 by psenko            #+#    #+#             */
+/*   Updated: 2025/07/24 11:10:28 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,18 @@
 #include <string>
 #include <vector>
 
-class User
+class Param
 {
   public:
-	User() = default;
+	Param() = default;
 	// Setters
-	void setNickName(const std::string &nickname);
+	void setName(const std::string &paramname);
+	void setValue(const std::string &newvalue);
 	// Getters
-	std::string getNickName();
+	std::string getName() const;
+	std::string getValue() const;
 
   private:
-	// bool _isAuthenticated; 
-	std::string _nickname;
-	std::string _username;
-	std::string _hostname;
-	std::string _servername;
-	std::string _realname;
+	std::string name;
+	std::string value;
 };

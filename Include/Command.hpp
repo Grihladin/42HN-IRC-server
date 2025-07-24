@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 16:32:10 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/23 16:54:00 by macbook          ###   ########.fr       */
+/*   Updated: 2025/07/24 11:23:23 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,20 @@
 #include <optional>
 #include <cstddef>
 #include <iostream>
+#include "Param.hpp"
 
 class Command {
 public:
-    Command(std::string rawCommand, std::vector<std::string> arguments);
+    Command() = default;
+    Command(std::string rawCommand, std::vector<Param> arguments);
 	Command& operator=(const Command&) = default;
-    const std::string& getCommand() const;
-    const std::vector<std::string>& getArgs() const;
-    size_t argCount() const;
+    const std::vector<Param>& getParams() const;
+    size_t paramCount() const;
+
+    void setCommand(std::string newcommand);
+    const std::string& getCommand(void) const;
 
 private:
-    std::string command;
-    std::vector<std::string> args;
+    std::string                 command;
+    std::vector<Param>          params;
 };

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IrcServer.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:33:58 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/23 16:48:57 by macbook          ###   ########.fr       */
+/*   Updated: 2025/07/24 11:45:05 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ int IrcServer::handle_client(int client_socket)
     {
         std::cout << "Message from socket " << client_socket << ": " << buffer << std::endl;
         std::string response = "Responce.\n";
-        send(client_socket, response.c_str(), response.length(), 0);
+        // send(client_socket, response.c_str(), response.length(), 0);
+        Command newcommand = commandParser(std::string(buffer));
+        commandExecutor(newcommand);
     }
     else
     {
@@ -50,7 +52,6 @@ IrcServer& IrcServer::operator=(const IrcServer &other)
         this->server_fd = other.server_fd;
         this->socket_fds = other.socket_fds;
         this->users = other.users;
-        this->messages = other.messages;
         this->channels = other.channels;
         std::memcpy(this->buffer, other.buffer, BUFFER_SIZE);
         this->password = other.password;

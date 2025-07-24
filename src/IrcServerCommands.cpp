@@ -3,76 +3,76 @@
 /*                                                        :::      ::::::::   */
 /*   IrcServerCommands.cpp                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 13:40:56 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/23 16:46:08 by macbook          ###   ########.fr       */
+/*   Updated: 2025/07/24 11:42:06 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Include/IrcServer.hpp"
 
-void IrcServer::ircCommandPass()
+void IrcServer::ircCommandPass(Command& command)
 {
-    
+    std::cout << "Executor" << command.getCommand() << std::endl;
 }
 
-void IrcServer::ircCommandNick()
+void IrcServer::ircCommandNick(Command& command)
 {
-    
+    std::cout << "Executor" << command.getCommand() << std::endl;
 }
 
-void IrcServer::ircCommandUser()
+void IrcServer::ircCommandUser(Command& command)
 {
-    
+    std::cout << "Executor" << command.getCommand() << std::endl;
 }
 
-void IrcServer::ircCommandOper()
+void IrcServer::ircCommandOper(Command& command)
 {
-    
+    std::cout << "Executor" << command.getCommand() << std::endl;
 }
 
-void IrcServer::ircCommandQuit()
+void IrcServer::ircCommandQuit(Command& command)
 {
-    
+    std::cout << "Executor" << command.getCommand() << std::endl;
 }
 
-void IrcServer::ircCommandJoin()
+void IrcServer::ircCommandJoin(Command& command)
 {
-    
+    std::cout << "Executor" << command.getCommand() << std::endl;
 }
 
-void IrcServer::ircCommandPart()
+void IrcServer::ircCommandPart(Command& command)
 {
-    
+    std::cout << "Executor" << command.getCommand() << std::endl;
 }
 
-void IrcServer::ircCommandMode()
+void IrcServer::ircCommandMode(Command& command)
 {
-    
+    std::cout << "Executor" << command.getCommand() << std::endl;
 }
 
-void IrcServer::ircCommandTopic()
+void IrcServer::ircCommandTopic(Command& command)
 {
-    
+    std::cout << "Executor" << command.getCommand() << std::endl;
 }
 
-void IrcServer::ircCommandList()
+void IrcServer::ircCommandList(Command& command)
 {
-    
+    std::cout << "Executor" << command.getCommand() << std::endl;
 }
 
-void IrcServer::ircCommandInvite()
+void IrcServer::ircCommandInvite(Command& command)
 {
-    
+    std::cout << "Executor" << command.getCommand() << std::endl;
 }
 
-void IrcServer::ircCommandKick()
+void IrcServer::ircCommandKick(Command& command)
 {
-    
+    std::cout << "Executor" << command.getCommand() << std::endl;
 }
 
-void IrcServer::ircCommandPrivMsg()
+void IrcServer::ircCommandPrivMsg(Command& command)
 {
-    
+    std::cout << "Executor" << command.getCommand() << std::endl;
 }
