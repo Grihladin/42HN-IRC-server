@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+         #
+#    By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2025/07/24 19:43:38 by mratke           ###   ########.fr        #
+#    Updated: 2025/07/25 00:43:05 by auplisas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,8 @@ HEADER=		Include/Channel.hpp \
 			Include/Command.hpp \
 			Include/IrcServer.hpp \
 			Include/Message.hpp \
-			Include/User.hpp 
+			Include/User.hpp \
+			Include/Definitions.hpp
 
 SRC_FILES = $(addprefix $(SRC_DIR)/, $(SRC))
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.cpp=.o))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 22:47:06 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/24 15:10:37 by macbook          ###   ########.fr       */
+/*   Updated: 2025/07/25 01:02:56 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,10 @@ int User::getSocketFd() const
 void User::setAuthenticated()
 {
 	_isAuthenticated = true;
+}
+
+bool User::isRegistered() const
+{
+	return (!_realname.empty() && !_nickname.empty() && !_username.empty()
+		&& !_hostname.empty());
 }
