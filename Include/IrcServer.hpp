@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:27:49 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/24 12:08:07 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/24 12:53:15 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ class IrcServer
         int openSocket(std::string port);
         int handle_client(int client_socket);
         int addUser();
+		int addUser(int client_fd);
         int addChannel();
         int sendMessageToChannel();
         int sendMessageToUser();
@@ -80,6 +81,24 @@ class IrcServer
 			&IrcServer::ircCommandKick,
 			&IrcServer::ircCommandPrivMsg
 		};
+
+		std::string irccommands[COMMANDS_COUNT] = {
+			"PASS",
+			"NICK",
+			"USER",
+			"OPER",
+			"QUIT",
+			"JOIN",
+			"PART",
+			"MODE",
+			"TOPIC",
+			"LIST",
+			"INVITE",
+			"KICK",
+			"PRIVMSG"
+		};
+
+		User* getUserByFd(int fd);
 	public:
 		IrcServer(void);
 		IrcServer(const IrcServer& other);

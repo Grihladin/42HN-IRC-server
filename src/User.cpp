@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 22:47:06 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/23 16:46:03 by macbook          ###   ########.fr       */
+/*   Updated: 2025/07/24 12:52:16 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,24 @@ void User::setNickName(const std::string &nickname)
 		}
 	}
 	_nickname = nickname;
+}
+
+bool User::isAuthenticated(void) const
+{
+	return (_isAuthenticated);
+}
+
+void User::setSocketFd(int fd)
+{
+	_socketFd = fd;
+}
+
+int User::getSocketFd() const
+{
+	return (_socketFd);
+}
+
+void User::setAuthenticated()
+{
+	_isAuthenticated = true;
 }

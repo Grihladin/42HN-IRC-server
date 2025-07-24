@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 11:03:05 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/24 11:10:20 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/24 12:30:42 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,15 @@ class User
 	// Setters
 	void setNickName(const std::string &nickname);
 	// Getters
+	void setSocketFd(int fd);
+	void setAuthenticated();
 	std::string getNickName();
+	bool isAuthenticated() const;
+	int getSocketFd() const;
 
   private:
-	// bool _isAuthenticated; 
+	int _socketFd;
+	bool _isAuthenticated = false;
 	std::string _nickname;
 	std::string _username;
 	std::string _hostname;

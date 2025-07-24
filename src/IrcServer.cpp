@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:33:58 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/24 12:12:19 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/24 12:51:06 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,13 +128,15 @@ void IrcServer::listenSocket(void)
 
 int IrcServer::openSocket(std::string port)
 {
+    int opt = 1;
+    sockaddr_in server_addr;
+
     server_fd = socket(AF_INET, SOCK_STREAM, 0);
     if (server_fd == -1)
     {
         std::cerr << "Error creation of socket." << std::endl;
         return 1;
     }
-    int opt = 1;
     if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)) < 0)
     {
         std::cerr << "setsockopt" << std::endl;
@@ -142,7 +144,6 @@ int IrcServer::openSocket(std::string port)
         return 1;
     }
     fcntl(server_fd, F_SETFL, O_NONBLOCK);
-    sockaddr_in server_addr;
     server_addr.sin_family = AF_INET;
     server_addr.sin_addr.s_addr = INADDR_ANY;
     server_addr.sin_port = htons(std::stoi(std::string(port)));
@@ -164,4 +165,23 @@ int IrcServer::openSocket(std::string port)
     std::cout << "Wait for connections..." << std::endl;
     socket_fds.push_back({server_fd, POLLIN, 0});
     return (0);
+}
+
+int IrcServer::addUser(int client_fd)
+{
+	User	newUser;
+	newUser.setSocketFd(client_fd);
+	users.push_back(newUser);
+	std::cout << "New user added" << client_fd << std::endl;
+	return (0);
+}
+
+User* IrcServer::getUserByFd(int fd)
+{
+	for (size_t i = 0; i < users.size(); ++i)
+	{
+		if (users[i].getSocketFd() == fd)
+			return (&users[i]);
+	}
+	return (nullptr);
 }
