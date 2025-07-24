@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/23 18:56:27 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/23 20:57:14 by macbook          ###   ########.fr       */
+/*   Created: 2025/07/23 11:33:58 by psenko            #+#    #+#             */
+/*   Updated: 2025/07/24 15:09:51 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,26 +32,22 @@ std::string IrcServer::ircCommandPass(const char *buffer, User *currentUser)
 
 int IrcServer::handle_client(int client_socket)
 {
-	int		bytes_received;
-	User	*currentUser;
-
-	std::cout << "Socket ID is " << client_socket << ";" << buffer << std::endl;
-	bytes_received = read(client_socket, buffer, BUFFER_SIZE);
-	if (bytes_received > 0)
-	{
-		std::cout << "Message from socket " << client_socket << ": " << buffer << std::endl;
-		
-        currentUser = getUserByFd(client_socket);
-		std::string response = ircCommandPass(buffer, currentUser);
-		
-        send(client_socket, response.c_str(), response.length(), 0);
-	}
-	else
-	{
-		std::cout << "Client (socket " << client_socket << ") is disconnected or with error." << std::endl;
-		return (-1);
-	}
-	return (0);
+    memset(buffer, 0, BUFFER_SIZE);
+    int bytes_received = read(client_socket, buffer, BUFFER_SIZE);
+    if (bytes_received > 0)
+    {
+        std::cout << "Message from socket " << client_socket << ": " << buffer << std::endl;
+        std::string response = "Responce.\n";
+        // send(client_socket, response.c_str(), response.length(), 0);
+        Command newcommand = commandParser(std::string(buffer));
+        commandExecutor(newcommand);
+    }
+    else
+    {
+        std::cout << "Client (socket " << client_socket << ") is disconnected or with error." << std::endl;
+        return (-1);
+    }
+    return (0);
 }
 
 IrcServer::IrcServer(void)
@@ -70,17 +66,16 @@ IrcServer::IrcServer(const IrcServer &other)
 
 IrcServer &IrcServer::operator=(const IrcServer &other)
 {
-	if (this != &other)
-	{
-		this->server_fd = other.server_fd;
-		this->socket_fds = other.socket_fds;
-		this->users = other.users;
-		this->messages = other.messages;
-		this->channels = other.channels;
-		std::memcpy(this->buffer, other.buffer, BUFFER_SIZE);
-		this->password = other.password;
-	}
-	return (*this);
+    if (this != &other)
+    {
+        this->server_fd = other.server_fd;
+        this->socket_fds = other.socket_fds;
+        this->users = other.users;
+        this->channels = other.channels;
+        std::memcpy(this->buffer, other.buffer, BUFFER_SIZE);
+        this->password = other.password;
+    }
+    return *this;
 }
 
 IrcServer::~IrcServer()
@@ -156,42 +151,43 @@ void IrcServer::listenSocket(void)
 
 int IrcServer::openSocket(std::string port)
 {
-	int			opt;
-	sockaddr_in	server_addr;
+    int opt = 1;
+    sockaddr_in server_addr;
 
-	server_fd = socket(AF_INET, SOCK_STREAM, 0);
-	if (server_fd == -1)
-	{
-		std::cerr << "Error creation of socket." << std::endl;
-		return (1);
-	}
-	opt = 1;
-	if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)) < 0)
-	{
-		std::cerr << "setsockopt" << std::endl;
-		close(server_fd);
-		return (1);
-	}
-	fcntl(server_fd, F_SETFL, O_NONBLOCK);
-	server_addr.sin_family = AF_INET;
-	server_addr.sin_addr.s_addr = INADDR_ANY;
-	server_addr.sin_port = htons(std::stoi(std::string(port)));
-	if (bind(server_fd, (struct sockaddr *)&server_addr,
-			sizeof(server_addr)) < 0)
-	{
-		std::cerr << "Error of binding" << std::endl;
-		close(server_fd);
-		return (1);
-	}
-	if (listen(server_fd, 3) < 0)
-	{
-		std::cerr << "Error of listen" << std::endl;
-		close(server_fd);
-		return (1);
-	}
-	std::cout << "Wait for connections..." << std::endl;
-	socket_fds.push_back({server_fd, POLLIN, 0});
-	return (0);
+    server_fd = socket(AF_INET, SOCK_STREAM, 0);
+    if (server_fd == -1)
+    {
+        std::cerr << "Error creation of socket." << std::endl;
+        return 1;
+    }
+    if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)) < 0)
+    {
+        std::cerr << "setsockopt" << std::endl;
+        close(server_fd);
+        return 1;
+    }
+    fcntl(server_fd, F_SETFL, O_NONBLOCK);
+    server_addr.sin_family = AF_INET;
+    server_addr.sin_addr.s_addr = INADDR_ANY;
+    server_addr.sin_port = htons(std::stoi(std::string(port)));
+
+    if (bind(server_fd, (struct sockaddr*)&server_addr, sizeof(server_addr)) < 0)
+    {
+        std::cerr << "Error of binding" << std::endl;
+        close(server_fd);
+        return 1;
+    }
+
+    if (listen(server_fd, 3) < 0)
+    {
+        std::cerr << "Error of listen" << std::endl;
+        close(server_fd);
+        return 1;
+    }
+
+    std::cout << "Wait for connections..." << std::endl;
+    socket_fds.push_back({server_fd, POLLIN, 0});
+    return (0);
 }
 
 int IrcServer::addUser(int client_fd)
@@ -212,6 +208,25 @@ User *IrcServer::getUserByFd(int fd)
 		{
 			return (&users[i]);
 		}
+	}
+	return (nullptr);
+}
+
+int IrcServer::addUser(int client_fd)
+{
+	User	newUser;
+	newUser.setSocketFd(client_fd);
+	users.push_back(newUser);
+	std::cout << "New user added" << client_fd << std::endl;
+	return (0);
+}
+
+User* IrcServer::getUserByFd(int fd)
+{
+	for (size_t i = 0; i < users.size(); ++i)
+	{
+		if (users[i].getSocketFd() == fd)
+			return (&users[i]);
 	}
 	return (nullptr);
 }

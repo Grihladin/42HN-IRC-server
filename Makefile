@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: macbook <macbook@student.42.fr>            +#+  +:+       +#+         #
+#    By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/22 13:24:12 by psenko            #+#    #+#              #
-#    Updated: 2025/07/23 16:44:23 by macbook          ###   ########.fr        #
+#    Updated: 2025/07/24 11:43:38 by psenko           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,9 +14,21 @@ CC=c++
 NAME=ircserv
 CFLAGS=-Wall -Wextra -Werror -std=c++17
 
-SOURCES=src/main.cpp src/IrcServer.cpp src/Channel.cpp src/Message.cpp src/User.cpp src/Command.cpp src/IrcServerCommands.cpp
+SOURCES=src/main.cpp \
+			src/IrcServer.cpp \
+			src/Channel.cpp \
+			src/Message.cpp \
+			src/User.cpp \
+			src/Command.cpp \
+			src/IrcServerCommands.cpp \
+			src/IrcServerParser.cpp \
+			src/IrcServerCommandExecutor.cpp
 
-HEADER=Include/Channel.hpp Include/Command.hpp Include/IrcServer.hpp Include/Message.hpp Include/User.hpp 
+HEADER=Include/Channel.hpp \
+		Include/Command.hpp \
+		Include/IrcServer.hpp \
+		Include/Message.hpp \
+		Include/User.hpp 
 
 OBJECTS=$(SOURCES:.cpp=.o)
 

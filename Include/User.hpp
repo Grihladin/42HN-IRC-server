@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   User.hpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/24 11:03:05 by psenko            #+#    #+#             */
+/*   Updated: 2025/07/24 15:04:43 by macbook          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #pragma once
 #include <cstddef>
 #include <iostream>
@@ -14,11 +26,14 @@ class User
 	void setSocketFd(int fd);
 	void setAuthenticated();
 	// Getters
+	void setSocketFd(int fd);
+	void setAuthenticated();
 	std::string getNickName();
 	bool isAuthenticated() const;
 	int getSocketFd() const;
+
   private:
-  	int _socketFd;
+	int _socketFd;
 	bool _isAuthenticated = false;
 	std::string _nickname;
 	std::string _username;
