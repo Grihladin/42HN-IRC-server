@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:33:58 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/25 00:15:41 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/25 02:19:28 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ int IrcServer::handle_client(int client_socket)
         std::string response = "Responce.\n";
         // send(client_socket, response.c_str(), response.length(), 0);
         Command newcommand = commandParser(std::string(buffer), client_socket);
-		std::cout << "Command Type: " << newcommand.getCommand() << std::endl;
-		std::cout << "Params: ";
-		std::cout << newcommand.getParams()[0].value << std::endl;
+		// std::cout << "Command Type: " << newcommand.getCommand() << std::endl;
+		// std::cout << "Params: ";
+		// std::cout << newcommand.getParams()[0].value << std::endl;
 		// printParams(newcommand.getParams());
         commandExecutor(newcommand);
     }
