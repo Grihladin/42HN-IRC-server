@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:27:49 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/24 16:36:10 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/24 16:57:13 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,9 @@ class IrcServer
         int handle_client(int client_socket);
         int addUser();
 		int addUser(int client_fd);
+		int addUser(User newuser);
         int addChannel();
+		int addChannel(Channel newchannel);
         int sendMessageToChannel();
         int sendMessageToUser();
 		const Command commandParser(std::string rawdata);
