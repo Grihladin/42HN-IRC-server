@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 16:32:10 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/24 16:16:42 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/24 19:19:09 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ public:
 	// Command& operator=(const Command&) = default;
     const std::vector<struct paramstruct>& getParams() const;
     size_t paramCount() const;
-
+    void setUserFd(int client_socket);
+    void setParams(const std::vector<paramstruct>& params);
     void setCommand(std::string newcommand);
     const std::string& getCommand(void) const;
     int getUserFd(void) const;

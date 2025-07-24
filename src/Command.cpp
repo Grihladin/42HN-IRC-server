@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 11:23:28 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/24 16:16:42 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/24 19:19:48 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,13 @@ void Command::setCommand(std::string newcommand)
 int Command::getUserFd(void) const
 {
     return (_user_fd);
+}
+
+void Command::setParams(const std::vector<paramstruct>& params) {
+    _params = params;
+}
+
+void Command::setUserFd(int client_socket)
+{
+	_user_fd = client_socket;
 }

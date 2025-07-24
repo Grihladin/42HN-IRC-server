@@ -3,32 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   IrcServer.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:33:58 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/24 16:50:05 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/24 19:06:28 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Include/IrcServer.hpp"
-
-// std::string IrcServer::ircCommandPass(const char *buffer, User *currentUser)
-// {
-// 	if (strncmp(buffer, "PASS ", 5) != 0 || currentUser->isAuthenticated())
-// 		return "You need to authenticate first.\n";
-
-// 	std::string receivedPassword(buffer + 5);
-
-// 	receivedPassword.erase(receivedPassword.find_last_not_of(" \r\n") + 1);
-
-// 	std::cout << "Expected password: [" << password << "]" << std::endl;
-// 	std::cout << "Received password: [" << receivedPassword << "]" << std::endl;
-
-// 	if (password == receivedPassword)
-// 		return "Pass is correct.\n";
-// 	else
-// 		return "Wrong password.\n";
-// }
 
 int IrcServer::handle_client(int client_socket)
 {

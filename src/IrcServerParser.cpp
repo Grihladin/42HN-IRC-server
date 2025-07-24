@@ -3,19 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   IrcServerParser.cpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 10:56:53 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/24 12:11:04 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/24 19:20:03 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Include/IrcServer.hpp"
 
-const Command IrcServer::commandParser(std::string rawdata)
+const Command IrcServer::commandParser(std::string rawdata, int client_socket)
 {
-    Command     newcommand;
-    std::cout << "Parser: " << rawdata << std::endl;
-    newcommand.setCommand("USER");
-    return (newcommand);
+	Command newcommand;
+	std::cout << "Parser: " << rawdata << std::endl;
+	newcommand.setCommand("USER");
+	std::vector<paramstruct> params = {
+		{"value", "123123"},
+	};
+	newcommand.setParams(params);
+    newcommand.setUserFd(client_socket);
+	return (newcommand);
 }
