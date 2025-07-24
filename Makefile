@@ -3,62 +3,70 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+         #
+#    By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2025/07/24 21:15:03 by auplisas         ###   ########.fr        #
+#    Updated: 2025/07/24 19:43:38 by mratke           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+NAME = ircserv
+CXX = c++
+CXXFLAGS = -Wall -Wextra -Werror -std=c++17
+SRC_DIR = src
+OBJ_DIR = obj
 
-CC=c++
-NAME=ircserv
-CFLAGS=-Wall -Wextra -Werror -std=c++17
+SRC=		main.cpp \
+			IrcServer.cpp \
+			Channel.cpp \
+			Message.cpp \
+			User.cpp \
+			Command.cpp \
+			IrcServerParser.cpp \
+			IrcServerCommandExecutor.cpp \
+			Commands/Invite.cpp \
+			Commands/Join.cpp \
+			Commands/Kick.cpp \
+			Commands/List.cpp \
+			Commands/Mode.cpp \
+			Commands/Nick.cpp \
+			Commands/Oper.cpp \
+			Commands/Part.cpp \
+			Commands/PrivMsg.cpp \
+			Commands/Quit.cpp \
+			Commands/Topic.cpp \
+			Commands/User.cpp \
+			Commands/Pass.cpp \
+			Parser.cpp \
+			parserTests.cpp
 
-SOURCES=src/main.cpp \
-			src/IrcServer.cpp \
-			src/Channel.cpp \
-			src/Message.cpp \
-			src/User.cpp \
-			src/Command.cpp \
-			src/IrcServerParser.cpp \
-			src/IrcServerCommandExecutor.cpp \
-			src/Commands/Invite.cpp \
-			src/Commands/Join.cpp \
-			src/Commands/Kick.cpp \
-			src/Commands/List.cpp \
-			src/Commands/Mode.cpp \
-			src/Commands/Nick.cpp \
-			src/Commands/Oper.cpp \
-			src/Commands/Part.cpp \
-			src/Commands/PrivMsg.cpp \
-			src/Commands/Quit.cpp \
-			src/Commands/Topic.cpp \
-			src/Commands/User.cpp \
-			src/Commands/Pass.cpp \
+HEADER=		Include/Channel.hpp \
+			Include/Command.hpp \
+			Include/IrcServer.hpp \
+			Include/Message.hpp \
+			Include/User.hpp 
 
-HEADER=Include/Channel.hpp \
-		Include/Command.hpp \
-		Include/IrcServer.hpp \
-		Include/Message.hpp \
-		Include/User.hpp 
-
-OBJECTS=$(SOURCES:.cpp=.o)
+SRC_FILES = $(addprefix $(SRC_DIR)/, $(SRC))
+OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.cpp=.o))
 
 all: $(NAME)
 
+$(NAME): $(OBJ)
+	$(CXX) $(CXXFLAGS) -o $(NAME) $(OBJ)
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
+	mkdir -p $(dir $@)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+$(OBJ_DIR):
+	mkdir -p $(OBJ_DIR)
+
 clean:
-	$(RM) $(OBJECTS)
+	rm -rf $(OBJ_DIR)
 
 fclean: clean
-	$(RM) $(NAME)
+	rm -f $(NAME)
 
-re:	fclean all
-
-$(NAME): $(OBJECTS) $(HEADER)
-	$(CC) $(CFLAGS) $(OBJECTS) -o $(NAME)
-
-%.o: %.cpp $(HEADER)
-	$(CC) -c $(CFLAGS) $< -o $@
+re: fclean all
 
 .PHONY: all clean fclean re

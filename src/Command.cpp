@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 11:23:28 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/24 18:22:58 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/24 19:27:02 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,14 @@ void Command::setUserFd(int client_socket)
 void Command::addParam(struct paramstruct& newparam)
 {
 	_params.push_back(newparam);
+}
+
+void Command::setPrefix(std::string prefix)
+{
+	_prefix = prefix;
+}
+
+const std::optional<std::string>& Command::getPrefix() const
+{
+	return _prefix;
 }
