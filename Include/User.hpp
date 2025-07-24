@@ -11,11 +11,15 @@ class User
 	User() = default;
 	// Setters
 	void setNickName(const std::string &nickname);
+	void setSocketFd(int fd);
+	void setAuthenticated();
 	// Getters
 	std::string getNickName();
-
+	bool isAuthenticated() const;
+	int getSocketFd() const;
   private:
-	// bool _isAuthenticated; 
+  	int _socketFd;
+	bool _isAuthenticated = false;
 	std::string _nickname;
 	std::string _username;
 	std::string _hostname;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IrcServer.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:27:49 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/23 13:42:55 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/23 20:50:00 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,13 @@ class IrcServer
         
         int openSocket(std::string port);
         int handle_client(int client_socket);
-        int addUser();
+        int addUser(int client_fd);
         int addChannel();
         int sendMessageToChannel();
         int sendMessageToUser();
 
 		//Methods for IRC commands
-		void ircCommandPass();
+		std::string ircCommandPass(const char* buffer, User* currentUser);
 		void ircCommandNick();
 		void ircCommandUser();
 		void ircCommandOper();
@@ -69,6 +69,8 @@ class IrcServer
 		
         IrcServer(std::string port, std::string password);
         void listenSocket(void);
+		//Getters
+		User* getUserByFd(int fd);
 };
 
 #endif
