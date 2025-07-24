@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:33:58 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/24 11:45:05 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/24 12:12:19 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int IrcServer::handle_client(int client_socket)
 {
-    
+    memset(buffer, 0, BUFFER_SIZE);
     int bytes_received = read(client_socket, buffer, BUFFER_SIZE);
     if (bytes_received > 0)
     {
