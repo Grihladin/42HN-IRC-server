@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:27:49 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/24 20:16:49 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/24 21:07:03 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,20 +50,29 @@ class IrcServer
 		int addUser(User newuser);
         int addChannel();
 		int addChannel(Channel newchannel);
-        int sendMessageToChannel();
-        int sendMessageToUser();
+        int sendMessageToChannel(Message &message);
+        int sendMessageToUser(Message &message);
 		const Command commandParser(std::string rawdata, int client_socket);
 		void commandExecutor(Command& command);
 		bool isUserExist(int fd);
+		bool isUserExist(std::string username);
+		bool isNicknameExist(std::string nickname);
 		bool isChannelExist(std::string chname);
 		//Getters
 		std::string getPassword() const;
 		bool isUserAuthenticated(int client_fd) const;
 		bool isUserRegistered(int client_fd) const; //Checks that realname, nickname, servername, hostname and username is entered
+		const std::vector<Channel>& getChannelList() const;
+		const std::vector<Channel>& getChannelList(std::vector<std::string>) const;
 		//Setters
 		int setUsername(std::string username, int client_fd);
 		int setNickname(std::string nickname, int client_fd); // Check unique nickname true or not return according error code
 		int setRealname(std::string Realname, int client_fd);
+		int addUserToChannel(std::string channelname, int user_fd);
+		int kickUserFromChannel(std::string channelname, std::string username);
+		int deleteUserFromChannel(std::string channelname, int user_fd);
+		int deleteUserFromServer(int user_fd); //It will go though channels, kick them out of there, send message to eveeryone
+		int setTopicToChannel(std::string channelname, std::string topic, int user_fd);
 		//Methods for IRC commands
 		int ircCommandPass(Command& command);
 		int ircCommandNick(Command& command);

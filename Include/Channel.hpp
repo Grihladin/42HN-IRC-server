@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 19:17:28 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/24 16:44:55 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/24 20:50:39 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ class Channel
 	void addUserToChannel(int user_fd);
 	void delUserFromChannel(int user_fd);
 	bool isUser(int user_fd);
+	bool isUserOperator(int user_fd);
+	int setTopic(std::string topic, int user_fd);
 };
 
 #endif
