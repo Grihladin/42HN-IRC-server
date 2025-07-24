@@ -1,0 +1,60 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Command.cpp                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/24 18:16:08 by mratke            #+#    #+#             */
+/*   Updated: 2025/07/24 18:29:12 by mratke           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "Command.hpp"
+
+Command::Command(std::string rawCommand,
+	std::vector<struct paramstruct> arguments, int fd) : _command(std::move(rawCommand)),
+	_params(std::move(arguments))
+{
+	_user_fd = fd;
+    std::cout << "Command created with command: " << _command << "\n";
+}
+
+const std::string &Command::getCommand() const
+{
+	return (_command);
+}
+
+const std::vector<struct paramstruct> &Command::getParams() const
+{
+	return (_params);
+}
+
+size_t Command::paramCount() const
+{
+	return (_params.size());
+}
+
+void Command::setCommand(std::string newcommand)
+{
+    _command = newcommand;
+}
+
+int Command::getUserFd(void) const
+{
+    return (_user_fd);
+}
+
+void Command::setParams(const std::vector<paramstruct>& params) {
+    _params = params;
+}
+
+void Command::setUserFd(int client_socket)
+{
+	_user_fd = client_socket;
+}
+
+void Command::addParam(struct paramstruct& newparam)
+{
+	_params.push_back(newparam);
+}
