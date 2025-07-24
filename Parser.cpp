@@ -17,10 +17,7 @@ Command Command::parse(const std::string &line) {
     if (prefix_end == std::string::npos) {
       throw std::runtime_error("Malformed message: prefix without command.");
     }
-    paramstruct tmp;
-    tmp.name = "prefix";
-    tmp.value = current_part.substr(1, prefix_end - 1);
-    command.addParam(tmp);
+    command.setPrefix(current_part.substr(1, prefix_end - 1));
     current_part = current_part.substr(prefix_end + 1);
   }
 

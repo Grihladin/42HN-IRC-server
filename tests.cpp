@@ -5,6 +5,10 @@
 // Helper function to print a parsed message for verification.
 void print_message(const std::string &raw_line, const Command &cmd) {
   std::cout << "--> " << raw_line << std::endl;
+  if (cmd.getPrefix().has_value())
+    std::cout << "  Prefix: " << cmd.getPrefix().value() << std::endl;
+  else
+    std::cout << "  Prefix: (none)" << std::endl;
   std::cout << "  Command: " << cmd.getCommand() << std::endl;
   if (!cmd.getParams().empty()) {
     std::cout << "  Params (" << cmd.getParams().size() << "):" << std::endl;

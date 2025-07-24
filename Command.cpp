@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 18:16:08 by mratke            #+#    #+#             */
-/*   Updated: 2025/07/24 18:29:12 by mratke           ###   ########.fr       */
+/*   Updated: 2025/07/24 19:06:18 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,14 @@ void Command::setUserFd(int client_socket)
 void Command::addParam(struct paramstruct& newparam)
 {
 	_params.push_back(newparam);
+}
+
+void Command::setPrefix(std::string prefix)
+{
+	_prefix = prefix;
+}
+
+const std::optional<std::string>& Command::getPrefix() const
+{
+	return _prefix;
 }
