@@ -5,19 +5,16 @@
 // Helper function to print a parsed message for verification.
 void print_message(const std::string &raw_line, const Command &cmd) {
   std::cout << "--> " << raw_line << std::endl;
-  if (cmd.getParams().size() > 0) {
-    std::cout << "  Prefix: " << cmd.getParams()[0].name << std::endl;
-  }
   std::cout << "  Command: " << cmd.getCommand() << std::endl;
   if (!cmd.getParams().empty()) {
     std::cout << "  Params (" << cmd.getParams().size() << "):" << std::endl;
     for (size_t i = 0; i < cmd.getParams().size(); ++i) {
-      std::cout << "    " << i << ": " << cmd.getParams()[i].value << std::endl;
+      std::cout << "    " << cmd.getParams()[i].name << ": "
+                << cmd.getParams()[i].value << std::endl;
     }
   }
   std::cout << "----------------------------------------" << std::endl;
 }
-
 int main() {
   std::vector<std::string> test_cases = {
       // Common cases
