@@ -1,14 +1,14 @@
-#include "IRCMessage.h"
+#include "Command.hpp"
 #include <stdexcept>
 #include <iostream>
 #include <sstream>
 
-IRCMessage parse(const std::string& line) {
+Command Command::parse(const std::string& line) {
     if (line.empty()) {
         throw std::runtime_error("Cannot parse empty line.");
     }
 
-    IRCMessage message;
+    Command command;
     std::string current_part = line;
 
     // 1. Parse Prefix
@@ -17,7 +17,7 @@ IRCMessage parse(const std::string& line) {
         if (prefix_end == std::string::npos) {
             throw std::runtime_error("Malformed message: prefix without command.");
         }
-        message.prefix = current_part.substr(1, prefix_end - 1);
+        command.setParams({{"prefix", current_part.substr(1, prefix_end - 1)}});
         current_part = current_part.substr(prefix_end + 1);
     }
 
@@ -25,31 +25,31 @@ IRCMessage parse(const std::string& line) {
     size_t command_end = current_part.find(' ');
     if (command_end == std::string::npos) {
         // No parameters, the rest of the line is the command
-        message.command = current_part;
-        return message;
+        command.setCommand(current_part);
+        return command;
     }
-    message.command = current_part.substr(0, command_end);
+    command.setCommand(current_part.substr(0, command_end));
     current_part = current_part.substr(command_end + 1);
 
     // 3. Parse Parameters
     while (!current_part.empty()) {
         if (current_part.rfind(":", 0) == 0) {
             // Trailing parameter
-            message.params.push_back(current_part.substr(1));
+            command.setParams({{"trailing", current_part.substr(1)}});
             break;
         }
 
         size_t param_end = current_part.find(' ');
         if (param_end == std::string::npos) {
             // Last parameter
-            message.params.push_back(current_part);
+            command.setParams({{"last", current_part}});
             break;
         }
         
         // Middle parameter
-        message.params.push_back(current_part.substr(0, param_end));
+        command.setParams({{"middle", current_part.substr(0, param_end)}});
         current_part = current_part.substr(param_end + 1);
     }
 
-    return message;
+    return command;
 }
