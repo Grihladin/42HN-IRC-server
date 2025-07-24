@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 16:32:10 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/24 20:00:47 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/24 21:11:11 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <optional>
 #include <cstddef>
 #include <iostream>
+#include <optional>
 
 struct paramstruct
 {
@@ -36,7 +37,9 @@ public:
     void setCommand(std::string newcommand);
     const std::string& getCommand(void) const;
     int getUserFd(void) const;
-
+    static Command parse(const std::string &line);
+    void setPrefix(std::string prefix);
+    const std::optional<std::string>& getPrefix() const;
 private:
     std::string         _prefix;
     std::string         _command;
