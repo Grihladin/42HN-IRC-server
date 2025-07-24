@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+         #
+#    By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/22 13:24:12 by psenko            #+#    #+#              #
-#    Updated: 2025/07/22 13:24:31 by psenko           ###   ########.fr        #
+#    Updated: 2025/07/24 13:02:04 by mratke           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,9 +14,9 @@ CC=c++
 NAME=ircserv
 CFLAGS=-Wall -Wextra -Werror -std=c++17
 
-SOURCES=main.cpp
+SOURCES=Parser.cpp tests.cpp
 
-HEADER=
+HEADER=IRCMessage.h
 
 OBJECTS=$(SOURCES:.cpp=.o)
 
