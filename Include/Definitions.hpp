@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 00:37:03 by auplisas          #+#    #+#             */
-/*   Updated: 2025/07/25 02:41:16 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/25 03:54:46 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,10 @@
 #define ERR_ALREADYREGISTRED ":server 462 :You may not reregister\r\n"
 #define ERR_PASSWDMISMATCH ":server 464 :Password incorrect\r\n"
 #define ERR_UNKNOWNCOMMAND(nick, command) (std::string(":server 421 ") + nick + " " + command.erase(command.find_last_not_of("\r\n") + 1) + " :Unknown command\r\n")
+#define ERR_NONICKNAMEGIVEN(nick) (std::string(":server 431 ") + nick + " :No nickname given\r\n")
+#define ERR_ERRONEUSNICKNAME(nick, badnick) (std::string(":server 432 ") + nick + " " + badnick + " :Erroneous nickname\r\n")
+#define ERR_NICKNAMEINUSE(nick, newnick) (std::string(":server 433 ") + nick + " " + newnick + " :Nickname is already in use\r\n")
+
+#define RPL_WELCOME(nick) (std::string(":server 001 ") + nick + " :Welcome to the IRC server " + nick + "\r\n")
 
 #endif

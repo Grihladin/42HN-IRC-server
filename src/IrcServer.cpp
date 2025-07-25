@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:33:58 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/25 02:19:28 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/25 03:17:14 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,4 +204,14 @@ User* IrcServer::getUserByFd(int fd)
 std::string IrcServer::getPassword() const
 {
 	return (password);
+}
+
+bool IrcServer::isNicknameExist(std::string nickname)
+{
+	for (std::list<User>::iterator it = users.begin(); it != users.end(); ++it)
+	{
+		if (it->getNickname() == nickname)
+			return true;
+	}
+	return false;
 }
