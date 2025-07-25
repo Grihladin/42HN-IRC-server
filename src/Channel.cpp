@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 12:20:50 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/25 18:28:38 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/26 01:19:32 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,9 @@ std::string Channel::getName(void) const
 
 int Channel::addUser(User *newuser)
 {
-	if (newuser)
-	{
-		std::cout << "Add user to channel" << std::endl;
-	}
-	return (0);
+    if (newuser)
+        users.push_back(newuser);
+    return (0);
 }
 
 int Channel::addOperator(User *newuser)
@@ -64,6 +62,32 @@ bool Channel::isUserOnChannel(int user_fd)
 			return (1);
 	}
 	return (0);
+}
+
+const std::vector<std::string> Channel::getNickList()
+{
+    std::vector<std::string>    nickList;
+
+    for (std::vector<User*>::iterator iter = users.begin() ; iter != users.end() ; ++iter)
+    {
+        nickList.push_back((*iter)->getNickName());
+    }
+    return (nickList);
+}
+
+const std::string Channel::getNickListStr()
+{
+    std::vector<std::string>    nickList = getNickList();
+    std::string result;
+    
+    for (std::vector<std::string>::iterator iter = nickList.begin() ; iter != nickList.end() ; ++iter)
+    {
+        if (result.length() > 0)
+            result.append(",");
+        result.append((*iter));
+    }
+    std::cout << "List of Nicknames: " << result << std::endl;
+    return (result);
 }
 
 std::string	Channel::getTopic(void) const
