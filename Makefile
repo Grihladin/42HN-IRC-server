@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+         #
+#    By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2025/07/25 02:04:14 by auplisas         ###   ########.fr        #
+#    Updated: 2025/07/25 15:58:22 by psenko           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,9 @@ SRC=		main.cpp \
 			Commands/User.cpp \
 			Commands/Pass.cpp \
 			Parser.cpp \
-			parserTests.cpp
+			parserTests.cpp \
+			IrcServer/getNickList.cpp \
+			IrcServer/getChannel.cpp
 
 HEADER=		Include/Channel.hpp \
 			Include/Command.hpp \

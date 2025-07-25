@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:27:49 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/25 11:22:13 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/25 15:55:53 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,12 @@ class IrcServer
 		std::string getPassword() const;
 		bool isUserAuthenticated(int client_fd) const;
 		bool isUserRegistered(int client_fd) const; //Checks that realname, nickname, servername, hostname and username is entered
+		Channel* getChannelByName(std::string channelname);
 		const std::vector<Channel>& getChannelList() const;
-		const std::vector<Channel>& getChannelList(std::vector<std::string>) const;
+		const std::vector<Channel> getChannelList(std::vector<std::string>) const;
+		User* getUserByFd(int fd);
+		const std::vector<std::string> getNickList(std::string channelname);
+		const std::string getNickListStr(std::string channelname);
 		//Setters
 		int setUsername(std::string username, int client_fd);
 		int setNickname(std::string nickname, int client_fd); // Check unique nickname true or not return according error code
@@ -119,8 +123,6 @@ class IrcServer
 			"KICK",
 			"PRIVMSG"
 		};
-
-		User* getUserByFd(int fd);
 	public:
 		IrcServer(void);
 		IrcServer(const IrcServer& other);

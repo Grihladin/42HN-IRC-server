@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:33:58 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/25 15:03:39 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/25 16:10:22 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,24 +29,19 @@ int IrcServer::handle_client(int client_socket)
 		memset(buffer, 0, BUFFER_SIZE);
 		bytes_received = recv(client_socket, buffer, BUFFER_SIZE, 0);
 		if (bytes_received > 0)
-		{
 			result.append(buffer);
-			std::cout << "Result out: " << result << std::endl;
-		}
 		else
 		{
 			std::cout << "Client (socket " << client_socket << ") is disconnected or with error." << std::endl;
 			return (-1);
 		}
 	}
-	std::cout << "Message from socket " << client_socket << ": " << result << std::endl;
 	size_t spos;
 	while (result.length() > 0)
 	{
 		spos = result.find("\r\n");
 		spos += 2;
 		std::string strcommand = result.substr(0, spos);
-		std::cout << "Command from message: " << strcommand << std::endl;
 		try
 		{
 			Command newcommand = commandParser(strcommand, client_socket);
