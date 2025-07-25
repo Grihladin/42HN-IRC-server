@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IrcServer.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:33:58 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/25 03:17:14 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/25 11:26:40 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,7 +186,22 @@ int IrcServer::addUser(int client_fd)
 	User	newUser;
 	newUser.setSocketFd(client_fd);
 	users.push_back(newUser);
-	// std::cout << "New user added" << client_fd << std::endl;
+	std::cout << "New user added" << client_fd << std::endl;
+	return (0);
+}
+
+int IrcServer::deleteUser(int client_fd)
+{
+	std::list<User>::iterator iter;
+	for (iter = users.begin(); iter != users.end(); ++iter)
+	{
+		if ((*iter).getSocketFd() == client_fd)
+		{
+			users.erase(iter);
+			std::cout << "User deleted: " << client_fd << std::endl;
+			break;
+		}
+	}
 	return (0);
 }
 
@@ -214,4 +229,44 @@ bool IrcServer::isNicknameExist(std::string nickname)
 			return true;
 	}
 	return false;
+}
+
+int IrcServer::addChannel(std::string newname, int user_fd)
+{
+	Channel	newChannel(newname);
+	newChannel.addUser(getUserByFd(user_fd));
+	newChannel.addOperator(getUserByFd(user_fd));
+	channels.push_back(newChannel);
+	std::cout << "New channel added: " << newname << std::endl;
+	return (0);
+}
+
+bool IrcServer::isChannelExist(std::string chname)
+{
+	for (std::vector<Channel>::iterator iter = channels.begin(); iter != channels.end(); ++iter)
+	{
+		if (iter->getName() == chname)
+			return true;
+	}
+	return false;
+}
+
+int IrcServer::addUserToChannel(std::string channelname, int user_fd)
+{
+	if (!isChannelExist(channelname))
+	{
+		addChannel(channelname, user_fd);
+		return (0);
+	}
+	std::vector<Channel>::iterator iterCh;
+	for (iterCh = channels.begin() ; iterCh != channels.end() ; ++iterCh)
+	{
+		if ((iterCh->getName() == channelname) 
+			&& (!iterCh->isUserOnChannel(user_fd)))
+		{
+			iterCh->addUser(getUserByFd(user_fd));
+			break;
+		}
+	}
+	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 19:17:28 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/24 20:50:39 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/25 11:29:42 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,12 @@ class Channel
 	std::string	getName(void) const;
 	std::string	getTopic(void) const;
 	
-	void addUserToChannel(int user_fd);
+	int addUser(User* newuser);
+	int addOperator(User* newuser);
 	void delUserFromChannel(int user_fd);
 	bool isUser(int user_fd);
 	bool isUserOperator(int user_fd);
+	bool isUserOnChannel(int user_fd);
 	int setTopic(std::string topic, int user_fd);
 };
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Pass.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:51:58 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/25 00:50:54 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/25 10:32:34 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int IrcServer::ircCommandPass(Command &command)
 	{
 		response = ERR_PASSWDMISMATCH;
 		send(command.getUserFd(), response.c_str(), response.length(), 0);
+		deleteUser(command.getUserFd());
 		return (0);
 	}
 }
