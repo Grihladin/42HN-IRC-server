@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Definitions.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 00:37:03 by auplisas          #+#    #+#             */
-/*   Updated: 2025/07/25 03:54:46 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/25 14:06:25 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,8 @@
 #define ERR_NICKNAMEINUSE(nick, newnick) (std::string(":server 433 ") + nick + " " + newnick + " :Nickname is already in use\r\n")
 
 #define RPL_WELCOME(nick) (std::string(":server 001 ") + nick + " :Welcome to the IRC server " + nick + "\r\n")
+
+#define RPL_NOTOPIC ":server 331 :No topic is set\r\n"
+#define RPL_TOPIC(channel, topic) (std::string(":server 332 ") + channel + " " + topic + "\r\n")
 
 #endif
