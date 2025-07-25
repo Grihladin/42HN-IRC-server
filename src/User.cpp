@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 22:47:06 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/25 03:27:35 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/25 16:21:59 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,7 @@ int User::setOperator(bool mode)
 // Getters
 bool User::isRegistered() const
 {
-	return (!_realname.empty() && !_nickname.empty() && !_username.empty()
-		&& !_hostname.empty());
+	return (!_realname.empty() && !_nickname.empty() && !_username.empty());
 }
 std::string User::getNickName()
 {

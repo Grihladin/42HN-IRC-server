@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:50:32 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/25 04:39:07 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/25 16:32:01 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,11 @@ int IrcServer::ircCommandNick(Command &command)
 	}
 	std::string oldNick = user->getNickname();
 	user->setNickname(newNick);
+	if(user->isRegistered())
+	{
+		std::string response = RPL_WELCOME(newNick);
+		send(userFd, response.c_str(), response.length(), 0);
+	}
     //POSSIBLY HANDLING OF SETTING NEW NICKNAME OVER NEW ONE NEEDS TO BE HANDLED
-    //ALSO THIS RESPONSE HAS TO BE SENT ONLY IF USER IS ALSO SET
-	std::string response = RPL_WELCOME(newNick);
-	send(userFd, response.c_str(), response.length(), 0);
 	return (0);
 }
