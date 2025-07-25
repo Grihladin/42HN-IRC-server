@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+         #
+#    By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2025/07/24 19:43:38 by mratke           ###   ########.fr        #
+#    Updated: 2025/07/25 02:04:14 by auplisas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = ircserv
 CXX = c++
-CXXFLAGS = -Wall -Wextra -Werror -std=c++17
+CXXFLAGS = -Wall -Wextra -Werror -std=c++17 -fsanitize=address -g
 SRC_DIR = src
 OBJ_DIR = obj
 
@@ -44,7 +44,8 @@ HEADER=		Include/Channel.hpp \
 			Include/Command.hpp \
 			Include/IrcServer.hpp \
 			Include/Message.hpp \
-			Include/User.hpp 
+			Include/User.hpp \
+			Include/Definitions.hpp
 
 SRC_FILES = $(addprefix $(SRC_DIR)/, $(SRC))
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.cpp=.o))

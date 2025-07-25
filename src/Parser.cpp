@@ -20,6 +20,12 @@ Command Command::parse(const std::string &line) {
     throw std::runtime_error("Cannot parse empty line.");
   }
 
+  // Helper trim function
+  auto trim = [](const std::string &s) -> std::string {
+    size_t start = s.find_first_not_of(" \r\n\t");
+    size_t end = s.find_last_not_of(" \r\n\t");
+    return (start == std::string::npos) ? "" : s.substr(start, end - start + 1);
+  };
   Command command;
   std::string current_part = line;
 
@@ -49,7 +55,7 @@ Command Command::parse(const std::string &line) {
       // Trailing parameter
       paramstruct trailing;
       trailing.name = "trailing";
-      trailing.value = current_part.substr(1);
+      trailing.value = trim(current_part.substr(1));
       command.addParam(trailing);
       break;
     }
@@ -59,7 +65,7 @@ Command Command::parse(const std::string &line) {
       // Last parameter
       paramstruct last;
       last.name = "last";
-      last.value = current_part;
+      last.value = trim(current_part);
       command.addParam(last);
       break;
     }
@@ -67,7 +73,7 @@ Command Command::parse(const std::string &line) {
     // Middle parameter
     paramstruct last;
     last.name = "middle";
-    last.value = current_part.substr(0, param_end);
+    last.value = trim(current_part.substr(0, param_end));
     command.addParam(last);
 
     current_part = current_part.substr(param_end + 1);

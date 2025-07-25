@@ -60,6 +60,16 @@
 		"typeinfo": "cpp",
 		"unordered_map": "cpp",
 		"utility": "cpp",
-		"vector": "cpp"
+		"vector": "cpp",
+		"__verbose_abort": "cpp",
+		"print": "cpp",
+		"charconv": "cpp",
+		"clocale": "cpp",
+		"deque": "cpp",
+		"execution": "cpp",
+		"forward_list": "cpp",
+		"queue": "cpp",
+		"stack": "cpp",
+		"variant": "cpp"
 	}
 }

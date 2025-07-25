@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parserTests.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 01:36:24 by mratke            #+#    #+#             */
-/*   Updated: 2025/07/25 01:36:25 by mratke           ###   ########.fr       */
+/*   Updated: 2025/07/25 04:39:03 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 // #include <iostream>
 // #include <vector>
 
-// // Helper function to print a parsed message for verification.
+// //Helper function to print a parsed message for verification.
 // void print_message(const std::string &raw_line, const Command &cmd) {
 //   std::cout << "--> " << raw_line << std::endl;
 //   if (cmd.getPrefix().has_value())
@@ -31,6 +31,7 @@
 //   }
 //   std::cout << "----------------------------------------" << std::endl;
 // }
+
 // int main() {
 //   std::vector<std::string> test_cases = {
 //       // Common cases
