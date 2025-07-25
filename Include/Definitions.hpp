@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Definitions.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 00:37:03 by auplisas          #+#    #+#             */
-/*   Updated: 2025/07/25 14:55:16 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/25 18:26:56 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #define ERR_NONICKNAMEGIVEN(nick) (std::string(":server 431 ") + nick + " :No nickname given\r\n")
 #define ERR_ERRONEUSNICKNAME(nick, badnick) (std::string(":server 432 ") + nick + " " + badnick + " :Erroneous nickname\r\n")
 #define ERR_NICKNAMEINUSE(nick, newnick) (std::string(":server 433 ") + nick + " " + newnick + " :Nickname is already in use\r\n")
+#define RPL_YOUREOPER(nick) (std::string(":server 381 ") + nick + " :You are now an IRC operator\r\n")
 
 #define RPL_WELCOME(nick) (std::string(":server 001 ") + nick + " :Welcome to the IRC server " + nick + "\r\n")
 
