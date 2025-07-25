@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:33:58 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/25 13:18:22 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/25 14:42:31 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,41 +20,42 @@ void printParams(const std::vector<paramstruct>& params) {
 
 int IrcServer::handle_client(int client_socket)
 {
-	int bytes_received = 1;
-	int start;
+	int bytes_received;
+	std::string result;
 
-	while (bytes_received)
+	while (result.back() != '\n')
 	{
 		memset(buffer, 0, BUFFER_SIZE);
-		start = 1;
-		for (int cc = 0 ; (cc < BUFFER_SIZE) ; ++cc)
+		bytes_received = recv(client_socket, buffer, BUFFER_SIZE, 0);
+		if (bytes_received > 0)
 		{
-			bytes_received = recv(client_socket, buffer + cc, 1, 0);
-			if (start && (bytes_received < 1) && (errno != EWOULDBLOCK) && (errno != EAGAIN))
-				return (0);
-			else if (bytes_received == 0)
-			{
-				std::cout << "Client (socket " << client_socket << ") is disconnected or with error." << std::endl;
-				return (-1);
-			}
-			else if ((bytes_received < 0))
-				return (0);
-			if (start && (bytes_received == 0))
-				return (0);
-			start = 0;
-			if (buffer[cc] == '\n')
-				break;
+			result.append(buffer);
+			std::cout << "Result out: " << result << std::endl;
 		}
-		std::cout << "Message from socket " << client_socket << ": " << buffer << std::endl;
+		else
+		{
+			std::cout << "Client (socket " << client_socket << ") is disconnected or with error." << std::endl;
+			return (-1);
+		}
+	}
+	std::cout << "Message from socket " << client_socket << ": " << result << std::endl;
+	size_t spos;
+	while (result.length() > 0)
+	{
+		spos = result.find("\r\n");
+		spos += 2;
+		std::string strcommand = result.substr(0, spos);
+		std::cout << "Command from message: " << strcommand << std::endl;
 		try
 		{
-			Command newcommand = commandParser(std::string(buffer), client_socket);
+			Command newcommand = commandParser(strcommand, client_socket);
 			commandExecutor(newcommand);
 		}
 		catch(const std::exception& e)
 		{
 			std::cerr << "Error: " << e.what() << std::endl;
 		}
+		result = result.substr(spos);
 	}
     return (0);
 }
@@ -134,7 +135,6 @@ void IrcServer::listenSocket(void)
 					{
 						std::cout << "New client connected. Socket: " << client_fd << std::endl;
 						socket_fds.push_back({client_fd, POLLIN, 0});
-						// ADD USER FUNCTION NEEDED HERE
 					}
 					else
 					{
