@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:33:58 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/25 11:26:40 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/25 13:18:22 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,25 +20,42 @@ void printParams(const std::vector<paramstruct>& params) {
 
 int IrcServer::handle_client(int client_socket)
 {
-    memset(buffer, 0, BUFFER_SIZE);
-    int bytes_received = read(client_socket, buffer, BUFFER_SIZE);
-    if (bytes_received > 0)
-    {
-        std::cout << "Message from socket " << client_socket << ": " << buffer << std::endl;
-        std::string response = "Responce.\n";
-        // send(client_socket, response.c_str(), response.length(), 0);
-        Command newcommand = commandParser(std::string(buffer), client_socket);
-		// std::cout << "Command Type: " << newcommand.getCommand() << std::endl;
-		// std::cout << "Params: ";
-		// std::cout << newcommand.getParams()[0].value << std::endl;
-		// printParams(newcommand.getParams());
-        commandExecutor(newcommand);
-    }
-    else
-    {
-        std::cout << "Client (socket " << client_socket << ") is disconnected or with error." << std::endl;
-        return (-1);
-    }
+	int bytes_received = 1;
+	int start;
+
+	while (bytes_received)
+	{
+		memset(buffer, 0, BUFFER_SIZE);
+		start = 1;
+		for (int cc = 0 ; (cc < BUFFER_SIZE) ; ++cc)
+		{
+			bytes_received = recv(client_socket, buffer + cc, 1, 0);
+			if (start && (bytes_received < 1) && (errno != EWOULDBLOCK) && (errno != EAGAIN))
+				return (0);
+			else if (bytes_received == 0)
+			{
+				std::cout << "Client (socket " << client_socket << ") is disconnected or with error." << std::endl;
+				return (-1);
+			}
+			else if ((bytes_received < 0))
+				return (0);
+			if (start && (bytes_received == 0))
+				return (0);
+			start = 0;
+			if (buffer[cc] == '\n')
+				break;
+		}
+		std::cout << "Message from socket " << client_socket << ": " << buffer << std::endl;
+		try
+		{
+			Command newcommand = commandParser(std::string(buffer), client_socket);
+			commandExecutor(newcommand);
+		}
+		catch(const std::exception& e)
+		{
+			std::cerr << "Error: " << e.what() << std::endl;
+		}
+	}
     return (0);
 }
 
@@ -96,8 +113,7 @@ void IrcServer::listenSocket(void)
 		poll_count = poll(socket_fds.data(), socket_fds.size(), -1);
 		if (poll_count < 0)
 		{
-			std::cerr << "poll" << std::endl;
-			break ;
+			throw std::runtime_error("Error with poll!");
 		}
 		for (size_t i = 0; i < socket_fds.size(); ++i)
 		{
