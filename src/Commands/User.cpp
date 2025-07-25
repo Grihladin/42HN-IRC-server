@@ -6,18 +6,46 @@
 /*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:53:34 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/24 20:41:54 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/25 16:21:17 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../Include/Definitions.hpp"
 #include "../../Include/IrcServer.hpp"
 
-int IrcServer::ircCommandUser(Command& command)
+int IrcServer::ircCommandUser(Command &command)
 {
-    //Check that user is authenticaated
-    //add user name, real name, and hoste name
-    //Return according message to the client
-    //
-    std::cout << "Executor: " << command.getCommand() << std::endl;
-    return (0);
+	int		userFd;
+	User	*user;
+
+	userFd = command.getUserFd();
+	user = getUserByFd(userFd);
+	if (!user || !user->isAuthenticated())
+	{
+		std::string response = ERR_PASSWDMISMATCH;
+		send(userFd, response.c_str(), response.length(), 0);
+		return (1);
+	}
+	if (user->isRegistered())
+	{
+		std::string response = ERR_ALREADYREGISTRED;
+		send(userFd, response.c_str(), response.length(), 0);
+		return (1);
+	}
+	const std::vector<paramstruct> &params = command.getParams();
+	if (params.size() < 4)
+	{
+		std::string response = ERR_NEEDMOREPARAMS("USER");
+		send(userFd, response.c_str(), response.length(), 0);
+		return (1);
+	}
+	user->setUsername(params[0].value);
+	user->setRealname(params[3].value);
+	if (!user->getNickname().empty())
+	{
+		user->setRegistered();
+		std::string response = RPL_WELCOME(user->getNickName());
+		send(userFd, response.c_str(), response.length(), 0);
+	}
+	return (0);
 }

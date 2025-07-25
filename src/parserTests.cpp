@@ -1,20 +1,8 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parserTests.cpp                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/25 01:36:24 by mratke            #+#    #+#             */
-/*   Updated: 2025/07/25 14:48:15 by psenko           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 // #include "../Include/Command.hpp"
 // #include <iostream>
 // #include <vector>
 
-// //Helper function to print a parsed message for verification.
+// // Helper function to print a parsed message for verification.
 // void print_message(const std::string &raw_line, const Command &cmd) {
 //   std::cout << "--> " << raw_line << std::endl;
 //   if (cmd.getPrefix().has_value())
@@ -31,7 +19,6 @@
 //   }
 //   std::cout << "----------------------------------------" << std::endl;
 // }
-
 // int main() {
 //   std::vector<std::string> test_cases = {
 //       // Common cases

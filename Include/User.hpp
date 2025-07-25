@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 11:03:05 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/24 20:59:07 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/25 16:22:13 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,5 @@ class User
 	bool _isRegistered = false;
 	std::string _nickname;
 	std::string _username;
-	std::string _hostname;
 	std::string _realname;
 };
