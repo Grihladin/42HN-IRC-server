@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 00:37:03 by auplisas          #+#    #+#             */
-/*   Updated: 2025/07/25 14:06:25 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/25 14:55:16 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 #define RPL_WELCOME(nick) (std::string(":server 001 ") + nick + " :Welcome to the IRC server " + nick + "\r\n")
 
 #define RPL_NOTOPIC ":server 331 :No topic is set\r\n"
-#define RPL_TOPIC(channel, topic) (std::string(":server 332 ") + channel + " " + topic + "\r\n")
+#define RPL_TOPIC(channel, topic) (std::string(":server 332 ") + channel + " :" + topic + "\r\n")
+#define RPL_NAMREPLY(channel, nicks) (std::string(":server 353 ") + channel + " :" + nicks + "\r\n")
 
 #endif

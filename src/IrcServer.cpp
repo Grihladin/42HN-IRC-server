@@ -6,11 +6,12 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:33:58 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/25 14:42:31 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/25 15:03:39 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Include/IrcServer.hpp"
+#include "../Include/Definitions.hpp"
 
 void printParams(const std::vector<paramstruct>& params) {
     for (const auto& param : params) {
@@ -267,22 +268,29 @@ bool IrcServer::isChannelExist(std::string chname)
 	return false;
 }
 
-int IrcServer::addUserToChannel(std::string channelname, int user_fd)
+int IrcServer::addUserToChannel(std::string channelname, int client_fd)
 {
 	if (!isChannelExist(channelname))
 	{
-		addChannel(channelname, user_fd);
+		addChannel(channelname, client_fd);
 		return (0);
 	}
 	std::vector<Channel>::iterator iterCh;
 	for (iterCh = channels.begin() ; iterCh != channels.end() ; ++iterCh)
 	{
 		if ((iterCh->getName() == channelname) 
-			&& (!iterCh->isUserOnChannel(user_fd)))
+			&& (!iterCh->isUserOnChannel(client_fd)))
 		{
-			iterCh->addUser(getUserByFd(user_fd));
+			iterCh->addUser(getUserByFd(client_fd));
 			break;
 		}
+		std::string topic = iterCh->getTopic();
+		std::string response;
+		if (topic.length() > 0)
+			response = RPL_TOPIC(channelname, topic);
+		else
+			response = RPL_NOTOPIC;
+		send(client_fd, response.c_str(), response.length(), 0);
 	}
 	return (0);
 }
