@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IrcServer.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:27:49 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/24 21:07:03 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/25 11:22:13 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,9 @@ class IrcServer
         int addUser();
 		int addUser(int client_fd);
 		int addUser(User newuser);
+		int deleteUser(int client_fd);
         int addChannel();
-		int addChannel(Channel newchannel);
+		int addChannel(std::string newname, int user_fd);
         int sendMessageToChannel(Message &message);
         int sendMessageToUser(Message &message);
 		const Command commandParser(std::string rawdata, int client_socket);
