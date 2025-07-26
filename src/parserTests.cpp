@@ -41,7 +41,7 @@
 //       "QUIT",          // Command with no params
 //       "list",          // Command with no params
 //       "NICK new_nick", // Command with one param
-//       ":server.name NOTICE Auth :*** Looking up your hostname...", // Server
+//       ":server.name NOTICE Auth :*** Looking up your hostname...\n", // Server
 //                                                                    // notice
 //       ":some_user!~user@host PRIVMSG #another_channel :This is a message with "
 //       "a : colon inside."};

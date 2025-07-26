@@ -6,22 +6,16 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 01:36:07 by mratke            #+#    #+#             */
-/*   Updated: 2025/07/26 15:18:32 by mratke           ###   ########.fr       */
+/*   Updated: 2025/07/26 15:32:03 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Include/Command.hpp"
 
 std::string cleanString(const std::string &s) {
-  std::string result;
-  // Trim whitespace
-  size_t start = s.find_first_not_of(" \r\n\t");
-  if (start == std::string::npos)
-    return "";
-  size_t end = s.find_last_not_of(" \r\n\t");
-  for (size_t i = start; i <= end; ++i) {
-    if (s[i] != '\n')
-      result += s[i];
+  std::string result = s;
+  if (!result.empty() && result[result.size() - 1] == '\n') {
+    result.resize(result.size() - 1);
   }
   return result;
 }
@@ -69,11 +63,7 @@ Command Command::parse(const std::string &line) {
       // Trailing parameter
       paramstruct trailing;
       trailing.name = "trailing";
-      trailing.value = current_part.substr(1);
-      if (!trailing.value.empty() &&
-          trailing.value[trailing.value.size() - 1] == '\n') {
-        trailing.value.resize(trailing.value.size() - 1);
-      }
+      trailing.value = cleanString(current_part.substr(1));
       command.addParam(trailing);
       break;
     }
