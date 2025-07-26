@@ -6,7 +6,7 @@
 #    By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2025/07/26 17:58:36 by auplisas         ###   ########.fr        #
+#    Updated: 2025/07/26 18:01:59 by auplisas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,8 @@ SRC=		main.cpp \
 			Commands/Nick.cpp \
 			Commands/Oper.cpp \
 			Commands/Part.cpp \
+			Commands/Ping.cpp \
+			Commands/Pong.cpp \
 			Commands/PrivMsg.cpp \
 			Commands/Quit.cpp \
 			Commands/Topic.cpp \

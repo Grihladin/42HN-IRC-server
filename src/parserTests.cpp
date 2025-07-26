@@ -10,6 +10,13 @@
 //   else
 //     std::cout << "  Prefix: (none)" << std::endl;
 //   std::cout << "  Command: " << cmd.getCommand() << std::endl;
+//   // Check that the command 'LIST' does not contain a newline
+//   if (cmd.getCommand().find('\n') != std::string::npos) {
+//     std::cout << "command newline check: FAIL" << std::endl;
+//   } else {
+//     std::cout << "command newline check: PASS" << std::endl;
+//   }
+  
 //   if (!cmd.getParams().empty()) {
 //     std::cout << "  Params (" << cmd.getParams().size() << "):" << std::endl;
 //     for (size_t i = 0; i < cmd.getParams().size(); ++i) {
@@ -32,8 +39,9 @@
 
 //       // Edge cases
 //       "QUIT",          // Command with no params
+//       "list",          // Command with no params
 //       "NICK new_nick", // Command with one param
-//       ":server.name NOTICE Auth :*** Looking up your hostname...", // Server
+//       ":server.name NOTICE Auth :*** Looking up your hostname...\n", // Server
 //                                                                    // notice
 //       ":some_user!~user@host PRIVMSG #another_channel :This is a message with "
 //       "a : colon inside."};

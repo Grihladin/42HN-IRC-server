@@ -6,26 +6,25 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 01:36:07 by mratke            #+#    #+#             */
-/*   Updated: 2025/07/25 01:36:08 by mratke           ###   ########.fr       */
+/*   Updated: 2025/07/26 15:32:03 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Include/Command.hpp"
-#include <iostream>
-#include <sstream>
-#include <stdexcept>
+
+std::string cleanString(const std::string &s) {
+  std::string result = s;
+  if (!result.empty() && result[result.size() - 1] == '\n') {
+    result.resize(result.size() - 1);
+  }
+  return result;
+}
 
 Command Command::parse(const std::string &line) {
   if (line.empty()) {
     throw std::runtime_error("Cannot parse empty line.");
   }
 
-  // Helper trim function
-  auto trim = [](const std::string &s) -> std::string {
-    size_t start = s.find_first_not_of(" \r\n\t");
-    size_t end = s.find_last_not_of(" \r\n\t");
-    return (start == std::string::npos) ? "" : s.substr(start, end - start + 1);
-  };
   Command command;
   std::string current_part = line;
 
@@ -35,7 +34,8 @@ Command Command::parse(const std::string &line) {
     if (prefix_end == std::string::npos) {
       throw std::runtime_error("Malformed message: prefix without command.");
     }
-    command.setPrefix(current_part.substr(1, prefix_end - 1));
+    std::string prefix = current_part.substr(1, prefix_end - 1);
+    command.setPrefix(cleanString(prefix));
     current_part = current_part.substr(prefix_end + 1);
   }
 
@@ -43,10 +43,18 @@ Command Command::parse(const std::string &line) {
   size_t command_end = current_part.find(' ');
   if (command_end == std::string::npos) {
     // No parameters, the rest of the line is the command
-    command.setCommand(current_part);
+    std::string cmd = current_part;
+    for (size_t i = 0; i < cmd.size(); ++i) {
+      cmd[i] = std::toupper(static_cast<unsigned char>(cmd[i]));
+    }
+    command.setCommand(cleanString(cmd));
     return command;
   }
-  command.setCommand(current_part.substr(0, command_end));
+  std::string cmd = current_part.substr(0, command_end);
+  for (size_t i = 0; i < cmd.size(); ++i) {
+    cmd[i] = std::toupper(static_cast<unsigned char>(cmd[i]));
+  }
+  command.setCommand(cleanString(cmd));
   current_part = current_part.substr(command_end + 1);
 
   // 3. Parse Parameters
@@ -55,7 +63,7 @@ Command Command::parse(const std::string &line) {
       // Trailing parameter
       paramstruct trailing;
       trailing.name = "trailing";
-      trailing.value = trim(current_part.substr(1));
+      trailing.value = cleanString(current_part.substr(1));
       command.addParam(trailing);
       break;
     }
@@ -65,7 +73,7 @@ Command Command::parse(const std::string &line) {
       // Last parameter
       paramstruct last;
       last.name = "last";
-      last.value = trim(current_part);
+      last.value = cleanString(current_part);
       command.addParam(last);
       break;
     }
@@ -73,7 +81,7 @@ Command Command::parse(const std::string &line) {
     // Middle parameter
     paramstruct last;
     last.name = "middle";
-    last.value = trim(current_part.substr(0, param_end));
+    last.value = cleanString(current_part.substr(0, param_end));
     command.addParam(last);
 
     current_part = current_part.substr(param_end + 1);
