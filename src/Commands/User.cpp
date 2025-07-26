@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:53:34 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/26 11:44:12 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/26 11:50:52 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ int IrcServer::ircCommandUser(Command &command)
 	if (!user->getNickname().empty())
 	{
 		user->setRegistered();
-		std::string response = RPL_WELCOME(user->getNickName());
+		// std::string response = RPL_WELCOME(user->getNickName());
+		std::string response = RPL_MOTD("Hello!");
 		sendToFd(userFd, response);
 	}
 	return (0);
