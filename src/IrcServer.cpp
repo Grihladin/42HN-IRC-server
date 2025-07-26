@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:33:58 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/26 10:21:13 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/26 11:14:57 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,6 +196,19 @@ int IrcServer::openSocket(std::string port)
 	return (0);
 }
 
+int IrcServer::closeUserFd(int user_fd)
+{
+	size_t i = 0;
+    while ((i < socket_fds.size()) && (socket_fds[i].fd != user_fd))
+        ++i;
+    if (i <= socket_fds.size())
+    {
+        close(socket_fds[i].fd);
+        socket_fds.erase(socket_fds.begin() + i);
+    }
+	return (0);
+}
+
 int IrcServer::addUser(int client_fd)
 {
 	User	newUser;
@@ -213,11 +226,6 @@ int IrcServer::deleteUser(int client_fd)
 	{
 		if ((*iter).getSocketFd() == client_fd)
 		{
-			size_t i = 0;
-			while (socket_fds[i].fd != client_fd)
-				++i;
-			close(socket_fds[i].fd);
-			socket_fds.erase(socket_fds.begin() + i);
 			users.erase(iter);
 			std::cout << "User deleted: " << client_fd << std::endl;
 			break ;

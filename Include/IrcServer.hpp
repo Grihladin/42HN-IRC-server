@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:27:49 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/26 10:38:34 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/26 11:13:37 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ class IrcServer
 		std::string operPassword = "424242";
         
         int openSocket(std::string port);
+		int closeUserFd(int user_fd);
         int handle_client(int client_socket);
         int addUser();
 		int addUser(int client_fd);
