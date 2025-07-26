@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:51:36 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/26 11:05:50 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/26 11:17:51 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@ int IrcServer::ircCommandPart(Command& command)
             deleteUserFromChannel((*iter).value, command.getUserFd());
         }
     }
+    //NEED TO ADD ANSWERS
     return (0);
 }

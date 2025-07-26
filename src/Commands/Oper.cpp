@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Oper.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:51:02 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/25 18:26:51 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/26 11:31:19 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,14 @@ int IrcServer::ircCommandOper(Command &command)
 
 	if (password != getOperPassword())
 	{
-		std::string response = ERR_PASSWDMISMATCH;
+		std::string response = ERR_PASSWDMISMATCH();
 		send(userFd, response.c_str(), response.length(), 0);
 		return (1);
 	}
 
 	user->setOperator(true);
 
-	std::string response = RPL_YOUREOPER(user->getNickName());
+	std::string response = RPL_YOUREOPER();
 	send(userFd, response.c_str(), response.length(), 0);
 
 	return (0);

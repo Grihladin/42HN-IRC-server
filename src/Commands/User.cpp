@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:53:34 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/25 16:21:17 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/26 11:32:16 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ int IrcServer::ircCommandUser(Command &command)
 	user = getUserByFd(userFd);
 	if (!user || !user->isAuthenticated())
 	{
-		std::string response = ERR_PASSWDMISMATCH;
+		std::string response = ERR_PASSWDMISMATCH();
 		send(userFd, response.c_str(), response.length(), 0);
 		return (1);
 	}
 	if (user->isRegistered())
 	{
-		std::string response = ERR_ALREADYREGISTRED;
+		std::string response = ERR_ALREADYREGISTRED();
 		send(userFd, response.c_str(), response.length(), 0);
 		return (1);
 	}

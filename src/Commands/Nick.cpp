@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Nick.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:50:32 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/25 16:32:01 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/26 11:30:45 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ int IrcServer::ircCommandNick(Command &command)
 		&& !user->getNickname().empty() ? user->getNickname() : "*";
 	if (!user || !user->isAuthenticated())
 	{
-		std::string response = ERR_PASSWDMISMATCH;
+		std::string response = ERR_PASSWDMISMATCH();
 		send(userFd, response.c_str(), response.length(), 0);
 		return (1);
 	}
 	if (command.getParams().empty())
 	{
-		std::string response = ERR_NONICKNAMEGIVEN(nickPrefix);
+		std::string response = ERR_NONICKNAMEGIVEN();
 		send(userFd, response.c_str(), response.length(), 0);
 		return (1);
 	}
@@ -40,13 +40,13 @@ int IrcServer::ircCommandNick(Command &command)
 		|| newNick.find_first_not_of("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-[]\\`^{}_") != std::string::npos
 		|| isdigit(newNick[0]))
 	{
-		std::string response = ERR_ERRONEUSNICKNAME(nickPrefix, newNick);
+		std::string response = ERR_ERRONEUSNICKNAME(newNick);
 		send(userFd, response.c_str(), response.length(), 0);
 		return (1);
 	}
 	if (isNicknameExist(newNick))
 	{
-		std::string response = ERR_NICKNAMEINUSE(nickPrefix, newNick);
+		std::string response = ERR_NICKNAMEINUSE(newNick);
 		send(userFd, response.c_str(), response.length(), 0);
 		return (1);
 	}

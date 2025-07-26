@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:33:58 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/26 11:14:57 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/26 11:25:14 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -285,7 +285,7 @@ bool IrcServer::isChannelExist(std::string chname)
 	return (false);
 }
 
-int IrcServer::addUserToChannel(std::string channelname, int client_fd)
+Channel *IrcServer::addUserToChannel(std::string channelname, int client_fd)
 {
 	if (!isChannelExist(channelname))
 	{
@@ -299,15 +299,8 @@ int IrcServer::addUserToChannel(std::string channelname, int client_fd)
 			&& (!iterCh->isUserOnChannel(client_fd)))
 		{
 			iterCh->addUser(getUserByFd(client_fd));
-			break ;
+			return (&(*iterCh));
 		}
-		std::string topic = iterCh->getTopic();
-		std::string response;
-		if (topic.length() > 0)
-			response = RPL_TOPIC(channelname, topic);
-		else
-			response = RPL_NOTOPIC;
-		send(client_fd, response.c_str(), response.length(), 0);
 	}
-	return (0);
+	return (nullptr);
 }

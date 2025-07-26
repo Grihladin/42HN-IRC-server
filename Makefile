@@ -6,7 +6,7 @@
 #    By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2025/07/26 10:33:02 by psenko           ###   ########.fr        #
+#    Updated: 2025/07/26 11:33:57 by psenko           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,8 @@ SRC=		main.cpp \
 			Parser.cpp \
 			parserTests.cpp \
 			IrcServer/getNickList.cpp \
-			IrcServer/getChannel.cpp
+			IrcServer/getChannel.cpp \
+			IrcServer/DeleteUserFromChannel.cpp
 
 HEADER=		Include/Channel.hpp \
 			Include/Command.hpp \

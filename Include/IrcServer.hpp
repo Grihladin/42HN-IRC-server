@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:27:49 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/26 11:13:37 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/26 11:20:21 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ class IrcServer
 		int setUsername(std::string username, int client_fd);
 		int setNickname(std::string nickname, int client_fd); // Check unique nickname true or not return according error code
 		int setRealname(std::string Realname, int client_fd);
-		int addUserToChannel(std::string channelname, int user_fd);
+		Channel *addUserToChannel(std::string channelname, int user_fd);
 		int kickUserFromChannel(std::string channelname, std::string username);
 		int deleteUserFromChannel(std::string channelname, int user_fd);
 		int deleteUserFromAllChannels(int user_fd);
