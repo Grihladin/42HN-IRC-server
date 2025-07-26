@@ -99,6 +99,11 @@ const std::string Channel::getNickListStr()
     return (result);
 }
 
+const std::vector<User*> Channel::getUsers(void) const
+{
+	return (users);
+}
+
 std::string	Channel::getTopic(void) const
 {
     return(topic);

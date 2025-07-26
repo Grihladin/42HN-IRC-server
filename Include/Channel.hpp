@@ -38,6 +38,7 @@ class Channel
 	Channel(std::string name);
 	std::string	getName(void) const;
 	std::string	getTopic(void) const;
+	const std::vector<User*> getUsers(void) const;
 	const std::vector<std::string> getNickList();
 	const std::string getNickListStr();
 	int getUsersCount();

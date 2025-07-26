@@ -3,32 +3,65 @@
 /*                                                        :::      ::::::::   */
 /*   PrivMsg.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:52:30 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/26 15:55:26 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/26 19:03:26 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../Include/Channel.hpp"
 #include "../../Include/IrcServer.hpp"
+#include "../../Include/User.hpp"
 
-int IrcServer::ircCommandPrivMsg(Command& command)
-{
-    //Check if message is sent to user or channel
-    //Check that recipent exists
-    //send message using sendmessagetousercommand
-    int user_fd = command.getUserFd();
-    std::cout << "Executor: " << command.getCommand() << std::endl;
-    std::vector<struct paramstruct> params = command.getParams();
-    std::string target = params[0].value;
-    std::string msg = params[1].value;
-    if ((target[0] != '#') && (target[0] != '&'))
-    {
-        sendMessageToUser(user_fd, target, msg);
+int IrcServer::ircCommandPrivMsg(Command &command) {
+  User *user = getUserByFd(command.getUserFd());
+  if (!user || !user->isRegistered()) {
+    std::cerr << "Error: User not registered or does not exist." << std::endl;
+    return (1);
+  }
+
+  const std::vector<paramstruct> &params = command.getParams();
+  if (params.size() < 2) {
+    sendToFd(user->getSocketFd(), ERR_NEEDMOREPARAMS(command.getCommand()));
+    return (1);
+  }
+
+  std::string recipient = params[0].value;
+  std::string message = params[1].value;
+  std::string full_message = ":" + user->getNickname() + " PRIVMSG " +
+                             recipient + " :" + message + "\r\n";
+
+  if (recipient[0] == '#') {
+    // It's a channel message
+    Channel *channel = getChannelByName(recipient);
+    if (!channel) {
+      sendToFd(user->getSocketFd(), ERR_NOSUCHCHANNEL(recipient));
+      return (1);
     }
-    else
-    {
-        sendMessageToChannel(user_fd, target, msg);
+
+    // Check if the user is on the channel
+    if (!channel->isUserOnChannel(user->getSocketFd())) {
+      sendToFd(user->getSocketFd(), ERR_CANNOTSENDTOCHAN(recipient));
+      return (1);
     }
-    return (0);
+
+    const std::vector<User *> channel_users = channel->getUsers();
+    for (size_t i = 0; i < channel_users.size(); ++i) {
+      if (channel_users[i]->getSocketFd() != user->getSocketFd()) {
+        sendToFd(channel_users[i]->getSocketFd(), full_message);
+      }
+    }
+  } else {
+    // It's a private message to a user
+    User *target_user = getUserByNick(recipient);
+    if (!target_user) {
+      sendToFd(user->getSocketFd(), ERR_NOSUCHNICK(recipient));
+      return (1);
+    }
+
+    sendToFd(target_user->getSocketFd(), full_message);
+  }
+
+  return (0);
 }

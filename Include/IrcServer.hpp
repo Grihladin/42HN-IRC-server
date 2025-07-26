@@ -74,6 +74,7 @@ class IrcServer
 		// const std::vector<Channel> &getChannelList() const;
 		// const std::vector<Channel> getChannelList(std::vector<std::string>);
 		User* getUserByFd(int fd);
+		User* getUserByNick(std::string nickname);
 		const std::vector<std::string> getNickList(std::string channelname);
 		const std::string getNickListStr(std::string channelname);
 		//Setters
