@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   IrcServer.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:33:58 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/26 13:21:54 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/26 17:59:29 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Include/Definitions.hpp"
 #include "../Include/IrcServer.hpp"
 
-void	printParams(const std::vector<paramstruct> &params)
+void IrcServer::printParams(const std::vector<struct paramstruct> &params)
 {
 	for (const auto &param : params)
 	{

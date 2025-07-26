@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+         #
+#    By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2025/07/26 11:45:02 by psenko           ###   ########.fr        #
+#    Updated: 2025/07/26 17:58:36 by auplisas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 

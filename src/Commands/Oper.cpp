@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Oper.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:51:02 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/26 11:42:45 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/26 16:07:35 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int IrcServer::ircCommandOper(Command &command)
 		sendToFd(userFd, response);
 		return (1);
 	}
-
+	printParams(command.getParams());
 	if (command.paramCount() < 2)
 	{
 		std::string response = ERR_NEEDMOREPARAMS("OPER");

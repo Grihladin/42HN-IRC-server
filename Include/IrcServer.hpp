@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IrcServer.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:27:49 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/26 13:02:30 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/26 17:58:35 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ class IrcServer
 		bool isUserAuthenticated(int client_fd) const;
 		bool isUserRegistered(int client_fd) const; //Checks that realname, nickname, servername, hostname and username is entered
 		Channel* getChannelByName(std::string channelname);
+		void printParams(const std::vector<struct paramstruct> &params);
 		// const std::vector<Channel> &getChannelList() const;
 		// const std::vector<Channel> getChannelList(std::vector<std::string>);
 		User* getUserByFd(int fd);
