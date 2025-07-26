@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 22:47:06 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/25 16:21:59 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/26 14:31:07 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,6 @@ bool User::isRegistered() const
 {
 	return (!_realname.empty() && !_nickname.empty() && !_username.empty());
 }
-std::string User::getNickName()
-{
-	return (_nickname);
-}
 
 bool User::isAuthenticated() const
 {
@@ -78,17 +74,17 @@ int User::getSocketFd() const
 	return (_socketFd);
 }
 
-std::string User::getUsername() const
+std::string User::getUserName() const
 {
 	return (_username);
 }
 
-std::string User::getNickname() const
+std::string User::getNickName(void) const
 {
 	return (_nickname);
 }
 
-std::string User::getRealname() const
+std::string User::getRealName() const
 {
 	return (_realname);
 }

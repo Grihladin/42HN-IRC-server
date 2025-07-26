@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:51:02 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/26 18:13:18 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/26 18:24:00 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int IrcServer::ircCommandOper(Command &command)
 	printParams(command.getParams());
 	if (command.paramCount() < 2)
 	{
-		std::string response = ERR_NEEDMOREPARAMS("OPER");
+		std::string response = ERR_NEEDMOREPARAMS("*", "OPER");
 		sendToFd(userFd, response);
 		return (1);
 	}
@@ -38,7 +38,7 @@ int IrcServer::ircCommandOper(Command &command)
 
 	if (password != getOperPassword())
 	{
-		std::string response = ERR_PASSWDMISMATCH();
+		std::string response = ERR_PASSWDMISMATCH("*");
 		sendToFd(userFd, response);
 		return (1);
 	}

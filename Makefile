@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+         #
+#    By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2025/07/26 18:01:59 by auplisas         ###   ########.fr        #
+#    Updated: 2025/07/26 16:12:46 by psenko           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,8 @@ SRC=		main.cpp \
 			IrcServer/getNickList.cpp \
 			IrcServer/getChannel.cpp \
 			IrcServer/DeleteUserFromChannel.cpp \
-			IrcServer/sendToFd.cpp
+			IrcServer/sendToFd.cpp \
+			IrcServer/sendMessage.cpp
 
 HEADER=		Include/Channel.hpp \
 			Include/Command.hpp \

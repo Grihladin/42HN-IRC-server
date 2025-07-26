@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:51:58 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/26 11:43:33 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/26 15:39:03 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int IrcServer::ircCommandPass(Command &command)
 	std::string currentPassword = getPassword();
 	if (command.getParams().empty())
 	{
-		response = ERR_NEEDMOREPARAMS("PASS");
+		response = ERR_NEEDMOREPARAMS("*", "PASS");
 		sendToFd(command.getUserFd(), response);
 		return (0);
 	}
@@ -28,7 +28,7 @@ int IrcServer::ircCommandPass(Command &command)
 	std::string receivedPassword = command.getParams()[0].value;
 	if (user && user->isRegistered())
 	{
-		response = ERR_ALREADYREGISTRED();
+		response = ERR_ALREADYREGISTRED("*");
 		sendToFd(command.getUserFd(), response);		
 		return (0);
 	}
@@ -40,7 +40,7 @@ int IrcServer::ircCommandPass(Command &command)
 	}
 	else
 	{
-		response = ERR_PASSWDMISMATCH();
+		response = ERR_PASSWDMISMATCH("*");
 		sendToFd(command.getUserFd(), response);
 		deleteUser(command.getUserFd());
 		return (0);

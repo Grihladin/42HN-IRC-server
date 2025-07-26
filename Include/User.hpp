@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 11:03:05 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/25 16:22:13 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/26 14:29:43 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,11 @@ class User
 	int setOperator(bool mode);
 	// Getters
 	bool isRegistered() const; //Checks that realname, nickname, servername, hostname and username is entered
-	std::string getNickName();
 	bool isAuthenticated() const;
 	int getSocketFd() const;
-	std::string getUsername(void) const;
-	std::string getNickname(void) const;
-	std::string getRealname(void) const;
+	std::string getUserName(void) const;
+	std::string getNickName(void) const;
+	std::string getRealName(void) const;
 	bool isOperator(void) const;
   private:
 	int _socketFd;

@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:53:34 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/26 12:37:09 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/26 15:40:20 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int IrcServer::ircCommandUser(Command &command)
 	user = getUserByFd(userFd);
 	if (!user || !user->isAuthenticated())
 	{
-		std::string response = ERR_PASSWDMISMATCH();
+		std::string response = ERR_PASSWDMISMATCH("*");
 		sendToFd(userFd, response);
 		return (1);
 	}
@@ -35,19 +35,19 @@ int IrcServer::ircCommandUser(Command &command)
 	const std::vector<paramstruct> &params = command.getParams();
 	if (params.size() < 4)
 	{
-		std::string response = ERR_NEEDMOREPARAMS("USER");
+		std::string response = ERR_NEEDMOREPARAMS("*", "USER");
 		sendToFd(userFd, response);
 		return (1);
 	}
 	user->setUsername(params[0].value);
 	user->setRealname(params[3].value);
-	if (!user->getNickname().empty())
+	if (!user->getNickName().empty())
 	{
 		user->setRegistered();
-		sendToFd(userFd, RPL_WELCOME(user->getNickName()));
-		sendToFd(userFd, RPL_MOTDSTART("My supercool IRC server"));
-		sendToFd(userFd, RPL_MOTD("Hello! You are welcome!"));
-		sendToFd(userFd, RPL_ENDOFMOTD());
+		sendToFd(userFd, RPL_WELCOME(user->getNickName(), user->getUserName(), "*"));
+		sendToFd(userFd, RPL_MOTDSTART(user->getNickName(), "My supercool IRC server"));
+		sendToFd(userFd, RPL_MOTD(user->getNickName(), "Hello! You are welcome!"));
+		sendToFd(userFd, RPL_ENDOFMOTD(user->getNickName()));
 	}
 	return (0);
 }

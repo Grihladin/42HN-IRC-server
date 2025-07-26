@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 10:30:43 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/26 11:44:27 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/26 14:34:47 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int IrcServer::ircCommandWrong(Command& command)
                 nick = "*";
         }
         std::string cmd = command.getCommand();
-        std::string response = ERR_UNKNOWNCOMMAND(cmd);
+        std::string response = ERR_UNKNOWNCOMMAND("*", cmd);
         sendToFd(fd, response);
     }
     return (0);
