@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:50:32 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/26 11:42:17 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/26 13:26:38 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,10 @@ int IrcServer::ircCommandNick(Command &command)
 	user->setNickname(newNick);
 	if(user->isRegistered())
 	{
-		std::string response = RPL_WELCOME(newNick);
-		sendToFd(userFd, response);
+		sendToFd(userFd, RPL_WELCOME(user->getNickName()));
+		sendToFd(userFd, RPL_MOTDSTART("My supercool IRC server"));
+		sendToFd(userFd, RPL_MOTD("Hello! You are welcome!"));
+		sendToFd(userFd, RPL_ENDOFMOTD());
 	}
     //POSSIBLY HANDLING OF SETTING NEW NICKNAME OVER NEW ONE NEEDS TO BE HANDLED
 	return (0);
