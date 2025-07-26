@@ -16,12 +16,17 @@
 //   } else {
 //     std::cout << "command newline check: PASS" << std::endl;
 //   }
-  
+
 //   if (!cmd.getParams().empty()) {
 //     std::cout << "  Params (" << cmd.getParams().size() << "):" << std::endl;
 //     for (size_t i = 0; i < cmd.getParams().size(); ++i) {
-//       std::cout << "    " << cmd.getParams()[i].name << ": "
-//                 << cmd.getParams()[i].value << std::endl;
+//       if (cmd.getParams()[i].name == "trailing") {
+//         std::cout << "    " << cmd.getParams()[i].name << ": ["
+//                   << cmd.getParams()[i].value << "]" << std::endl;
+//       } else {
+//         std::cout << "    " << cmd.getParams()[i].name << ": "
+//                   << cmd.getParams()[i].value << std::endl;
+//       }
 //     }
 //   }
 //   std::cout << "----------------------------------------" << std::endl;
@@ -42,7 +47,7 @@
 //       "list",          // Command with no params
 //       "NICK new_nick", // Command with one param
 //       ":server.name NOTICE Auth :*** Looking up your hostname...\n", // Server
-//                                                                    // notice
+//                                                                      // notice
 //       ":some_user!~user@host PRIVMSG #another_channel :This is a message with "
 //       "a : colon inside."};
 
