@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:51:02 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/26 11:42:45 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/26 14:32:28 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ int IrcServer::ircCommandOper(Command &command)
 
 	if (!user || !user->isRegistered())
 	{
-		std::string response = ERR_NEEDMOREPARAMS("OPER");
+		std::string response = ERR_NEEDMOREPARAMS("*", "OPER");
 		sendToFd(userFd, response);
 		return (1);
 	}
 
 	if (command.paramCount() < 2)
 	{
-		std::string response = ERR_NEEDMOREPARAMS("OPER");
+		std::string response = ERR_NEEDMOREPARAMS("*", "OPER");
 		sendToFd(userFd, response);
 		return (1);
 	}

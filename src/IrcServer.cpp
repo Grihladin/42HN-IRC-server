@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:33:58 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/26 13:21:54 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/26 14:30:07 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,7 +264,7 @@ bool IrcServer::isNicknameExist(std::string nickname)
 {
 	for (std::list<User>::iterator it = users.begin(); it != users.end(); ++it)
 	{
-		if (it->getNickname() == nickname)
+		if (it->getNickName() == nickname)
 			return (true);
 	}
 	return (false);
