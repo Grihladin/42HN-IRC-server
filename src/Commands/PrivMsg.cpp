@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:52:30 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/26 19:07:40 by mratke           ###   ########.fr       */
+/*   Updated: 2025/07/26 19:29:30 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,9 @@ int IrcServer::ircCommandPrivMsg(Command &command) {
       return (1);
     }
 
-    const std::vector<User *> channel_users = channel->getUsers();
-    for (size_t i = 0; i < channel_users.size(); ++i) {
-      if (channel_users[i]->getSocketFd() != user->getSocketFd()) {
-        sendToFd(channel_users[i]->getSocketFd(), full_message);
+    for (auto channel_user : channel->getUsers()) {
+      if (channel_user->getSocketFd() != user->getSocketFd()) {
+        sendToFd(channel_user->getSocketFd(), full_message);
       }
     }
   } else {
