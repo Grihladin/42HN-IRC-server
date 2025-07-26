@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 01:36:07 by mratke            #+#    #+#             */
-/*   Updated: 2025/07/26 15:01:41 by mratke           ###   ########.fr       */
+/*   Updated: 2025/07/26 15:18:32 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,10 @@ Command Command::parse(const std::string &line) {
       paramstruct trailing;
       trailing.name = "trailing";
       trailing.value = current_part.substr(1);
+      if (!trailing.value.empty() &&
+          trailing.value[trailing.value.size() - 1] == '\n') {
+        trailing.value.resize(trailing.value.size() - 1);
+      }
       command.addParam(trailing);
       break;
     }
