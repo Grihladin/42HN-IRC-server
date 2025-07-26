@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:51:02 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/26 14:32:28 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/26 15:40:11 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int IrcServer::ircCommandOper(Command &command)
 
 	if (password != getOperPassword())
 	{
-		std::string response = ERR_PASSWDMISMATCH();
+		std::string response = ERR_PASSWDMISMATCH("*");
 		sendToFd(userFd, response);
 		return (1);
 	}

@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:51:58 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/26 14:34:36 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/26 15:39:03 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int IrcServer::ircCommandPass(Command &command)
 	}
 	else
 	{
-		response = ERR_PASSWDMISMATCH();
+		response = ERR_PASSWDMISMATCH("*");
 		sendToFd(command.getUserFd(), response);
 		deleteUser(command.getUserFd());
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:53:34 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/26 14:33:59 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/26 15:40:20 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int IrcServer::ircCommandUser(Command &command)
 	user = getUserByFd(userFd);
 	if (!user || !user->isAuthenticated())
 	{
-		std::string response = ERR_PASSWDMISMATCH();
+		std::string response = ERR_PASSWDMISMATCH("*");
 		sendToFd(userFd, response);
 		return (1);
 	}
