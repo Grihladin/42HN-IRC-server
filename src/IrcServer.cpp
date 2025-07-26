@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:33:58 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/26 12:50:19 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/26 13:21:54 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int IrcServer::handle_client(int client_socket)
 	Command	newcommand;
 
 	std::string result;
-	while (result.back() != '\n')
+	while (result.empty() || result.back() != '\n')
 	{
 		memset(buffer, 0, BUFFER_SIZE);
 		bytes_received = recv(client_socket, buffer, BUFFER_SIZE, 0);
