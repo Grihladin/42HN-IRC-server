@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:47:21 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/26 11:41:06 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/26 14:13:29 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ int IrcServer::ircCommandJoin(Command& command)
 				std::string topic = tmpChannel->getTopic();
 				std::string response;
 				if (topic.length() > 0)
-					response = RPL_TOPIC(iter->value, topic);
+					response = RPL_TOPIC("*", iter->value, topic);
 				else
-					response = RPL_NOTOPIC(iter->value);
+					response = RPL_NOTOPIC("*", iter->value);
 				sendToFd(client_fd, response);
 			}
 		}

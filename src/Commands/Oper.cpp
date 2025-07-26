@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Oper.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:51:02 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/26 16:07:35 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/26 16:14:44 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ int IrcServer::ircCommandOper(Command &command)
 
 	if (!user || !user->isRegistered())
 	{
-		std::string response = ERR_NEEDMOREPARAMS("OPER");
+		std::string response = ERR_NEEDMOREPARAMS("*", "OPER");
 		sendToFd(userFd, response);
 		return (1);
 	}
 	printParams(command.getParams());
 	if (command.paramCount() < 2)
 	{
-		std::string response = ERR_NEEDMOREPARAMS("OPER");
+		std::string response = ERR_NEEDMOREPARAMS("*", "OPER");
 		sendToFd(userFd, response);
 		return (1);
 	}
@@ -38,7 +38,7 @@ int IrcServer::ircCommandOper(Command &command)
 
 	if (password != getOperPassword())
 	{
-		std::string response = ERR_PASSWDMISMATCH();
+		std::string response = ERR_PASSWDMISMATCH("*");
 		sendToFd(userFd, response);
 		return (1);
 	}
