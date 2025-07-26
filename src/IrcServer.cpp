@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:33:58 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/26 11:25:14 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/26 12:50:19 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,11 @@ IrcServer::IrcServer(std::string port, std::string newpass)
 		throw std::runtime_error("Error with creation IrcServer!");
 	}
 	password = newpass;
+	//FOR DEBUG ADD CHANNELS
+	for (int ii = 0; ii < 10; ++ii)
+	{
+		addChannel(std::string("#Channel").append(std::to_string(ii)));
+	}
 }
 
 void IrcServer::listenSocket(void)
@@ -263,6 +268,14 @@ bool IrcServer::isNicknameExist(std::string nickname)
 			return (true);
 	}
 	return (false);
+}
+
+int IrcServer::addChannel(std::string newname)
+{
+	Channel newChannel(newname);
+	channels.push_back(newChannel);
+	std::cout << "New channel added: " << newname << std::endl;
+	return (0);
 }
 
 int IrcServer::addChannel(std::string newname, int user_fd)

@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 19:17:28 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/25 16:00:29 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/26 12:29:40 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ class Channel
 	std::string	getTopic(void) const;
 	const std::vector<std::string> getNickList();
 	const std::string getNickListStr();
+	int getUsersCount();
 	
 	int addUser(User* newuser);
 	int addOperator(User* newuser);

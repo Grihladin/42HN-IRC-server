@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:27:49 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/26 11:38:56 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/26 13:02:30 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ class IrcServer
 		int addUser(User newuser);
 		int deleteUser(int client_fd);
         int addChannel();
+		int addChannel(std::string newname);
 		int addChannel(std::string newname, int user_fd);
         int sendMessageToChannel(Message &message);
         int sendMessageToUser(Message &message);
@@ -69,8 +70,8 @@ class IrcServer
 		bool isUserAuthenticated(int client_fd) const;
 		bool isUserRegistered(int client_fd) const; //Checks that realname, nickname, servername, hostname and username is entered
 		Channel* getChannelByName(std::string channelname);
-		const std::vector<Channel> &getChannelList() const;
-		const std::vector<Channel> getChannelList(std::vector<std::string>) const;
+		// const std::vector<Channel> &getChannelList() const;
+		// const std::vector<Channel> getChannelList(std::vector<std::string>);
 		User* getUserByFd(int fd);
 		const std::vector<std::string> getNickList(std::string channelname);
 		const std::string getNickListStr(std::string channelname);

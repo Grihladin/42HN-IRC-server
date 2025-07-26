@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 12:20:50 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/26 10:46:48 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/26 12:29:51 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,4 +102,9 @@ const std::string Channel::getNickListStr()
 std::string	Channel::getTopic(void) const
 {
     return(topic);
+}
+
+int Channel::getUsersCount()
+{
+	return (users.size());
 }

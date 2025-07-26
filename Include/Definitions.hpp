@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 00:37:03 by auplisas          #+#    #+#             */
-/*   Updated: 2025/07/26 11:03:29 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/26 12:30:57 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@
 #define RPL_ENDOFWHOIS(nick) (std::string(":server 318 ") + nick + " :End of /WHOIS list\r\n")
 #define RPL_WHOISCHANNELS(nick, channels) (std::string(":server 319 ") + nick + " :" + channels + "\r\n")
 #define RPL_LISTSTART() (std::string(":server 321 Channel :Users Name\r\n"))
-#define RPL_LIST(channel, visible, topic) (std::string(":server 322 ") + channel + " " + visible + " :" + topic + "\r\n")
+#define RPL_LIST(channel, visible, topic) (std::string(":server 322 ") + channel + " " + std::to_string(visible) + " :" + topic + "\r\n")
 #define RPL_LISTEND() (std::string(":server 323 :End of /LIST\r\n"))
 #define RPL_CHANNELMODEIS(channel, mode, modeparams) (std::string(":server 324 ") + channel + " " + mode + " " + modeparams + "\r\n")
 #define RPL_NOTOPIC(channel) (std::string(":server 331 ") + channel + " :No topic is set\r\n")
