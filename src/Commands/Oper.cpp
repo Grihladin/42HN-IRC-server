@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:51:02 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/26 11:31:19 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/26 11:42:45 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ int IrcServer::ircCommandOper(Command &command)
 	if (!user || !user->isRegistered())
 	{
 		std::string response = ERR_NEEDMOREPARAMS("OPER");
-		send(userFd, response.c_str(), response.length(), 0);
+		sendToFd(userFd, response);
 		return (1);
 	}
 
 	if (command.paramCount() < 2)
 	{
 		std::string response = ERR_NEEDMOREPARAMS("OPER");
-		send(userFd, response.c_str(), response.length(), 0);
+		sendToFd(userFd, response);
 		return (1);
 	}
 
@@ -39,14 +39,13 @@ int IrcServer::ircCommandOper(Command &command)
 	if (password != getOperPassword())
 	{
 		std::string response = ERR_PASSWDMISMATCH();
-		send(userFd, response.c_str(), response.length(), 0);
+		sendToFd(userFd, response);
 		return (1);
 	}
 
 	user->setOperator(true);
 
 	std::string response = RPL_YOUREOPER();
-	send(userFd, response.c_str(), response.length(), 0);
-
+	sendToFd(userFd, response);
 	return (0);
 }

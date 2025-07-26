@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:47:21 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/26 11:28:50 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/26 11:41:06 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int IrcServer::ircCommandJoin(Command& command)
 					response = RPL_TOPIC(iter->value, topic);
 				else
 					response = RPL_NOTOPIC(iter->value);
-				send(client_fd, response.c_str(), response.length(), 0);
+				sendToFd(client_fd, response);
 			}
 		}
 	}

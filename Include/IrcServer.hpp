@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:27:49 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/26 11:20:21 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/26 11:38:56 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ class IrcServer
         
         int openSocket(std::string port);
 		int closeUserFd(int user_fd);
+		int sendToFd(int user_fd, std::string message);
         int handle_client(int client_socket);
         int addUser();
 		int addUser(int client_fd);

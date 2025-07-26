@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:50:32 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/26 11:30:45 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/26 11:42:17 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ int IrcServer::ircCommandNick(Command &command)
 	if (!user || !user->isAuthenticated())
 	{
 		std::string response = ERR_PASSWDMISMATCH();
-		send(userFd, response.c_str(), response.length(), 0);
+		sendToFd(userFd, response);
 		return (1);
 	}
 	if (command.getParams().empty())
 	{
 		std::string response = ERR_NONICKNAMEGIVEN();
-		send(userFd, response.c_str(), response.length(), 0);
+		sendToFd(userFd, response);
 		return (1);
 	}
 	std::string newNick = command.getParams()[0].value;
@@ -41,13 +41,13 @@ int IrcServer::ircCommandNick(Command &command)
 		|| isdigit(newNick[0]))
 	{
 		std::string response = ERR_ERRONEUSNICKNAME(newNick);
-		send(userFd, response.c_str(), response.length(), 0);
+		sendToFd(userFd, response);
 		return (1);
 	}
 	if (isNicknameExist(newNick))
 	{
 		std::string response = ERR_NICKNAMEINUSE(newNick);
-		send(userFd, response.c_str(), response.length(), 0);
+		sendToFd(userFd, response);
 		return (1);
 	}
 	std::string oldNick = user->getNickname();
@@ -55,7 +55,7 @@ int IrcServer::ircCommandNick(Command &command)
 	if(user->isRegistered())
 	{
 		std::string response = RPL_WELCOME(newNick);
-		send(userFd, response.c_str(), response.length(), 0);
+		sendToFd(userFd, response);
 	}
     //POSSIBLY HANDLING OF SETTING NEW NICKNAME OVER NEW ONE NEEDS TO BE HANDLED
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:53:34 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/26 11:32:16 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/26 11:44:12 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,20 @@ int IrcServer::ircCommandUser(Command &command)
 	if (!user || !user->isAuthenticated())
 	{
 		std::string response = ERR_PASSWDMISMATCH();
-		send(userFd, response.c_str(), response.length(), 0);
+		sendToFd(userFd, response);
 		return (1);
 	}
 	if (user->isRegistered())
 	{
 		std::string response = ERR_ALREADYREGISTRED();
-		send(userFd, response.c_str(), response.length(), 0);
+		sendToFd(userFd, response);
 		return (1);
 	}
 	const std::vector<paramstruct> &params = command.getParams();
 	if (params.size() < 4)
 	{
 		std::string response = ERR_NEEDMOREPARAMS("USER");
-		send(userFd, response.c_str(), response.length(), 0);
+		sendToFd(userFd, response);
 		return (1);
 	}
 	user->setUsername(params[0].value);
@@ -45,7 +45,7 @@ int IrcServer::ircCommandUser(Command &command)
 	{
 		user->setRegistered();
 		std::string response = RPL_WELCOME(user->getNickName());
-		send(userFd, response.c_str(), response.length(), 0);
+		sendToFd(userFd, response);
 	}
 	return (0);
 }
