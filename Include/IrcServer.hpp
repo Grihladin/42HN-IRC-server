@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IrcServer.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:27:49 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/26 13:02:30 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/26 13:42:01 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 
 # define BUFFER_SIZE 10240
 # define MAX_CLIENTS 10240
-# define COMMANDS_COUNT 14
+# define COMMANDS_COUNT 16
 
 class IrcServer
 {
@@ -93,6 +93,8 @@ class IrcServer
 		int ircCommandQuit(Command& command);
 		int ircCommandJoin(Command& command);
 		int ircCommandPart(Command& command);
+		int ircCommandPing(Command& command);
+		int ircCommandPong(Command& command);
 		int ircCommandMode(Command& command);
 		int ircCommandTopic(Command& command);
 		int ircCommandList(Command& command);
@@ -108,6 +110,8 @@ class IrcServer
 			&IrcServer::ircCommandQuit,
 			&IrcServer::ircCommandJoin,
 			&IrcServer::ircCommandPart,
+			&IrcServer::ircCommandPing,
+			&IrcServer::ircCommandPong,
 			&IrcServer::ircCommandMode,
 			&IrcServer::ircCommandTopic,
 			&IrcServer::ircCommandList,
@@ -125,6 +129,8 @@ class IrcServer
 			"QUIT",
 			"JOIN",
 			"PART",
+			"PING",
+			"PONG",
 			"MODE",
 			"TOPIC",
 			"LIST",

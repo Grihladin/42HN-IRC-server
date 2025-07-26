@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 01:36:07 by mratke            #+#    #+#             */
-/*   Updated: 2025/07/25 01:36:08 by mratke           ###   ########.fr       */
+/*   Updated: 2025/07/26 13:45:49 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,18 @@ Command Command::parse(const std::string &line) {
   size_t command_end = current_part.find(' ');
   if (command_end == std::string::npos) {
     // No parameters, the rest of the line is the command
-    command.setCommand(current_part);
+    std::string cmd = current_part;
+    for (size_t i = 0; i < cmd.size(); ++i) {
+      cmd[i] = std::toupper(static_cast<unsigned char>(cmd[i]));
+    }
+    command.setCommand(cmd);
     return command;
   }
-  command.setCommand(current_part.substr(0, command_end));
+  std::string cmd = current_part.substr(0, command_end);
+  for (size_t i = 0; i < cmd.size(); ++i) {
+    cmd[i] = std::toupper(static_cast<unsigned char>(cmd[i]));
+  }
+  command.setCommand(cmd);
   current_part = current_part.substr(command_end + 1);
 
   // 3. Parse Parameters
