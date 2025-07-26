@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 01:36:07 by mratke            #+#    #+#             */
-/*   Updated: 2025/07/26 13:45:49 by mratke           ###   ########.fr       */
+/*   Updated: 2025/07/26 14:06:41 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@ Command Command::parse(const std::string &line) {
     if (prefix_end == std::string::npos) {
       throw std::runtime_error("Malformed message: prefix without command.");
     }
-    command.setPrefix(current_part.substr(1, prefix_end - 1));
+    std::string prefix = current_part.substr(1, prefix_end - 1);
+    prefix.erase(std::remove(prefix.begin(), prefix.end(), '\n'), prefix.end());
+    command.setPrefix(prefix);
     current_part = current_part.substr(prefix_end + 1);
   }
 
@@ -44,6 +46,7 @@ Command Command::parse(const std::string &line) {
   if (command_end == std::string::npos) {
     // No parameters, the rest of the line is the command
     std::string cmd = current_part;
+    cmd.erase(std::remove(cmd.begin(), cmd.end(), '\n'), cmd.end());
     for (size_t i = 0; i < cmd.size(); ++i) {
       cmd[i] = std::toupper(static_cast<unsigned char>(cmd[i]));
     }
@@ -51,6 +54,7 @@ Command Command::parse(const std::string &line) {
     return command;
   }
   std::string cmd = current_part.substr(0, command_end);
+  cmd.erase(std::remove(cmd.begin(), cmd.end(), '\n'), cmd.end());
   for (size_t i = 0; i < cmd.size(); ++i) {
     cmd[i] = std::toupper(static_cast<unsigned char>(cmd[i]));
   }
@@ -64,6 +68,9 @@ Command Command::parse(const std::string &line) {
       paramstruct trailing;
       trailing.name = "trailing";
       trailing.value = trim(current_part.substr(1));
+      trailing.value.erase(
+          std::remove(trailing.value.begin(), trailing.value.end(), '\n'),
+          trailing.value.end());
       command.addParam(trailing);
       break;
     }
@@ -74,6 +81,8 @@ Command Command::parse(const std::string &line) {
       paramstruct last;
       last.name = "last";
       last.value = trim(current_part);
+      last.value.erase(std::remove(last.value.begin(), last.value.end(), '\n'),
+                       last.value.end());
       command.addParam(last);
       break;
     }
@@ -82,6 +91,8 @@ Command Command::parse(const std::string &line) {
     paramstruct last;
     last.name = "middle";
     last.value = trim(current_part.substr(0, param_end));
+    last.value.erase(std::remove(last.value.begin(), last.value.end(), '\n'),
+                     last.value.end());
     command.addParam(last);
 
     current_part = current_part.substr(param_end + 1);
