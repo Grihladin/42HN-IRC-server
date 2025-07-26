@@ -6,26 +6,31 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 01:36:07 by mratke            #+#    #+#             */
-/*   Updated: 2025/07/26 14:06:41 by mratke           ###   ########.fr       */
+/*   Updated: 2025/07/26 15:01:41 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Include/Command.hpp"
-#include <iostream>
-#include <sstream>
-#include <stdexcept>
+
+std::string cleanString(const std::string &s) {
+  std::string result;
+  // Trim whitespace
+  size_t start = s.find_first_not_of(" \r\n\t");
+  if (start == std::string::npos)
+    return "";
+  size_t end = s.find_last_not_of(" \r\n\t");
+  for (size_t i = start; i <= end; ++i) {
+    if (s[i] != '\n')
+      result += s[i];
+  }
+  return result;
+}
 
 Command Command::parse(const std::string &line) {
   if (line.empty()) {
     throw std::runtime_error("Cannot parse empty line.");
   }
 
-  // Helper trim function
-  auto trim = [](const std::string &s) -> std::string {
-    size_t start = s.find_first_not_of(" \r\n\t");
-    size_t end = s.find_last_not_of(" \r\n\t");
-    return (start == std::string::npos) ? "" : s.substr(start, end - start + 1);
-  };
   Command command;
   std::string current_part = line;
 
@@ -36,8 +41,7 @@ Command Command::parse(const std::string &line) {
       throw std::runtime_error("Malformed message: prefix without command.");
     }
     std::string prefix = current_part.substr(1, prefix_end - 1);
-    prefix.erase(std::remove(prefix.begin(), prefix.end(), '\n'), prefix.end());
-    command.setPrefix(prefix);
+    command.setPrefix(cleanString(prefix));
     current_part = current_part.substr(prefix_end + 1);
   }
 
@@ -46,19 +50,17 @@ Command Command::parse(const std::string &line) {
   if (command_end == std::string::npos) {
     // No parameters, the rest of the line is the command
     std::string cmd = current_part;
-    cmd.erase(std::remove(cmd.begin(), cmd.end(), '\n'), cmd.end());
     for (size_t i = 0; i < cmd.size(); ++i) {
       cmd[i] = std::toupper(static_cast<unsigned char>(cmd[i]));
     }
-    command.setCommand(cmd);
+    command.setCommand(cleanString(cmd));
     return command;
   }
   std::string cmd = current_part.substr(0, command_end);
-  cmd.erase(std::remove(cmd.begin(), cmd.end(), '\n'), cmd.end());
   for (size_t i = 0; i < cmd.size(); ++i) {
     cmd[i] = std::toupper(static_cast<unsigned char>(cmd[i]));
   }
-  command.setCommand(cmd);
+  command.setCommand(cleanString(cmd));
   current_part = current_part.substr(command_end + 1);
 
   // 3. Parse Parameters
@@ -67,10 +69,7 @@ Command Command::parse(const std::string &line) {
       // Trailing parameter
       paramstruct trailing;
       trailing.name = "trailing";
-      trailing.value = trim(current_part.substr(1));
-      trailing.value.erase(
-          std::remove(trailing.value.begin(), trailing.value.end(), '\n'),
-          trailing.value.end());
+      trailing.value = current_part.substr(1);
       command.addParam(trailing);
       break;
     }
@@ -80,9 +79,7 @@ Command Command::parse(const std::string &line) {
       // Last parameter
       paramstruct last;
       last.name = "last";
-      last.value = trim(current_part);
-      last.value.erase(std::remove(last.value.begin(), last.value.end(), '\n'),
-                       last.value.end());
+      last.value = cleanString(current_part);
       command.addParam(last);
       break;
     }
@@ -90,9 +87,7 @@ Command Command::parse(const std::string &line) {
     // Middle parameter
     paramstruct last;
     last.name = "middle";
-    last.value = trim(current_part.substr(0, param_end));
-    last.value.erase(std::remove(last.value.begin(), last.value.end(), '\n'),
-                     last.value.end());
+    last.value = cleanString(current_part.substr(0, param_end));
     command.addParam(last);
 
     current_part = current_part.substr(param_end + 1);
