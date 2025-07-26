@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IrcServer.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:33:58 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/26 13:21:54 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/26 17:41:08 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,6 +248,14 @@ User *IrcServer::getUserByFd(int fd)
 			return (&(*iter));
 	}
 	return (nullptr);
+}
+
+User *IrcServer::getUserByNick(std::string nickname) {
+  for (User &user : users) {
+    if (user.getNickname() == nickname)
+      return &user;
+  }
+  return nullptr;
 }
 
 std::string IrcServer::getPassword() const
