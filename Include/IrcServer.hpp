@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IrcServer.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:27:49 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/26 01:23:21 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/26 09:43:19 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ class IrcServer
         std::vector<Channel>        channels;
         char                        buffer[BUFFER_SIZE] = {0};
         std::string                 password;
+		std::string operPassword = "424242";
         
         int openSocket(std::string port);
         int handle_client(int client_socket);
@@ -54,17 +55,18 @@ class IrcServer
         int sendMessageToChannel(Message &message);
         int sendMessageToUser(Message &message);
 		const Command commandParser(std::string rawdata, int client_socket);
-		void commandExecutor(Command& command);
+		void commandExecutor(Command &command);
 		bool isUserExist(int fd);
 		bool isUserExist(std::string username);
 		bool isNicknameExist(std::string nickname);
 		bool isChannelExist(std::string chname);
 		//Getters
 		std::string getPassword() const;
+		std::string getOperPassword() const;
 		bool isUserAuthenticated(int client_fd) const;
 		bool isUserRegistered(int client_fd) const; //Checks that realname, nickname, servername, hostname and username is entered
 		Channel* getChannelByName(std::string channelname);
-		const std::vector<Channel>& getChannelList() const;
+		const std::vector<Channel> &getChannelList() const;
 		const std::vector<Channel> getChannelList(std::vector<std::string>) const;
 		User* getUserByFd(int fd);
 		const std::vector<std::string> getNickList(std::string channelname);
@@ -92,7 +94,7 @@ class IrcServer
 		int ircCommandInvite(Command& command);
 		int ircCommandKick(Command& command);
 		int ircCommandPrivMsg(Command& command);
-		int (IrcServer::*executors[COMMANDS_COUNT])(Command& command) = {\
+		int (IrcServer::*executors[COMMANDS_COUNT])(Command &command) = {\
 			&IrcServer::ircCommandPass,
 			&IrcServer::ircCommandNick,
 			&IrcServer::ircCommandUser,
