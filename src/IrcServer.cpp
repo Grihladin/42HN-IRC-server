@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:33:58 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/26 19:03:07 by mratke           ###   ########.fr       */
+/*   Updated: 2025/07/26 19:05:14 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -252,7 +252,7 @@ User *IrcServer::getUserByFd(int fd)
 
 User *IrcServer::getUserByNick(std::string nickname) {
   for (User &user : users) {
-    if (user.getNickname() == nickname)
+    if (user.getNickName() == nickname)
       return &user;
   }
   return nullptr;

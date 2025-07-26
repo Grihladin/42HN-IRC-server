@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:52:30 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/26 19:03:26 by mratke           ###   ########.fr       */
+/*   Updated: 2025/07/26 19:07:40 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,26 +23,26 @@ int IrcServer::ircCommandPrivMsg(Command &command) {
 
   const std::vector<paramstruct> &params = command.getParams();
   if (params.size() < 2) {
-    sendToFd(user->getSocketFd(), ERR_NEEDMOREPARAMS(command.getCommand()));
+    sendToFd(user->getSocketFd(), ERR_NEEDMOREPARAMS(user->getNickName(), command.getCommand()));
     return (1);
   }
 
   std::string recipient = params[0].value;
   std::string message = params[1].value;
-  std::string full_message = ":" + user->getNickname() + " PRIVMSG " +
+  std::string full_message = ":" + user->getNickName() + " PRIVMSG " +
                              recipient + " :" + message + "\r\n";
 
   if (recipient[0] == '#') {
     // It's a channel message
     Channel *channel = getChannelByName(recipient);
     if (!channel) {
-      sendToFd(user->getSocketFd(), ERR_NOSUCHCHANNEL(recipient));
+      sendToFd(user->getSocketFd(), ERR_NOSUCHCHANNEL(user->getNickName(), recipient));
       return (1);
     }
 
     // Check if the user is on the channel
     if (!channel->isUserOnChannel(user->getSocketFd())) {
-      sendToFd(user->getSocketFd(), ERR_CANNOTSENDTOCHAN(recipient));
+      sendToFd(user->getSocketFd(), ERR_CANNOTSENDTOCHAN(user->getNickName(), recipient));
       return (1);
     }
 
@@ -56,7 +56,7 @@ int IrcServer::ircCommandPrivMsg(Command &command) {
     // It's a private message to a user
     User *target_user = getUserByNick(recipient);
     if (!target_user) {
-      sendToFd(user->getSocketFd(), ERR_NOSUCHNICK(recipient));
+      sendToFd(user->getSocketFd(), ERR_NOSUCHNICK(user->getNickName(), recipient));
       return (1);
     }
 
