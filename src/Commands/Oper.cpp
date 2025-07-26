@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:51:02 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/26 16:07:35 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/26 18:13:18 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int IrcServer::ircCommandOper(Command &command)
 
 	if (!user || !user->isRegistered())
 	{
-		std::string response = ERR_NEEDMOREPARAMS("OPER");
+		std::string response = ERR_NOTREGISTERED();
 		sendToFd(userFd, response);
 		return (1);
 	}
