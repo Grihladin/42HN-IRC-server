@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+         #
+#    By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2025/07/26 11:45:02 by psenko           ###   ########.fr        #
+#    Updated: 2025/07/26 13:50:48 by mratke           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,8 @@ SRC=		main.cpp \
 			Commands/Nick.cpp \
 			Commands/Oper.cpp \
 			Commands/Part.cpp \
+			Commands/Ping.cpp \
+			Commands/Pong.cpp \
 			Commands/PrivMsg.cpp \
 			Commands/Quit.cpp \
 			Commands/Topic.cpp \
