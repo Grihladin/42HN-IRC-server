@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 19:17:28 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/26 12:29:40 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/26 20:14:36 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ class Channel
 	std::vector<User*>		 	users;
 	std::vector<User*>			operators;
 	std::vector<std::string> 	banMask;
-	size_t 						limit;
+	// size_t 						limit;
 	std::string 				key;
-	bool 						inviteOnly;
+	// bool 						inviteOnly;
 
   public:
 	Channel(const Channel &other) = default;
