@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:27:49 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/26 09:43:19 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/26 10:38:34 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "Command.hpp"
 # include "Message.hpp"
 # include "User.hpp"
+# include "Definitions.hpp"
 # include <cstring>
 # include <fcntl.h>
 # include <iostream>
@@ -78,6 +79,7 @@ class IrcServer
 		int addUserToChannel(std::string channelname, int user_fd);
 		int kickUserFromChannel(std::string channelname, std::string username);
 		int deleteUserFromChannel(std::string channelname, int user_fd);
+		int deleteUserFromAllChannels(int user_fd);
 		int deleteUserFromServer(int user_fd); //It will go though channels, kick them out of there, send message to eveeryone
 		int setTopicToChannel(std::string channelname, std::string topic, int user_fd);
 		//Methods for IRC commands
@@ -94,6 +96,7 @@ class IrcServer
 		int ircCommandInvite(Command& command);
 		int ircCommandKick(Command& command);
 		int ircCommandPrivMsg(Command& command);
+		int ircCommandWrong(Command& command);
 		int (IrcServer::*executors[COMMANDS_COUNT])(Command &command) = {\
 			&IrcServer::ircCommandPass,
 			&IrcServer::ircCommandNick,
@@ -107,7 +110,8 @@ class IrcServer
 			&IrcServer::ircCommandList,
 			&IrcServer::ircCommandInvite,
 			&IrcServer::ircCommandKick,
-			&IrcServer::ircCommandPrivMsg
+			&IrcServer::ircCommandPrivMsg,
+			&IrcServer::ircCommandWrong
 		};
 
 		std::string irccommands[COMMANDS_COUNT] = {
@@ -123,7 +127,8 @@ class IrcServer
 			"LIST",
 			"INVITE",
 			"KICK",
-			"PRIVMSG"
+			"PRIVMSG",
+			""
 		};
 	public:
 		IrcServer(void);

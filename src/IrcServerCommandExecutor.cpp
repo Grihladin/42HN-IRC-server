@@ -3,48 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   IrcServerCommandExecutor.cpp                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 11:11:44 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/25 02:20:50 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/26 10:35:18 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Include/IrcServer.hpp"
-#include "../Include/Definitions.hpp"
 
 void IrcServer::commandExecutor(Command &command)
 {
-	bool	matched;
-	User	*user;
-	int		fd;
+	int 	nn = 0;
 
-	matched = false;
-	for (int nn = 0; nn < COMMANDS_COUNT; nn++)
+	for (nn = 0; nn < (COMMANDS_COUNT - 1); nn++)
 	{
 		if (irccommands[nn] == command.getCommand())
-		{
-			(this->*executors[nn])(command);
-			matched = true;
 			break ;
-		}
 	}
-	if (!matched)
-	{
-		fd = command.getUserFd();
-		if (fd >= 0)
-		{
-			user = getUserByFd(fd);
-			std::string nick = "*";
-			if (user)
-			{
-				nick = user->getNickName();
-				if (nick.empty())
-					nick = "*";
-			}
-			std::string cmd = command.getCommand();
-			std::string response = ERR_UNKNOWNCOMMAND(nick, cmd);
-			send(fd, response.c_str(), response.length(), 0);
-		}
-	}
+	(this->*executors[nn])(command);
 }

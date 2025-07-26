@@ -1,30 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Part.cpp                                           :+:      :+:    :+:   */
+/*   Wrong.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/24 16:51:36 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/26 10:47:22 by psenko           ###   ########.fr       */
+/*   Created: 2025/07/26 10:30:43 by psenko            #+#    #+#             */
+/*   Updated: 2025/07/26 10:36:44 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Include/IrcServer.hpp"
 
-// Parameters: <channel>{,<channel>}
-
-int IrcServer::ircCommandPart(Command& command)
+int IrcServer::ircCommandWrong(Command& command)
 {
-    std::cout << "Executor: " << command.getCommand() << std::endl;
-    std::vector<struct paramstruct> params = command.getParams();
-    std::vector<struct paramstruct>::iterator iter;
-    for (iter = params.begin() ; iter != params.end() ; ++iter)
+    User	*user;
+	int		fd;
+
+    fd = command.getUserFd();
+    if (fd >= 0)
     {
-        if ((*iter).name == std::string("channel"))
+        user = getUserByFd(fd);
+        std::string nick = "*";
+        if (user)
         {
-            deleteUserFromChannel((*iter).value, command.getUserFd());
+            nick = user->getNickName();
+            if (nick.empty())
+                nick = "*";
         }
+        std::string cmd = command.getCommand();
+        std::string response = ERR_UNKNOWNCOMMAND(nick, cmd);
+        send(fd, response.c_str(), response.length(), 0);
     }
     return (0);
 }

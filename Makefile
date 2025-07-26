@@ -6,7 +6,7 @@
 #    By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2025/07/25 15:58:22 by psenko           ###   ########.fr        #
+#    Updated: 2025/07/26 10:33:02 by psenko           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ SRC=		main.cpp \
 			Commands/Topic.cpp \
 			Commands/User.cpp \
 			Commands/Pass.cpp \
+			Commands/Wrong.cpp \
 			Parser.cpp \
 			parserTests.cpp \
 			IrcServer/getNickList.cpp \
@@ -54,10 +55,10 @@ OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.cpp=.o))
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
+$(NAME): $(OBJ) $(HEADER)
 	$(CXX) $(CXXFLAGS) -o $(NAME) $(OBJ)
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp $(HEADER)
 	mkdir -p $(dir $@)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 

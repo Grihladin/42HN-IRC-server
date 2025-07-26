@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:33:58 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/26 09:48:56 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/26 10:21:13 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int IrcServer::handle_client(int client_socket)
 	Command	newcommand;
 
 	std::string result;
-	while (result.empty() || result.back() != '\n')
+	while (result.back() != '\n')
 	{
 		memset(buffer, 0, BUFFER_SIZE);
 		bytes_received = recv(client_socket, buffer, BUFFER_SIZE, 0);
@@ -40,6 +40,7 @@ int IrcServer::handle_client(int client_socket)
 			return (-1);
 		}
 	}
+	std::cout << "Command from client: " << result << std::endl;
 	while (result.length() > 0)
 	{
 		spos = result.find("\r\n");
@@ -47,7 +48,7 @@ int IrcServer::handle_client(int client_socket)
 		std::string strcommand = result.substr(0, spos);
 		try
 		{
-			newcommand = commandParser(strcommand, client_socket);
+			Command newcommand = commandParser(strcommand, client_socket);
 			commandExecutor(newcommand);
 		}
 		catch (const std::exception &e)
@@ -201,7 +202,7 @@ int IrcServer::addUser(int client_fd)
 
 	newUser.setSocketFd(client_fd);
 	users.push_back(newUser);
-	std::cout << "New user added" << client_fd << std::endl;
+	std::cout << "New user added with fd: " << client_fd << std::endl;
 	return (0);
 }
 
@@ -212,6 +213,11 @@ int IrcServer::deleteUser(int client_fd)
 	{
 		if ((*iter).getSocketFd() == client_fd)
 		{
+			size_t i = 0;
+			while (socket_fds[i].fd != client_fd)
+				++i;
+			close(socket_fds[i].fd);
+			socket_fds.erase(socket_fds.begin() + i);
 			users.erase(iter);
 			std::cout << "User deleted: " << client_fd << std::endl;
 			break ;

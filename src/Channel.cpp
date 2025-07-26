@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 12:20:50 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/26 01:19:32 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/26 10:46:48 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,15 @@ void Channel::delUserFromChannel(int user_fd)
 	if (user_fd)
 	{
 		std::cout << "Del user from channel" << std::endl;
+		std::vector<User *>::iterator iter;
+		for (iter = users.begin(); iter != users.end(); ++iter)
+		{
+			if ((*(*iter)).getSocketFd() == user_fd)
+			{
+				users.erase(iter);
+				break ;
+			}
+		}
 	}
 }
 
