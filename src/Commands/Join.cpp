@@ -3,40 +3,52 @@
 /*                                                        :::      ::::::::   */
 /*   Join.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:47:21 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/26 14:13:29 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/27 02:44:40 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Include/IrcServer.hpp"
 
-//Parameters: <channel>{,<channel>} [<key>{,<key>}]
+// Parameters: <channel>{,<channel>} [<key>{,<key>}]
 
-int IrcServer::ircCommandJoin(Command& command)
-{
-	int	client_fd = command.getUserFd();
-	std::cout << "Executor: " << command.getCommand() << std::endl;
-	std::vector<struct paramstruct> params = command.getParams();
-	std::vector<struct paramstruct>::iterator iter;
-	Channel	*tmpChannel;
-	for (iter = params.begin() ; iter != params.end() ; ++iter)
-	{
-		if (iter->name == std::string("middle"))
-		{
-			tmpChannel = addUserToChannel(iter->value, client_fd);
-			if (tmpChannel)
-			{
-				std::string topic = tmpChannel->getTopic();
-				std::string response;
-				if (topic.length() > 0)
-					response = RPL_TOPIC("*", iter->value, topic);
-				else
-					response = RPL_NOTOPIC("*", iter->value);
-				sendToFd(client_fd, response);
-			}
-		}
-	}
-    return (0);
+int IrcServer::ircCommandJoin(Command &command) {
+  int client_fd = command.getUserFd();
+  User *user = getUserByFd(client_fd);
+
+  for (auto &iter : command.getParams()) {
+    if (iter.name == std::string("last")) {
+      Channel *channel = getChannelByName(iter.value);
+      if (channel && channel->isUserOnChannel(client_fd))
+        continue;
+      channel = addUserToChannel(iter.value, client_fd);
+      if (channel) {
+        // Get the channel's topic
+        std::string topic = channel->getTopic();
+        std::string response;
+
+        // Send the topic to the user who just joined
+        if (topic.length() > 0) {
+          response = RPL_TOPIC(user->getNickName(), iter.value, topic);
+        } else {
+          response = RPL_NOTOPIC(user->getNickName(), iter.value);
+        }
+        sendToFd(client_fd, response);
+
+        // Get the list of nicks in the channel and send it to the user
+        std::string user_list = getNickListStr(iter.value);
+        response = RPL_NAMREPLY(user->getNickName(), "=", iter.value, user_list);
+        sendToFd(client_fd, response);
+        response = RPL_ENDOFNAMES(user->getNickName(), iter.value);
+        sendToFd(client_fd, response);
+
+        // Notify all users in the channel that a new user has joined
+        response = "JOIN " + iter.value;
+        sendMessageToChannel(client_fd, iter.value, response);
+      }
+    }
+  }
+  return (0);
 }

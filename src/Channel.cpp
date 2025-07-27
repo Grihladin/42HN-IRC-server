@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 12:20:50 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/26 20:13:19 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/27 16:05:16 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,12 @@ const std::string Channel::getNickListStr()
 	return (result);
 }
 
-std::string Channel::getTopic(void) const
+const std::vector<User*> Channel::getUsers(void) const
+{
+	return (users);
+}
+
+std::string	Channel::getTopic(void) const
 {
 	return (topic);
 }
