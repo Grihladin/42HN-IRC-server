@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 01:36:07 by mratke            #+#    #+#             */
-/*   Updated: 2025/07/26 16:15:55 by mratke           ###   ########.fr       */
+/*   Updated: 2025/07/27 02:29:45 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,10 @@ Command Command::parse(const std::string &line) {
     }
 
     // Middle parameter
-    paramstruct last;
-    last.name = "middle";
-    last.value = cleanString(current_part.substr(0, param_end));
-    command.addParam(last);
+    paramstruct middle;
+    middle.name = "middle";
+    middle.value = cleanString(current_part.substr(0, param_end));
+    command.addParam(middle);
 
     current_part = current_part.substr(param_end + 1);
   }

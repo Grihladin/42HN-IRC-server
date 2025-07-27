@@ -311,7 +311,7 @@ Channel *IrcServer::addUserToChannel(std::string channelname, int client_fd)
 	if (!isChannelExist(channelname))
 	{
 		addChannel(channelname, client_fd);
-		return (0);
+		return (&channels.back());
 	}
 	std::vector<Channel>::iterator iterCh;
 	for (iterCh = channels.begin(); iterCh != channels.end(); ++iterCh)
