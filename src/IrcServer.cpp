@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:33:58 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/26 19:05:14 by mratke           ###   ########.fr       */
+/*   Updated: 2025/07/27 02:37:21 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -313,14 +313,13 @@ Channel *IrcServer::addUserToChannel(std::string channelname, int client_fd)
 		addChannel(channelname, client_fd);
 		return (&channels.back());
 	}
-	std::vector<Channel>::iterator iterCh;
-	for (iterCh = channels.begin(); iterCh != channels.end(); ++iterCh)
+	for (Channel &iterCh : channels)
 	{
-		if ((iterCh->getName() == channelname)
-			&& (!iterCh->isUserOnChannel(client_fd)))
+		if ((iterCh.getName() == channelname)
+			&& (!iterCh.isUserOnChannel(client_fd)))
 		{
-			iterCh->addUser(getUserByFd(client_fd));
-			return (&(*iterCh));
+			iterCh.addUser(getUserByFd(client_fd));
+			return (&iterCh);
 		}
 	}
 	return (nullptr);
