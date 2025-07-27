@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:53:16 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/26 20:13:51 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/27 18:46:15 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,16 +55,16 @@ int IrcServer::ircCommandTopic(Command& command)
 		return 0;
 	}
 
-	if (!channel->isUserOperator(userFd))
-	{
-		sendToFd(userFd, ERR_CHANOPRIVSNEEDED(user->getNickName(), channelName));
-		return 1;
-	}
+	// if (!channel->isUserOperator(userFd))
+	// {
+	// 	sendToFd(userFd, ERR_CHANOPRIVSNEEDED(user->getNickName(), channelName));
+	// 	return 1;
+	// }
 
 	std::string newTopic = params[1].value;
 	channel->setTopic(newTopic, userFd);
 
-	std::string response = ":" + user->getNickName() + " TOPIC " + channelName + " :" + newTopic + "\r\n";
+	std::string response = ":" + user->getNickName() + " TOPIC " + channelName + " :" + channel->getTopic() + "\r\n";
 	const std::vector<std::string> nicklist = getNickList(channelName);
 	for (const std::string& nick : nicklist)
 	{
