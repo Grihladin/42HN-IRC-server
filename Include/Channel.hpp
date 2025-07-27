@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 19:17:28 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/26 20:14:36 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/27 20:16:05 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ class Channel
 	std::string 				topic;
 	std::vector<User*>		 	users;
 	std::vector<User*>			operators;
+	std::vector<User*>			invitedUsers;
 	std::vector<std::string> 	banMask;
 	// size_t 						limit;
 	std::string 				key;
