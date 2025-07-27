@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:47:21 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/27 02:25:07 by mratke           ###   ########.fr       */
+/*   Updated: 2025/07/27 02:44:40 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int IrcServer::ircCommandJoin(Command &command) {
   User *user = getUserByFd(client_fd);
 
   for (auto &iter : command.getParams()) {
-    if (iter.name == std::string("middle")) {
+    if (iter.name == std::string("last")) {
       Channel *channel = getChannelByName(iter.value);
       if (channel && channel->isUserOnChannel(client_fd))
         continue;
