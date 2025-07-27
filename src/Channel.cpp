@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 12:20:50 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/27 16:05:16 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/27 20:32:41 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,12 @@ void Channel::delUserFromChannel(int user_fd)
 
 bool Channel::isUser(int user_fd)
 {
-	if (user_fd)
+	for (std::vector<User *>::const_iterator it = users.begin(); it != users.end(); ++it)
 	{
+		if ((*it)->getSocketFd() == user_fd)
+			return (true);
 	}
-	return (true);
+	return (false);
 }
 
 bool Channel::isUserOnChannel(int user_fd)
@@ -97,12 +99,12 @@ const std::string Channel::getNickListStr()
 	return (result);
 }
 
-const std::vector<User*> Channel::getUsers(void) const
+const std::vector<User *> Channel::getUsers(void) const
 {
 	return (users);
 }
 
-std::string	Channel::getTopic(void) const
+std::string Channel::getTopic(void) const
 {
 	return (topic);
 }
