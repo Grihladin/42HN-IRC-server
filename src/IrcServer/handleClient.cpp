@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 14:17:24 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/28 14:18:18 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/28 14:42:26 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int IrcServer::handle_client(int client_socket)
 	int		tries = 5;
 
 	std::string result;
-	while (result.empty() && (result.back() != '\n') && (tries))
+	while ((result.empty() || (result.back() != '\n')) && (tries))
 	{
 		memset(buffer, 0, BUFFER_SIZE);
 		bytes_received = recv(client_socket, buffer, BUFFER_SIZE, 0);

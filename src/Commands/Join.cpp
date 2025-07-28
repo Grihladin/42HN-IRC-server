@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:47:21 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/27 02:44:40 by mratke           ###   ########.fr       */
+/*   Updated: 2025/07/28 14:36:07 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,19 @@ int IrcServer::ircCommandJoin(Command &command) {
 
         // Get the list of nicks in the channel and send it to the user
         std::string user_list = getNickListStr(iter.value);
-        response = RPL_NAMREPLY(user->getNickName(), "=", iter.value, user_list);
+        response =
+            RPL_NAMREPLY(user->getNickName(), "=", iter.value, user_list);
         sendToFd(client_fd, response);
         response = RPL_ENDOFNAMES(user->getNickName(), iter.value);
         sendToFd(client_fd, response);
 
         // Notify all users in the channel that a new user has joined
         response = "JOIN " + iter.value;
-        sendMessageToChannel(client_fd, iter.value, response);
+        if (sendMessageToChannel(client_fd, iter.value, response) != 0) {
+          std::cerr << "Error: Failed to send JOIN message to channel "
+                    << iter.value << std::endl;
+          return (1);
+        }
       }
     }
   }
