@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IrcServer.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:33:58 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/28 14:17:40 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/28 17:42:55 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,13 @@ IrcServer::IrcServer(std::string port, std::string newpass)
 	{
 		addChannel(std::string("#Channel").append(std::to_string(ii)));
 	}
+	Channel *chenel1 = getChannelByName("#Channel1");
+	Channel *chenel2 = getChannelByName("#Channel2");
+	Channel *chenel3 = getChannelByName("#Channel3");
+	chenel1->setKey("1");
+	chenel2->setKey("2");
+	chenel3->setKey("3");
+
 }
 
 void IrcServer::listenSocket(void)
