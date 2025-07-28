@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 19:17:28 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/28 17:48:32 by mratke           ###   ########.fr       */
+/*   Updated: 2025/07/28 22:03:39 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ class Channel
 		std::string	getTopic(void) const;
 		std::string getKey(void) const;
 		const std::vector<User*> getUsers(void) const;
+		const std::vector<User*> getInvitedUsers(void) const;
 		const std::vector<std::string> getNickList();
 		const std::string getNickListStr();
 		int getUsersCount();
@@ -50,6 +51,9 @@ class Channel
 		
 		int addUser(User* newuser);
 		int addOperator(User* newuser);
+		void addInvitedUser(User* user);
+		void removeInvitedUser(User* user);
+		bool isUserInvited(User* user) const;
 		int deleteOperator(std::string username);
 		void delUserFromChannel(int user_fd);
 		bool isUser(int user_fd);

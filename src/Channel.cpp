@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 12:20:50 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/28 17:54:36 by mratke           ###   ########.fr       */
+/*   Updated: 2025/07/28 21:57:14 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,10 @@ const std::vector<User *> Channel::getUsers(void) const
 {
 	return (users);
 }
+const std::vector<User *> Channel::getInvitedUsers(void) const
+{
+	return (invitedUsers);
+}
 
 std::string Channel::getTopic(void) const
 {
@@ -215,4 +219,36 @@ int Channel::setTopic(std::string topic, int user_fd)
 std::string Channel::getKey(void) const
 {
 	return (key);
+}
+
+void Channel::addInvitedUser(User* user)
+{
+    for (size_t i = 0; i < invitedUsers.size(); ++i)
+    {
+        if (invitedUsers[i] == user)
+            return; // already invited
+    }
+    invitedUsers.push_back(user);
+}
+
+bool Channel::isUserInvited(User* user) const
+{
+    for (size_t i = 0; i < invitedUsers.size(); ++i)
+    {
+        if (invitedUsers[i] == user)
+            return true;
+    }
+    return false;
+}
+
+void Channel::removeInvitedUser(User* user)
+{
+    for (std::vector<User*>::iterator it = invitedUsers.begin(); it != invitedUsers.end(); ++it)
+    {
+        if (*it == user)
+        {
+            invitedUsers.erase(it);
+            break;
+        }
+    }
 }

@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:53:16 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/27 18:46:15 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/28 22:03:36 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int IrcServer::ircCommandTopic(Command& command)
 	std::string newTopic = params[1].value;
 	channel->setTopic(newTopic, userFd);
 
-	std::string response = ":" + user->getNickName() + " TOPIC " + channelName + " :" + channel->getTopic() + "\r\n";
+	std::string response = RPL_TOPIC(user->getNickName(), channelName, channel->getTopic());
 	const std::vector<std::string> nicklist = getNickList(channelName);
 	for (const std::string& nick : nicklist)
 	{

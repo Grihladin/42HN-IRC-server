@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 13:40:56 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/27 20:21:01 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/28 22:03:24 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,6 @@ int IrcServer::ircCommandInvite(Command& command)
 		return 1;
 	}
 
-	// Assume inviteOnly mode will be implemented later
-	// If invite-only, require operator
-	// if (channel->isInviteOnly() && !channel->isUserOperator(inviter->getSocketFd()))
-	// {
-	//     sendToFd(inviter->getSocketFd(), ERR_CHANOPRIVSNEEDED(inviter->getNickName(), channelName));
-	//     return 1;
-	// }
-
 	if (!targetUser)
 	{
 		sendToFd(inviter->getSocketFd(), ERR_NOSUCHNICK(inviter->getNickName(), targetNick));
@@ -61,7 +53,9 @@ int IrcServer::ircCommandInvite(Command& command)
 		return 1;
 	}
 
+		///ADD HERE FUNCTIONALITY WHICH ADDS USER TO INVITED USER LIST ONCE INVITE TO IT HAS BEEN SENT
 	// Success case: send RPL_INVITING and INVITE message
+	channel->addInvitedUser(targetUser);
 	sendToFd(inviter->getSocketFd(), RPL_INVITING(inviter->getNickName(), channelName, targetNick));
 
 	std::string inviteMsg = ":" + inviter->getNickName() + "!" + inviter->getUserName() + "@localhost INVITE " + targetNick + " " + channelName + "\r\n";
