@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 22:47:06 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/28 17:09:15 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/28 18:58:05 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,4 +101,9 @@ bool User::isOperator() const
 std::string User::getPrefix() const
 {
 	return (_nickname + "!" + _username + "@" + _hostname);
+}
+
+std::string User::getHostName(void) const
+{
+	return (_hostname);
 }

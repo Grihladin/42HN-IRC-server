@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:51:36 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/28 18:52:17 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/28 18:58:35 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,7 @@ int IrcServer::ircCommandPart(Command &command)
 			continue ;
 		}
 		channel->delUserFromChannel(fd);
-		std::string prefix = ":" + user->getPrefix();
-		std::string message = prefix + " PART " + channelName;
-		if (!partMessage.empty())
-			message += " :" + partMessage;
-        message += "\r\n"; 
+		std::string message = RPL_PART(user->getNickName(), user->getUserName(), user->getHostName(), channelName, partMessage);
         auto& users = channel->getUsers();
         for (User* u : users)
         {
