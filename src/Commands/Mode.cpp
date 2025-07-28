@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:49:21 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/28 11:32:06 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/28 17:04:22 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,55 @@ int IrcServer::ircCommandMode(Command& command)
         return (1);
     }
     std::string recipient = params[0].value;
-    std::string message = params[1].value;
+    std::string modes = params[1].value;
+    if (modes.length() > 4)
+    {
+        std::cerr << "No more than 3 modes at a time!" << std::endl;
+        return (1);
+    }
 
     if (recipient[0] == '#')
     {
+        Channel *channel = getChannelByName(recipient);
+        if (channel->isUserOperator(user->getSocketFd()))
+        {
+            if (modes[0] == '+')
+            {
+                if (modes[1] == 'i')
+                    channel->setInviteOnly();
+                else if (modes[1] == 't')
+                    channel->setRestrictTopic();
+                else if (modes[1] == 'k')
+                    channel->setKey(params[2].value);
+                else if (modes[1] == 'o')
+                    channel->addOperator(getUserByNick(params[2].value));
+                else if (modes[1] == 'l')
+                    channel->setUserLimit(stoi(params[2].value));
+                else
+                    sendToFd(command.getUserFd(), ERR_UNKNOWNMODE(user->getNickName(), modes[0], recipient));
+            }
+            else if (modes[0] == '-')
+            {
+                if (modes[1] == 'i')
+                    channel->unsetInviteOnly();
+                else if (modes[1] == 't')
+                    channel->unsetRestrictTopic();
+                else if (modes[1] == 'k')
+                    channel->unsetKey();
+                else if (modes[1] == 'o')
+                    channel->deleteOperator(params[2].value);
+                else if (modes[1] == 'l')
+                    channel->setUserLimit(0);
+                else
+                    sendToFd(command.getUserFd(), ERR_UNKNOWNMODE(user->getNickName(), modes[0], recipient));
+            }
+        }
         //MODE for channel
-        ;
+        // DEBUG: Param name: 'middle', value: '#Channel1'
+        // DEBUG: Param name: 'middle', value: '+o'
+        // DEBUG: Param name: 'last', value: 'pavel'
+        else
+            sendToFd(command.getUserFd(), ERR_CHANOPRIVSNEEDED(user->getNickName(), recipient));
     }
     else
     {
