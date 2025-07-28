@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Definitions.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 00:37:03 by auplisas          #+#    #+#             */
-/*   Updated: 2025/07/28 14:11:30 by mratke           ###   ########.fr       */
+/*   Updated: 2025/07/28 18:56:46 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,7 @@
 
 #define RPL_PRIV_MESSAGE(yournick, recipient, message)  (std::string(":" + yournick) + " PRIVMSG " + recipient + " :" + std::string(message) + "\r\n")
 #define RPL_CHANNEL_MESSAGE(yournick, channel, message)  (std::string(":" + yournick) + " PRIVMSG " + channel + " :" + std::string(message) + "\r\n")
+#define RPL_PART(nick, user, host, channel, message) (":" + nick + "!" + user + "@" + host + " PART " + channel + (message.empty() ? "" : " :" + message) + "\r\n")
 
 #endif
 	

@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 12:20:50 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/28 17:44:47 by mratke           ###   ########.fr       */
+/*   Updated: 2025/07/28 17:48:39 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,23 @@ int Channel::addOperator(User *newuser)
 	if (newuser)
 	{
 		std::cout << "Add operator to channel" << std::endl;
+	}
+	return (0);
+}
+
+int Channel::deleteOperator(std::string username)
+{
+	if (operators.size() > 0)
+	{
+		std::vector<User *>::iterator iter;
+		for (iter = operators.begin(); iter != operators.end(); ++iter)
+		{
+			if ((*iter)->getUserName() == username)
+			{
+				operators.erase(iter);
+				break ;
+			}
+		}
 	}
 	return (0);
 }
@@ -132,20 +149,19 @@ bool Channel::isRestrictTopic(void)
 	return (_restrictTopic);
 }
 
-int Channel::setKey(std::string newKey)
+void Channel::setKey(std::string newKey)
 {
 	if (newKey.length() > 0)
 	{
 		_isKey = true;
 		key = newKey;
 	}
-	return (0);
 }
 
 void Channel::unsetKey(void)
 {
 	_isKey = false;
-	key = "";
+	key.clear();
 }
 
 void Channel::setRestrictTopic(void)
@@ -173,10 +189,9 @@ size_t Channel::getUserLimit() const
 	return (userLimit);
 }
 
-int Channel::setUserLimit(size_t new_limit)
+void Channel::setUserLimit(size_t new_value)
 {
-	userLimit = new_limit;
-	return (userLimit);
+	userLimit = new_value;
 }
 
 bool Channel::isUserOperator(int user_fd)
@@ -194,4 +209,9 @@ int Channel::setTopic(std::string topic, int user_fd)
 	(void)user_fd;
 	this->topic = topic;
 	return (0);
+}
+
+std::string Channel::getKey(void) const
+{
+	return (key);
 }

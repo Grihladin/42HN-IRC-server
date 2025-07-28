@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:51:36 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/27 20:00:48 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/28 18:58:35 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,47 +29,80 @@
 //     //NEED TO ADD ANSWERS
 //     return (0);
 // }
+std::vector<std::string> split(const std::string &s, char delimiter)
+{
+	std::vector<std::string> tokens;
+	std::string token;
+	for (char c : s)
+	{
+		if (c == delimiter)
+		{
+			if (!token.empty())
+				tokens.push_back(token);
+			token.clear();
+		}
+		else
+		{
+			token += c;
+		}
+	}
+	if (!token.empty())
+		tokens.push_back(token);
+	return (tokens);
+}
 
 int IrcServer::ircCommandPart(Command &command)
 {
 	User	*user;
 	Channel	*channel;
 
-	user = getUserByFd(command.getUserFd());
+    int fd = command.getUserFd();
+	user = getUserByFd(fd);
 	if (!user || !user->isRegistered())
 		return (sendToFd(command.getUserFd(), ERR_NOTREGISTERED("*")));
 	const std::vector<paramstruct> &params = command.getParams();
 	if (params.empty())
-    {
-		return (sendToFd(command.getUserFd(), ERR_NEEDMOREPARAMS(user->getNickName(), "PART")));
-    }
-	std::string channelName;
-	channelName = params[0].value;
-	if (!isChannelExist(channelName))
 	{
-		sendToFd(command.getUserFd(), ERR_NOSUCHCHANNEL(user->getNickName(), channelName));
-		return (1);
+		return (sendToFd(command.getUserFd(),
+				ERR_NEEDMOREPARAMS(user->getNickName(), "PART")));
 	}
-	channel = getChannelByName(channelName);
-	if (!channel || !channel->isUserOnChannel(command.getUserFd()))
+	std::string partMessage = (params.size() > 1) ? params[1].value : "";
+	std::vector<std::string> channelNames = split(params[0].value, ',');
+	for (size_t i = 0; i < channelNames.size(); ++i)
 	{
-		sendToFd(command.getUserFd(), ERR_NOTONCHANNEL(user->getNickName(), channelName));
-		return (1);
-	}
-	channel->delUserFromChannel(command.getUserFd());
-	// If channel is empty delete it
-	if (channel->getUsersCount() == 0)
-	{
-		std::vector<Channel>::iterator it = channels.begin();
-		while (it != channels.end())
+		std::string channelName = channelNames[i];
+		if (!isChannelExist(channelName))
 		{
-			if (it->getName() == channelName)
+			sendToFd(fd, ERR_NOSUCHCHANNEL(user->getNickName(), channelName));
+			continue ;
+		}
+		channel = getChannelByName(channelName);
+		if (!channel->isUserOnChannel(fd))
+		{
+			sendToFd(fd, ERR_NOTONCHANNEL(user->getNickName(), channelName));
+			continue ;
+		}
+		channel->delUserFromChannel(fd);
+		std::string message = RPL_PART(user->getNickName(), user->getUserName(), user->getHostName(), channelName, partMessage);
+        auto& users = channel->getUsers();
+        for (User* u : users)
+        {
+            sendToFd(u->getSocketFd(), message);
+        }
+
+		if (channel->getUsersCount() == 0)
+		{
+			std::vector<Channel>::iterator it = channels.begin();
+			while (it != channels.end())
 			{
-				it = channels.erase(it);
-				break ;
+				if (it->getName() == channelName)
+				{
+					it = channels.erase(it);
+					break ;
+				}
+				else
+					++it;
 			}
-			else
-				++it;
 		}
 	}
 	return (0);

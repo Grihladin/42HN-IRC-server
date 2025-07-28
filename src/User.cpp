@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 22:47:06 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/28 09:46:38 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/28 18:58:05 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Include/User.hpp"
 
-User::User(int socket_fd) :
-_socketFd(socket_fd)
-{}
+User::User(int socket_fd) : _socketFd(socket_fd)
+{
+}
 
 // Setters
 void User::setNickName(const std::string &nickname)
@@ -96,4 +96,14 @@ std::string User::getRealName() const
 bool User::isOperator() const
 {
 	return (_isOperator);
+}
+
+std::string User::getPrefix() const
+{
+	return (_nickname + "!" + _username + "@" + _hostname);
+}
+
+std::string User::getHostName(void) const
+{
+	return (_hostname);
 }
