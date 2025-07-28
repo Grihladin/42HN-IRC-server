@@ -6,11 +6,13 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 01:36:07 by mratke            #+#    #+#             */
-/*   Updated: 2025/07/27 02:29:45 by mratke           ###   ########.fr       */
+/*   Updated: 2025/07/28 17:52:45 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Include/Command.hpp"
+#include <sstream>
+#include <sstream>
 
 std::string cleanString(const std::string &s) {
   size_t end = s.size();
