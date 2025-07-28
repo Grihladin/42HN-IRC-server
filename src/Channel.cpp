@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 12:20:50 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/28 11:11:19 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/28 11:55:39 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,4 +115,66 @@ std::string	Channel::getTopic(void) const
 int Channel::getUsersCount()
 {
 	return (users.size());
+}
+
+bool Channel::isKey(void)
+{
+	return (isKey);
+}
+
+bool Channel::isInviteOnly(void)
+{
+	return (_inviteOnly);
+}
+
+bool Channel::isRestrictTopic(void)
+{
+	return (_restrictTopic);
+}
+
+int Channel::setKey(std::string newKey)
+{
+	if (newKey.length() > 0)
+	{
+		_isKey = true;
+		key = newKey;
+	}
+	return (0);
+}
+
+void Channel::unsetKey(void)
+{
+	_isKey = false;
+	key = "";
+}
+
+void Channel::setRestrictTopic(void)
+{
+	_restrictTopic = true;
+}
+
+void Channel::unsetRestrictTopic(void)
+{
+	_restrictTopic = false;
+}
+
+void Channel::setInviteOnly(void)
+{
+	_inviteOnly = true;
+}
+
+void Channel::unsetInviteOnly(void)
+{
+	_inviteOnly = false;
+}
+
+size_t Channel::getUserLimit() const
+{
+	return (userLimit);
+}
+
+int Channel::setUserLimit(size_t new_limit)
+{
+	userLimit = new_limit;
+	return (userLimit);
 }

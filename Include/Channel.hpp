@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 19:17:28 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/26 12:29:40 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/28 11:53:41 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,11 @@ class Channel
 	std::vector<User*>		 	users;
 	std::vector<User*>			operators;
 	std::vector<std::string> 	banMask;
-	size_t 						limit;
+	size_t 						userLimit = 0;
 	std::string 				key;
-	bool 						inviteOnly;
+	bool 						_inviteOnly;
+	bool						_restrictTopic;
+	bool						_isKey = false;
 
   public:
 	Channel(const Channel &other) = default;
@@ -42,6 +44,7 @@ class Channel
 	const std::vector<std::string> getNickList();
 	const std::string getNickListStr();
 	int getUsersCount();
+	size_t getUserLimit() const;
 	
 	int addUser(User* newuser);
 	int addOperator(User* newuser);
@@ -49,7 +52,17 @@ class Channel
 	bool isUser(int user_fd);
 	bool isUserOperator(int user_fd);
 	bool isUserOnChannel(int user_fd);
+	bool isKey(void);
+	bool isInviteOnly(void);
+	bool isRestrictTopic(void);
 	int setTopic(std::string topic, int user_fd);
+	int setKey(std::string newKey);
+	void unsetKey(void);
+	void setRestrictTopic(void);
+	void unsetRestrictTopic(void);
+	void setInviteOnly(void);
+	void unsetInviteOnly(void);
+	int setUsetLimit(size_t newlimit);
 };
 
 #endif
