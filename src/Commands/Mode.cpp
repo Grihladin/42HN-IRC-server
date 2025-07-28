@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:49:21 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/28 17:20:59 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/28 18:00:43 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int IrcServer::ircCommandMode(Command& command)
     if (recipient[0] == '#')
     {
         Channel *channel = getChannelByName(recipient);
-        if (channel->isUserOperator(user->getSocketFd()))
+        if (channel && channel->isUserOperator(user->getSocketFd()))
         {
             if (modes[0] == '+')
             {
@@ -59,7 +59,10 @@ int IrcServer::ircCommandMode(Command& command)
                 else if (modes[1] == 'l')
                     channel->setUserLimit(stoi(params[2].value));
                 else
+                {
                     sendToFd(command.getUserFd(), ERR_UNKNOWNMODE(user->getNickName(), modes[0], recipient));
+                    return (1);
+                }
             }
             else if (modes[0] == '-')
             {
@@ -74,8 +77,12 @@ int IrcServer::ircCommandMode(Command& command)
                 else if (modes[1] == 'l')
                     channel->setUserLimit(0);
                 else
+                {
                     sendToFd(command.getUserFd(), ERR_UNKNOWNMODE(user->getNickName(), modes[0], recipient));
+                    return (1);
+                }
             }
+            sendToFd(command.getUserFd(), RPL_CHANNELMODEIS(user->getNickName(), recipient, "ok", "ok"));
         }
         //MODE for channel
         // DEBUG: Param name: 'middle', value: '#Channel1'
