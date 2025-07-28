@@ -6,11 +6,15 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 22:47:06 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/26 14:31:07 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/28 09:46:38 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Include/User.hpp"
+
+User::User(int socket_fd) :
+_socketFd(socket_fd)
+{}
 
 // Setters
 void User::setNickName(const std::string &nickname)

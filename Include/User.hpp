@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 11:03:05 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/26 14:29:43 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/28 09:46:02 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 class User
 {
   public:
-	User() = default;
+	User(int socket_fd);
 	// Setters
 	void setNickName(const std::string &nickname);
 	void setSocketFd(int fd);

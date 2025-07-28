@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 12:20:50 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/26 12:29:51 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/28 11:11:19 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,17 @@ void Channel::delUserFromChannel(int user_fd)
 {
 	if (user_fd)
 	{
-		std::cout << "Del user from channel" << std::endl;
-		std::vector<User *>::iterator iter;
-		for (iter = users.begin(); iter != users.end(); ++iter)
+		if (users.size() > 0)
 		{
-			if ((*(*iter)).getSocketFd() == user_fd)
+			std::vector<User *>::iterator iter;
+			for (iter = users.begin(); iter != users.end(); ++iter)
 			{
-				users.erase(iter);
-				break ;
+				if ((*(*iter)).getSocketFd() == user_fd)
+				{
+					users.erase(iter);
+					std::cout << "User " << user_fd << " deleted from channel " << name << std::endl;
+					break ;
+				}
 			}
 		}
 	}

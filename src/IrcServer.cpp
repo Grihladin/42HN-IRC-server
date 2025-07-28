@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IrcServer.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:33:58 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/27 02:37:21 by mratke           ###   ########.fr       */
+/*   Updated: 2025/07/28 10:52:06 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,9 +216,9 @@ int IrcServer::closeUserFd(int user_fd)
 
 int IrcServer::addUser(int client_fd)
 {
-	User	newUser;
+	User	newUser(client_fd);
 
-	newUser.setSocketFd(client_fd);
+	// newUser.setSocketFd(client_fd);
 	users.push_back(newUser);
 	std::cout << "New user added with fd: " << client_fd << std::endl;
 	return (0);
