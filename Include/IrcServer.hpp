@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:27:49 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/28 17:12:08 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/28 17:23:41 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ class IrcServer
         int sendMessageToUser(int user_fd, std::string user, std::string &message);
 		const Command commandParser(std::string rawdata, int client_socket);
 		void commandExecutor(Command &command);
-		bool isUserExist(int fd);
-		bool isUserExist(std::string username);
+		// bool isUserExist(int fd);
+		// bool isUserExist(std::string nickname);
 		bool isNicknameExist(std::string nickname);
 		bool isChannelExist(std::string chname);
 		//Getters

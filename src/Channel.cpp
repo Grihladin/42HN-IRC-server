@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 12:20:50 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/28 17:08:58 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/28 17:34:10 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,10 @@ int Channel::addUser(User *newuser)
 
 int Channel::addOperator(User *newuser)
 {
-	if (newuser)
+	if (newuser && !isUserOperator(newuser->getSocketFd()))
 	{
 		std::cout << "Add operator to channel" << std::endl;
+		operators.push_back(newuser);
 	}
 	return (0);
 }

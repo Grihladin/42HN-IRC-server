@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:49:21 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/28 17:04:22 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/28 17:20:59 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,14 @@ int IrcServer::ircCommandMode(Command& command)
                 else if (modes[1] == 't')
                     channel->setRestrictTopic();
                 else if (modes[1] == 'k')
+                {
+                    if (params.size() < 3)
+                    {
+                        sendToFd(command.getUserFd(), ERR_NEEDMOREPARAMS(user->getNickName(), command.getCommand()));
+                        return (1);
+                    }
                     channel->setKey(params[2].value);
+                }
                 else if (modes[1] == 'o')
                     channel->addOperator(getUserByNick(params[2].value));
                 else if (modes[1] == 'l')
