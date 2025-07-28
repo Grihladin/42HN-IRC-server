@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IrcServer.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:33:58 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/27 02:37:21 by mratke           ###   ########.fr       */
+/*   Updated: 2025/07/28 14:17:40 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,45 +19,6 @@ void IrcServer::printParams(const std::vector<struct paramstruct> &params)
 	{
 		std::cout << param.name << ": " << param.value << "\n";
 	}
-}
-
-int IrcServer::handle_client(int client_socket)
-{
-	int		bytes_received;
-	size_t	spos;
-	Command	newcommand;
-
-	std::string result;
-	while (result.empty() || result.back() != '\n')
-	{
-		memset(buffer, 0, BUFFER_SIZE);
-		bytes_received = recv(client_socket, buffer, BUFFER_SIZE, 0);
-		if (bytes_received > 0)
-			result.append(buffer);
-		else
-		{
-			std::cout << "Client (socket " << client_socket << ") is disconnected or with error." << std::endl;
-			return (-1);
-		}
-	}
-	std::cout << "Command from client: " << result << std::endl;
-	while (result.length() > 0)
-	{
-		spos = result.find("\r\n");
-		spos += 2;
-		std::string strcommand = result.substr(0, spos);
-		try
-		{
-			Command newcommand = commandParser(strcommand, client_socket);
-			commandExecutor(newcommand);
-		}
-		catch (const std::exception &e)
-		{
-			std::cerr << "Error: " << e.what() << std::endl;
-		}
-		result = result.substr(spos);
-	}
-	return (0);
 }
 
 IrcServer::IrcServer(void)
@@ -216,9 +177,9 @@ int IrcServer::closeUserFd(int user_fd)
 
 int IrcServer::addUser(int client_fd)
 {
-	User	newUser;
+	User	newUser(client_fd);
 
-	newUser.setSocketFd(client_fd);
+	// newUser.setSocketFd(client_fd);
 	users.push_back(newUser);
 	std::cout << "New user added with fd: " << client_fd << std::endl;
 	return (0);
