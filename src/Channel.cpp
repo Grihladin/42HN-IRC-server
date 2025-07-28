@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 12:20:50 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/28 11:55:39 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/28 12:11:07 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ int Channel::getUsersCount()
 
 bool Channel::isKey(void)
 {
-	return (isKey);
+	return (_isKey);
 }
 
 bool Channel::isInviteOnly(void)

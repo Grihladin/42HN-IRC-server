@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 19:17:28 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/28 11:53:41 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/28 12:11:55 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ class Channel
 	void unsetRestrictTopic(void);
 	void setInviteOnly(void);
 	void unsetInviteOnly(void);
-	int setUsetLimit(size_t newlimit);
+	int setUserLimit(size_t newlimit);
 };
 
 #endif
