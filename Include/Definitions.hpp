@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Definitions.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 00:37:03 by auplisas          #+#    #+#             */
-/*   Updated: 2025/07/26 15:50:46 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/28 14:11:30 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,8 @@
 #define ERR_UMODEUNKNOWNFLAG(yournick) (std::string(":server 501 ") + yournick + " :Unknown MODE flag\r\n")
 #define ERR_USERSDONTMATCH(yournick) (std::string(":server 502 ") + yournick + " :Cannot change mode for other users\r\n")
 
-#define RPL_PRIV_MESSAGE(yournick, message) (std::string(":server PRIVMSG ") + yournick + " :" + message + "\r\n")
-#define RPL_CHANNEL_MESSAGE(yournick, channel, message) (std::string(":server PRIVMSG ") + yournick + " " + channel + " :" + message + "\r\n")
+#define RPL_PRIV_MESSAGE(yournick, recipient, message)  (std::string(":" + yournick) + " PRIVMSG " + recipient + " :" + std::string(message) + "\r\n")
+#define RPL_CHANNEL_MESSAGE(yournick, channel, message)  (std::string(":" + yournick) + " PRIVMSG " + channel + " :" + std::string(message) + "\r\n")
 
 #endif
+	
