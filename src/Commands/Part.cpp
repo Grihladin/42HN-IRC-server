@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:51:36 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/28 17:34:09 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/28 18:52:17 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int IrcServer::ircCommandPart(Command &command)
 		std::string message = prefix + " PART " + channelName;
 		if (!partMessage.empty())
 			message += " :" + partMessage;
-        
+        message += "\r\n"; 
         auto& users = channel->getUsers();
         for (User* u : users)
         {
