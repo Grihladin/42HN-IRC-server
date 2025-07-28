@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 19:17:28 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/28 22:03:39 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/28 22:49:04 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ class Channel
 		std::vector<std::string> 	banMask;
 		size_t 						userLimit = 0;	//l
 		std::string 				key;
-		bool 						_inviteOnly;	//i
-		bool						_restrictTopic;	//t
+		bool 						_inviteOnly = false;	//i
+		bool						_restrictTopic = true;	//t
 		bool						_isKey = false;	//k
 	
 	public:

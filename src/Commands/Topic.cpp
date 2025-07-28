@@ -6,43 +6,43 @@
 /*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:53:16 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/28 22:03:36 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/28 23:22:01 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Include/IrcServer.hpp"
 #include "../../Include/Definitions.hpp"
+#include "../../Include/IrcServer.hpp"
 
-int IrcServer::ircCommandTopic(Command& command)
+int IrcServer::ircCommandTopic(Command &command)
 {
 	int userFd = command.getUserFd();
-	User* user = getUserByFd(userFd);
+	User *user = getUserByFd(userFd);
 
 	if (!user || !user->isRegistered())
 	{
 		sendToFd(userFd, ERR_NOTREGISTERED());
-		return 1;
+		return (1);
 	}
 
-	const std::vector<paramstruct>& params = command.getParams();
+	const std::vector<paramstruct> &params = command.getParams();
 	if (params.size() < 1)
 	{
 		sendToFd(userFd, ERR_NEEDMOREPARAMS(user->getNickName(), "TOPIC"));
-		return 1;
+		return (1);
 	}
 
 	std::string channelName = params[0].value;
-	Channel* channel = getChannelByName(channelName);
+	Channel *channel = getChannelByName(channelName);
 	if (!channel)
 	{
 		sendToFd(userFd, ERR_NOSUCHCHANNEL(user->getNickName(), channelName));
-		return 1;
+		return (1);
 	}
 
 	if (!channel->isUserOnChannel(userFd))
 	{
 		sendToFd(userFd, ERR_NOTONCHANNEL(user->getNickName(), channelName));
-		return 1;
+		return (1);
 	}
 
 	if (params.size() == 1)
@@ -51,27 +51,29 @@ int IrcServer::ircCommandTopic(Command& command)
 		if (topic.empty())
 			sendToFd(userFd, RPL_NOTOPIC(user->getNickName(), channelName));
 		else
-			sendToFd(userFd, RPL_TOPIC(user->getNickName(), channelName, topic));
-		return 0;
+			sendToFd(userFd, RPL_TOPIC(user->getNickName(), channelName,
+					topic));
+		return (0);
 	}
 
-	// if (!channel->isUserOperator(userFd))
-	// {
-	// 	sendToFd(userFd, ERR_CHANOPRIVSNEEDED(user->getNickName(), channelName));
-	// 	return 1;
-	// }
+	if (channel->isRestrictTopic() && !channel->isUserOperator(userFd))
+	{
+		sendToFd(userFd, ERR_CHANOPRIVSNEEDED(user->getNickName(),
+				channelName));
+		return (1);
+	}
 
-	std::string newTopic = params[1].value;
+	std::string newTopic = (params.size() > 1 && !params[1].value.empty()) ? params[1].value : "";
 	channel->setTopic(newTopic, userFd);
 
-	std::string response = RPL_TOPIC(user->getNickName(), channelName, channel->getTopic());
+	std::string response = RPL_TOPIC(user->getNickName(), channelName,
+			channel->getTopic());
 	const std::vector<std::string> nicklist = getNickList(channelName);
-	for (const std::string& nick : nicklist)
+	for (const std::string &nick : nicklist)
 	{
-        (void)nick;
-		User* recipient = getUserByFd(userFd);
+		User *recipient = getUserByNick(nick);
 		if (recipient)
 			sendToFd(recipient->getSocketFd(), response);
 	}
-	return 0;
+	return (0);
 }
