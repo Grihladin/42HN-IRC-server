@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 11:03:05 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/28 09:46:02 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/28 17:08:52 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ class User
 	std::string getNickName(void) const;
 	std::string getRealName(void) const;
 	bool isOperator(void) const;
+	std::string getPrefix() const;
   private:
 	int _socketFd;
 	bool _isOperator = false;
@@ -46,4 +47,5 @@ class User
 	std::string _nickname;
 	std::string _username;
 	std::string _realname;
+	std::string _hostname = "42Heilbronn";
 };
