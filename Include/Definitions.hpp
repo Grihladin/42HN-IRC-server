@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 00:37:03 by auplisas          #+#    #+#             */
-/*   Updated: 2025/07/29 18:13:16 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/29 18:27:06 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,8 +153,8 @@
 #define RPL_PRIV_MESSAGE(yournick, recipient, message)  (std::string(":" + yournick) + " PRIVMSG " + recipient + " :" + std::string(message) + "\r\n")
 #define RPL_CHANNEL_MESSAGE(yournick, channel, message)  (std::string(":" + yournick) + " PRIVMSG " + channel + " :" + std::string(message) + "\r\n")
 #define RPL_PART(nick, user, host, channel, message) (":" + nick + "!" + user + "@" + host + " PART " + channel + (message.empty() ? "" : " :" + message) + "\r\n")
+#define RPL_JOIN(nick, host, server, channel) (":" + nick + "!" + host + "@" + server + " JOIN " + channel + "\r\n")
 #define RPL_QUIT(prefix, message) (":" + prefix + " QUIT :" + message + "\r\n")
 #define RPL_ERROR_CLOSING_LINK(prefix, message) ("ERROR :Closing Link: " + prefix + " (" + message + ")\r\n")
 
 #endif
-	
