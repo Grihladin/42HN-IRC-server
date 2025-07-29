@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:27:49 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/29 11:45:07 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/29 15:39:37 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ class IrcServer
 		int addChannel(std::string newname);
 		int addChannel(std::string newname, int user_fd);
         int sendMessageToChannel(int user_fd, std::string channel, std::string &message);
+		int sendRawMessageToChannel(std::string channel, std::string reply);
         int sendMessageToUser(int user_fd, std::string user, std::string &message);
 		const Command commandParser(std::string rawdata, int client_socket);
 		void commandExecutor(Command &command);

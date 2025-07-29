@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sendMessage.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 15:27:44 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/28 14:29:02 by mratke           ###   ########.fr       */
+/*   Updated: 2025/07/29 15:51:59 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,14 @@ int IrcServer::sendMessageToChannel(int user_fd, std::string channel,
                                    message));
     }
   }
+  return (0);
+}
+
+int IrcServer::sendRawMessageToChannel(std::string channel, std::string reply)
+{
+  Channel *channelObj = getChannelByName(channel);
+  for (auto &channel_user : channelObj->getUsers())
+    sendToFd(channel_user->getSocketFd(), reply);
   return (0);
 }
 
