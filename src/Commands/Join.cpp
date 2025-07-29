@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Join.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:47:21 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/29 18:26:47 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/29 17:27:27 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,12 @@ int IrcServer::ircCommandJoin(Command &command) {
   std::vector<std::string> channels;
   std::vector<std::string> keys;
   std::string channel_str, key_str;
+
+  if (!user || !user->isRegistered()) {
+    sendToFd(client_fd, ERR_NOTREGISTERED(user->getNickName()));
+    std::cerr << "Error: User not registered or does not exist." << std::endl;
+    return (1);
+  }
 
   for (auto &iter : command.getParams()) {
     if (iter.name == "middle") {
@@ -42,8 +48,10 @@ int IrcServer::ircCommandJoin(Command &command) {
     std::string key = (i < keys.size()) ? keys[i] : "";
 
     Channel *channel = getChannelByName(channel_name);
-    if (channel && channel->isUserOnChannel(client_fd))
+    if (channel && channel->isUserOnChannel(client_fd)) {
+      sendToFd(client_fd, ERR_USERONCHANNEL(user->getNickName(), channel_name));
       continue;
+    }
 
     if (channel && channel->isKey() && channel->getKey() != key) {
       sendToFd(client_fd, ERR_BADCHANNELKEY(user->getNickName(), channel_name));
@@ -51,14 +59,12 @@ int IrcServer::ircCommandJoin(Command &command) {
     }
 
     if (channel && channel->isInviteOnly()) {
-      if (!channel->isUserInvited(user)) 
-      {
-          sendToFd(client_fd, ERR_INVITEONLYCHAN(user->getNickName(), channel_name));
-          continue;
-      }
-      else
-      {
-         channel->removeInvitedUser(user);
+      if (!channel->isUserInvited(user)) {
+        sendToFd(client_fd,
+                 ERR_INVITEONLYCHAN(user->getNickName(), channel_name));
+        continue;
+      } else {
+        channel->removeInvitedUser(user);
       }
     }
     channel = addUserToChannel(channel_name, client_fd);
