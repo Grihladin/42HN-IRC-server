@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 12:20:50 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/28 21:57:14 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/29 10:31:38 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,19 @@ bool Channel::isUserOnChannel(int user_fd)
 	for (iter = users.begin(); iter != users.end(); ++iter)
 	{
 		if ((*(*iter)).getSocketFd() == user_fd)
-			return (1);
+			return (true);
 	}
-	return (0);
+	return (false);
+}
+
+bool Channel::isUserOnChannel(std::string nickname)
+{
+	for (User* iter : users)
+	{
+		if (iter->getNickName() == nickname)
+			return (true);
+	}
+	return (false);
 }
 
 const std::vector<std::string> Channel::getNickList()

@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:53:34 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/26 15:40:20 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/29 11:14:17 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,7 @@ int IrcServer::ircCommandUser(Command &command)
 	if (!user->getNickName().empty())
 	{
 		user->setRegistered();
-		sendToFd(userFd, RPL_WELCOME(user->getNickName(), user->getUserName(), "*"));
-		sendToFd(userFd, RPL_MOTDSTART(user->getNickName(), "My supercool IRC server"));
-		sendToFd(userFd, RPL_MOTD(user->getNickName(), "Hello! You are welcome!"));
-		sendToFd(userFd, RPL_ENDOFMOTD(user->getNickName()));
+		connectIsSuccesfull(getUserByFd(userFd));
 	}
 	return (0);
 }

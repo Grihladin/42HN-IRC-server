@@ -6,7 +6,7 @@
 #    By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2025/07/28 16:35:13 by psenko           ###   ########.fr        #
+#    Updated: 2025/07/29 10:58:17 by psenko           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,8 @@ SRC=		main.cpp \
 			IrcServer/DeleteUserFromChannel.cpp \
 			IrcServer/sendToFd.cpp \
 			IrcServer/sendMessage.cpp \
-			IrcServer/handleClient.cpp
+			IrcServer/handleClient.cpp \
+			IrcServer/connectIsSuccesfull.cpp
 
 HEADER=		Include/Channel.hpp \
 			Include/Command.hpp \

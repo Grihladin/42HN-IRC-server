@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:27:49 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/28 17:23:41 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/29 10:55:38 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ class IrcServer
 		int deleteUserFromAllChannels(int user_fd);
 		int deleteUserFromServer(int user_fd); //It will go though channels, kick them out of there, send message to eveeryone
 		int setTopicToChannel(std::string channelname, std::string topic, int user_fd);
+		void connectIsSuccesfull(User *user);
 		//Methods for IRC commands
 		int ircCommandPass(Command& command);
 		int ircCommandNick(Command& command);

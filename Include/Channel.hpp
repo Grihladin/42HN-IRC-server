@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 19:17:28 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/28 22:49:04 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/29 10:29:16 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ class Channel
 		bool isUser(int user_fd);
 		bool isUserOperator(int user_fd);
 		bool isUserOnChannel(int user_fd);
+		bool isUserOnChannel(std::string nickname);
 		bool isKey(void);
 		bool isInviteOnly(void);
 		bool isRestrictTopic(void);

@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:49:21 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/28 18:00:43 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/29 10:34:37 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,12 @@ int IrcServer::ircCommandMode(Command& command)
                     channel->setKey(params[2].value);
                 }
                 else if (modes[1] == 'o')
-                    channel->addOperator(getUserByNick(params[2].value));
+                {
+                    if (channel->isUserOnChannel(params[2].value))
+                        channel->addOperator(getUserByNick(params[2].value));
+                    else
+                        sendToFd(command.getUserFd(), ERR_USERNOTINCHANNEL(user->getNickName(), params[2].value, recipient));
+                }
                 else if (modes[1] == 'l')
                     channel->setUserLimit(stoi(params[2].value));
                 else
@@ -84,10 +89,6 @@ int IrcServer::ircCommandMode(Command& command)
             }
             sendToFd(command.getUserFd(), RPL_CHANNELMODEIS(user->getNickName(), recipient, "ok", "ok"));
         }
-        //MODE for channel
-        // DEBUG: Param name: 'middle', value: '#Channel1'
-        // DEBUG: Param name: 'middle', value: '+o'
-        // DEBUG: Param name: 'last', value: 'pavel'
         else
             sendToFd(command.getUserFd(), ERR_CHANOPRIVSNEEDED(user->getNickName(), recipient));
     }
