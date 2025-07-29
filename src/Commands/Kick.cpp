@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:48:19 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/27 21:15:21 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/28 20:39:26 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,11 @@ int IrcServer::ircCommandKick(Command& command)
         return (1);
     }
 
-    //Check if the kicker is a channel operator (THIS FUNCTIONALITY IS NOT YET IMPLEMENTED)
-    //Check if the kicker is a channel operator (THIS FUNCTIONALITY IS NOT YET IMPLEMENTED)
-    //Check if the kicker is a channel operator (THIS FUNCTIONALITY IS NOT YET IMPLEMENTED)
-    //Check if the kicker is a channel operator (THIS FUNCTIONALITY IS NOT YET IMPLEMENTED)
-    //Check if the kicker is a channel operator (THIS FUNCTIONALITY IS NOT YET IMPLEMENTED)
-
+    if (!channel->isUserOperator(kicker->getSocketFd())) {
+        sendToFd(command.getUserFd(), ERR_CHANOPRIVSNEEDED(yournick, channelName));
+        return (1);
+    }
+    
     User* targetUser = getUserByNick(targetNick);
     if (!targetUser) {
         sendToFd(command.getUserFd(), ERR_NOSUCHNICK(yournick, targetNick));

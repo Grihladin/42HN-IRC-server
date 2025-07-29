@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 19:17:28 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/28 17:48:32 by mratke           ###   ########.fr       */
+/*   Updated: 2025/07/29 10:29:16 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ class Channel
 		std::vector<std::string> 	banMask;
 		size_t 						userLimit = 0;	//l
 		std::string 				key;
-		bool 						_inviteOnly;	//i
-		bool						_restrictTopic;	//t
+		bool 						_inviteOnly = false;	//i
+		bool						_restrictTopic = true;	//t
 		bool						_isKey = false;	//k
 	
 	public:
@@ -43,6 +43,7 @@ class Channel
 		std::string	getTopic(void) const;
 		std::string getKey(void) const;
 		const std::vector<User*> getUsers(void) const;
+		const std::vector<User*> getInvitedUsers(void) const;
 		const std::vector<std::string> getNickList();
 		const std::string getNickListStr();
 		int getUsersCount();
@@ -50,11 +51,15 @@ class Channel
 		
 		int addUser(User* newuser);
 		int addOperator(User* newuser);
+		void addInvitedUser(User* user);
+		void removeInvitedUser(User* user);
+		bool isUserInvited(User* user) const;
 		int deleteOperator(std::string username);
 		void delUserFromChannel(int user_fd);
 		bool isUser(int user_fd);
 		bool isUserOperator(int user_fd);
 		bool isUserOnChannel(int user_fd);
+		bool isUserOnChannel(std::string nickname);
 		bool isKey(void);
 		bool isInviteOnly(void);
 		bool isRestrictTopic(void);

@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:27:49 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/28 17:23:41 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/29 11:45:07 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,10 @@ class IrcServer
 	private:
         int                         server_fd;
         std::vector<struct pollfd>  socket_fds;
+		int							poll_count;
+		sockaddr_in					client_addr;
+		socklen_t					client_len;
+		int							client_fd;
         std::list<User>           	users;
         std::vector<Message>        messages;
         std::vector<Channel>        channels;
@@ -87,6 +91,7 @@ class IrcServer
 		int deleteUserFromAllChannels(int user_fd);
 		int deleteUserFromServer(int user_fd); //It will go though channels, kick them out of there, send message to eveeryone
 		int setTopicToChannel(std::string channelname, std::string topic, int user_fd);
+		void connectIsSuccesfull(User *user);
 		//Methods for IRC commands
 		int ircCommandPass(Command& command);
 		int ircCommandNick(Command& command);
