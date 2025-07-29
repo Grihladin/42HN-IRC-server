@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   Quit.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:52:51 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/29 19:41:44 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/29 17:58:19 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../../Include/IrcServer.hpp"
 

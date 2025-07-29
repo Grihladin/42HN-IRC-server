@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+         #
+#    By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2025/07/29 19:40:43 by auplisas         ###   ########.fr        #
+#    Updated: 2025/07/29 17:58:14 by mratke           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ SRC=		main.cpp \
 			Commands/User.cpp \
 			Commands/Pass.cpp \
 			Commands/Wrong.cpp \
+			Commands/Who.cpp \
 			Parser.cpp \
 			parserTests.cpp \
 			IrcServer/getNickList.cpp \

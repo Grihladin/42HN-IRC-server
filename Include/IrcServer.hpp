@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IrcServer.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:27:49 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/29 15:39:37 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/29 17:41:11 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 
 # define BUFFER_SIZE 10240
 # define MAX_CLIENTS 10240
-# define COMMANDS_COUNT 16
+# define COMMANDS_COUNT 17
 
 class IrcServer
 {
@@ -110,6 +110,7 @@ class IrcServer
 		int ircCommandKick(Command& command);
 		int ircCommandPrivMsg(Command& command);
 		int ircCommandWrong(Command& command);
+		int ircCommandWho(Command& command);
 		int (IrcServer::*executors[COMMANDS_COUNT])(Command &command) = {\
 			&IrcServer::ircCommandPass,
 			&IrcServer::ircCommandNick,
@@ -126,7 +127,8 @@ class IrcServer
 			&IrcServer::ircCommandInvite,
 			&IrcServer::ircCommandKick,
 			&IrcServer::ircCommandPrivMsg,
-			&IrcServer::ircCommandWrong
+			&IrcServer::ircCommandWrong,
+			&IrcServer::ircCommandWho
 		};
 
 		std::string irccommands[COMMANDS_COUNT] = {
