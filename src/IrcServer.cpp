@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:33:58 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/29 12:00:41 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/29 17:45:40 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,8 +121,10 @@ void IrcServer::listenSocket(void)
 			{
 				if (handle_client(socket_fds[i].fd) != 0)
 				{
-					close(socket_fds[i].fd);
-					socket_fds.erase(socket_fds.begin() + i);
+					deleteUser(socket_fds[i].fd);
+					closeUserFd(socket_fds[i].fd);
+					// close(socket_fds[i].fd);
+					// socket_fds.erase(socket_fds.begin() + i);
 					i--;
 				}
 			}
@@ -172,14 +174,19 @@ int IrcServer::openSocket(std::string port)
 
 int IrcServer::closeUserFd(int user_fd)
 {
-	size_t i = 0;
-    while ((i < socket_fds.size()) && (socket_fds[i].fd != user_fd))
-        ++i;
-    if (i < socket_fds.size())
-    {
-        close(socket_fds[i].fd);
-        socket_fds.erase(socket_fds.begin() + i);
-    }
+	std::vector<struct pollfd>::iterator iter;
+	for (iter = socket_fds.begin(); iter != socket_fds.end() ; ++iter)
+	{
+		if ((*iter).fd == user_fd)
+		{
+			shutdown(user_fd, SHUT_WR);
+			while (recv(user_fd, buffer, sizeof(buffer), 0) > 0)
+				;
+			close(user_fd);
+			socket_fds.erase(iter);
+			break ;
+		}
+	}
 	return (0);
 }
 
