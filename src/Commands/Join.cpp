@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:47:21 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/29 17:27:27 by mratke           ###   ########.fr       */
+/*   Updated: 2025/07/29 17:37:06 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int IrcServer::ircCommandJoin(Command &command) {
 
     Channel *channel = getChannelByName(channel_name);
     if (channel && channel->isUserOnChannel(client_fd)) {
-      sendToFd(client_fd, ERR_USERONCHANNEL(user->getNickName(), channel_name));
+      sendToFd(client_fd, ERR_USERONCHANNEL(user->getNickName(), user->getUserName(), channel_name));
       continue;
     }
 
