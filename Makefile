@@ -6,13 +6,13 @@
 #    By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2025/07/29 10:58:17 by psenko           ###   ########.fr        #
+#    Updated: 2025/07/29 11:48:22 by psenko           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = ircserv
 CXX = c++
-CXXFLAGS = -Wall -Wextra -Werror -std=c++17 -fsanitize=address -g
+CXXFLAGS = -Wall -Wextra -Werror -std=c++17 -g
 SRC_DIR = src
 OBJ_DIR = obj
 

@@ -3,18 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 13:26:40 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/26 16:19:36 by mratke           ###   ########.fr       */
+/*   Updated: 2025/07/29 11:50:23 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Include/IrcServer.hpp"
 #include "../Include/Command.hpp"
+#include <csignal>
+
+volatile sig_atomic_t sigintstatus;
+
+void signal_handler(int signal) {
+    sigintstatus = signal;
+}
 
 int main(int argc, char **argv)
 {
+    signal(SIGINT, signal_handler);
     if (argc != 3)
     {
         std::cerr << "Wrong count of parameters. I need at least a port and a password." << std::endl;
@@ -24,7 +32,8 @@ int main(int argc, char **argv)
     try
     {
         IrcServer ircserver(argv[1], argv[2]);
-        ircserver.listenSocket();
+        while (!sigintstatus)
+            ircserver.listenSocket();
     }
     catch (const std::exception& e)
     {
