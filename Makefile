@@ -6,7 +6,7 @@
 #    By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2025/07/29 17:58:14 by mratke           ###   ########.fr        #
+#    Updated: 2025/07/30 00:10:57 by mratke           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,6 @@ SRC=		main.cpp \
 			Commands/Wrong.cpp \
 			Commands/Who.cpp \
 			Parser.cpp \
-			parserTests.cpp \
 			IrcServer/getNickList.cpp \
 			IrcServer/getChannel.cpp \
 			IrcServer/DeleteUserFromChannel.cpp \

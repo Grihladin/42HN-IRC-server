@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:52:30 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/28 14:29:53 by mratke           ###   ########.fr       */
+/*   Updated: 2025/07/30 00:06:23 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 
 int IrcServer::ircCommandPrivMsg(Command &command) {
   User *user = getUserByFd(command.getUserFd());
+
   if (!user || !user->isRegistered()) {
     std::cerr << "Error: User not registered or does not exist." << std::endl;
     return (1);
@@ -33,13 +34,16 @@ int IrcServer::ircCommandPrivMsg(Command &command) {
 
   if (recipient[0] == '#') {
     // It's a channel message
-    if (sendMessageToChannel(user->getSocketFd(), recipient, message) != 0)
+    if (sendMessageToChannel(user->getSocketFd(), recipient, message) != 0) {
+      std::cerr << "Error: Failed to send message to channel." << std::endl;
       return (1);
+    }
   } else {
     // It's a private message to a user
-    if (sendMessageToUser(user->getSocketFd(), recipient, message) != 0)
+    if (sendMessageToUser(user->getSocketFd(), recipient, message) != 0) {
+      std::cerr << "Error: Failed to send private message." << std::endl;
       return (1);
+    }
   }
-
   return (0);
 }

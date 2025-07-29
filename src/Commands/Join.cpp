@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:47:21 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/29 23:15:55 by mratke           ###   ########.fr       */
+/*   Updated: 2025/07/30 00:04:03 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int IrcServer::ircCommandJoin(Command &command) {
 
   if (!user || !user->isRegistered()) {
     sendToFd(client_fd, ERR_NOTREGISTERED(user->getNickName()));
-    std::cerr << "Error: User not registered or does not exist." << std::endl;
     return (1);
   }
 
@@ -38,6 +37,7 @@ int IrcServer::ircCommandJoin(Command &command) {
       }
     }
   }
+
   channels = split(channel_str, ',');
   if (!key_str.empty()) {
     keys = split(key_str, ',');
@@ -68,31 +68,30 @@ int IrcServer::ircCommandJoin(Command &command) {
         channel->removeInvitedUser(user);
       }
     }
+
     channel = addUserToChannel(channel_name, client_fd);
+
     if (channel) {
       // Get the channel's topic
       std::string topic = channel->getTopic();
       std::string response;
+      std::string user_nick = user->getNickName();
 
       // Send the topic to the user who just joined
       if (topic.length() > 0) {
-        response = RPL_TOPIC(user->getNickName(), channel_name, topic);
+        sendToFd(client_fd, RPL_TOPIC(user_nick, channel_name, topic));
       } else {
-        response = RPL_NOTOPIC(user->getNickName(), channel_name);
+        sendToFd(client_fd, RPL_NOTOPIC(user_nick, channel_name));
       }
-      sendToFd(client_fd, response);
 
       // Notify all users in the channel that a new user has joined
-      response = RPL_JOIN(user->getNickName(), "", "server", channel_name);
-      sendRawMessageToChannel(channel_name, response);
+      sendRawMessageToChannel(channel_name,
+                              RPL_JOIN(user_nick, "", "server", channel_name));
 
       // Get the list of nicks in the channel and send it to the user
-      std::string user_list = getNickListStr(channel_name);
-      response =
-          RPL_NAMREPLY(user->getNickName(), "=", channel_name, user_list);
-      sendToFd(client_fd, response);
-      response = RPL_ENDOFNAMES(user->getNickName(), channel_name);
-      sendToFd(client_fd, response);
+      sendToFd(client_fd, RPL_NAMREPLY(user_nick, "=", channel_name,
+                                       getNickListStr(channel_name)));
+      sendToFd(client_fd, RPL_ENDOFNAMES(user_nick, channel_name));
     }
   }
   return (0);
