@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   List.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:48:47 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/26 14:14:33 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/29 19:31:13 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,13 @@ int IrcServer::ircCommandList(Command& command)
 {
     //Command: getChannelList() with or without arguments
     std::vector<Channel>::iterator iter;
-    std::cout << "Executor: " << command.getCommand() << std::endl;
     int user_fd = command.getUserFd();
+    User *user = getUserByFd(command.getUserFd());
+    if (!user || !user->isRegistered())
+	{
+		sendToFd(user_fd, ERR_NOTREGISTERED());
+		return (1);
+	}
     if (channels.size() > 0)
     {
         for (iter = channels.begin(); iter != channels.end(); ++iter)

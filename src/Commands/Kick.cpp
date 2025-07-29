@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:48:19 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/28 20:39:26 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/29 19:31:53 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@ int IrcServer::ircCommandKick(Command& command)
     User* kicker = getUserByFd(command.getUserFd());
     std::string yournick = kicker->getNickName();
 
+    if (!kicker || !kicker->isRegistered())
+	{
+		sendToFd(kicker->getSocketFd(), ERR_NOTREGISTERED());
+		return (1);
+	}
     if (command.paramCount() < 2) {
         sendToFd(command.getUserFd(), ERR_NEEDMOREPARAMS(yournick, command.getCommand()));
         return (1);
