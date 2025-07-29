@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:47:21 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/29 15:52:09 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/29 16:05:40 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,7 @@ int IrcServer::ircCommandJoin(Command &command) {
 
       // Notify all users in the channel that a new user has joined
       response = RPL_JOIN(user->getNickName(), "", "server", channel_name);
-      // sendToFd(client_fd, response);
-      // if (sendMessageToChannel(client_fd, channel_name, response) != 0) {
       sendRawMessageToChannel(channel_name, response);
-      //   std::cerr << "Error: Failed to send JOIN message to channel "
-      //             << channel_name << std::endl;
-      //   return (1);
-      // }
     }
   }
   return (0);

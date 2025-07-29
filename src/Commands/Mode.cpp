@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:49:21 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/29 10:34:37 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/29 16:54:35 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,29 @@ int IrcServer::ircCommandMode(Command& command)
         return (1);
     }
     const std::vector<paramstruct> &params = command.getParams();
-    if (params.size() < 2) {
+    if (params.size() == 0) {
         sendToFd(user->getSocketFd(), ERR_NEEDMOREPARAMS(user->getNickName(), command.getCommand()));
         return (1);
     }
     std::string recipient = params[0].value;
-    std::string modes = params[1].value;
-    if (modes.length() > 4)
+    std::string modes;
+    if (params.size() > 1)
     {
-        std::cerr << "No more than 3 modes at a time!" << std::endl;
-        return (1);
+        std::string modes = params[1].value;
+        if (modes.length() > 4)
+        {
+            std::cerr << "No more than 3 modes at a time!" << std::endl;
+            return (1);
+        }
     }
-
     if (recipient[0] == '#')
     {
+        if (params.size() == 1)
+        {
+            sendToFd(command.getUserFd(), \
+                RPL_CHANNELMODEIS(user->getNickName(), recipient, getChannelByName(recipient)->getMode(), ""));
+            return (0);
+        }
         Channel *channel = getChannelByName(recipient);
         if (channel && channel->isUserOperator(user->getSocketFd()))
         {
@@ -87,7 +96,7 @@ int IrcServer::ircCommandMode(Command& command)
                     return (1);
                 }
             }
-            sendToFd(command.getUserFd(), RPL_CHANNELMODEIS(user->getNickName(), recipient, "ok", "ok"));
+            sendToFd(command.getUserFd(), RPL_CHANNELMODEIS(user->getNickName(), recipient, getChannelByName(recipient)->getMode(), ""));
         }
         else
             sendToFd(command.getUserFd(), ERR_CHANOPRIVSNEEDED(user->getNickName(), recipient));
