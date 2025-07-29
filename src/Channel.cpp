@@ -142,7 +142,7 @@ const std::string Channel::getNickListStr()
 	for (std::vector<User *>::iterator iter = users.begin(); iter != users.end(); ++iter)
 	{
 		if (result.length() > 0)
-			result.append(",");
+			result.append(" ");
 		if (isUserOperator((*iter)->getSocketFd()))
 			result.append("@");
 		result.append((*iter)->getNickName());

@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:47:21 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/29 17:50:08 by mratke           ###   ########.fr       */
+/*   Updated: 2025/07/29 23:15:55 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ int IrcServer::ircCommandJoin(Command &command) {
 
     Channel *channel = getChannelByName(channel_name);
     if (channel && channel->isUserOnChannel(client_fd)) {
-      sendToFd(client_fd, ERR_USERONCHANNEL(user->getNickName(), user->getUserName(), channel_name));
+      sendToFd(client_fd, ERR_USERONCHANNEL(user->getNickName(),
+                                            user->getUserName(), channel_name));
       continue;
     }
 
@@ -81,6 +82,10 @@ int IrcServer::ircCommandJoin(Command &command) {
       }
       sendToFd(client_fd, response);
 
+      // Notify all users in the channel that a new user has joined
+      response = RPL_JOIN(user->getNickName(), "", "server", channel_name);
+      sendRawMessageToChannel(channel_name, response);
+
       // Get the list of nicks in the channel and send it to the user
       std::string user_list = getNickListStr(channel_name);
       response =
@@ -88,10 +93,6 @@ int IrcServer::ircCommandJoin(Command &command) {
       sendToFd(client_fd, response);
       response = RPL_ENDOFNAMES(user->getNickName(), channel_name);
       sendToFd(client_fd, response);
-
-      // Notify all users in the channel that a new user has joined
-      response = RPL_JOIN(user->getNickName(), "", "server", channel_name);
-      sendRawMessageToChannel(channel_name, response);
     }
   }
   return (0);

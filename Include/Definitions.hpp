@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Definitions.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 00:37:03 by auplisas          #+#    #+#             */
-/*   Updated: 2025/07/29 18:27:06 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/29 23:16:49 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@
 #define RPL_EXCEPTLIST(yournick, channel, exceptionmask) (std::string(":server 348 ") + yournick + " " + channel + " " + exceptionmask + "\r\n")
 #define RPL_ENDOFEXCEPTLIST(yournick, channel) (std::string(":server 349 ") + yournick + " " + channel + " :End of channel exception list\r\n")
 #define RPL_VERSION(yournick, version, debuglevel, server, comments) (std::string(":server 351 ") + yournick + " " + version + "." + debuglevel + " " + server + " :" + comments + "\r\n")
-#define RPL_WHOREPLY(yournick, ...) (std::string(":server 352 ") + yournick + " " + __VA_ARGS__ + "\r\n")
+#define RPL_WHOREPLY(yournick, channel, user, host, server, nick, flags, hopcount, realname) (std::string(":server 352 ") + yournick + " " + channel + " " + user + " " + host + " " + server + " " + nick + " " + flags + " " + hopcount + " :" + realname + "\r\n")
 #define RPL_NAMREPLY(yournick, symbol, channel, nicklist) (std::string(":server 353 ") + yournick + " " + symbol + " " + channel + " :" + nicklist + "\r\n")
 #define RPL_ENDOFNAMES(yournick, channel) (std::string(":server 366 ") + yournick + " " + channel + " :End of NAMES list\r\n")
 #define RPL_LINKS(yournick, mask, server, hopcount, serverinfo) (std::string(":server 364 ") + yournick + " " + mask + " " + server + " :" + hopcount + " " + serverinfo + "\r\n")
