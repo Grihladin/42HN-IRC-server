@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 12:20:50 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/29 10:31:38 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/29 17:57:27 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,17 +59,36 @@ void Channel::delUserFromChannel(int user_fd)
 {
 	if (user_fd)
 	{
-		if (users.size() > 0)
+		// Remove from users
+		for (std::vector<User *>::iterator iter = users.begin(); iter != users.end(); ++iter)
 		{
-			std::vector<User *>::iterator iter;
-			for (iter = users.begin(); iter != users.end(); ++iter)
+			if ((*iter)->getSocketFd() == user_fd)
 			{
-				if ((*(*iter)).getSocketFd() == user_fd)
-				{
-					users.erase(iter);
-					std::cout << "User " << user_fd << " deleted from channel " << name << std::endl;
-					break ;
-				}
+				users.erase(iter);
+				std::cout << "User " << user_fd << " deleted from channel " << name << std::endl;
+				break;
+			}
+		}
+
+		// Remove from operators
+		for (std::vector<User *>::iterator iter = operators.begin(); iter != operators.end(); ++iter)
+		{
+			if ((*iter)->getSocketFd() == user_fd)
+			{
+				operators.erase(iter);
+				std::cout << "User " << user_fd << " removed from operators in channel " << name << std::endl;
+				break;
+			}
+		}
+
+		// Remove from invited users
+		for (std::vector<User *>::iterator iter = invitedUsers.begin(); iter != invitedUsers.end(); ++iter)
+		{
+			if ((*iter)->getSocketFd() == user_fd)
+			{
+				invitedUsers.erase(iter);
+				std::cout << "User " << user_fd << " removed from invited list in channel " << name << std::endl;
+				break;
 			}
 		}
 	}
