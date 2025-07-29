@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 12:20:50 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/29 16:58:29 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/29 18:03:15 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,13 +137,15 @@ const std::vector<std::string> Channel::getNickList()
 
 const std::string Channel::getNickListStr()
 {
-	std::vector<std::string> nickList = getNickList();
+	// std::vector<std::string> nickList = getNickList();
 	std::string result;
-	for (std::vector<std::string>::iterator iter = nickList.begin(); iter != nickList.end(); ++iter)
+	for (std::vector<User *>::iterator iter = users.begin(); iter != users.end(); ++iter)
 	{
 		if (result.length() > 0)
 			result.append(",");
-		result.append((*iter));
+		if (isUserOperator((*iter)->getSocketFd()))
+			result.append("@");
+		result.append((*iter)->getNickName());
 	}
 	std::cout << "List of Nicknames: " << result << std::endl;
 	return (result);
