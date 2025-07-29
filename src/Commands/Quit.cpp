@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/07/29 17:02:43 by mratke           ###   ########.fr       */
+/*   Created: 2025/07/24 16:52:51 by macbook           #+#    #+#             */
+/*   Updated: 2025/07/29 17:50:23 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,12 @@ int IrcServer::ircCommandQuit(Command& command)
     if (!user)
         return -1;
 
-    // Construct the quit message
+    if (!user || !user->isRegistered())
+	{
+		sendToFd(user_fd, ERR_NOTREGISTERED());
+		return (1);
+	}
+
     std::string quitMessage = "Client Quit";
     if (command.paramCount() > 0)
     {

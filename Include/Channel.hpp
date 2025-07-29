@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 19:17:28 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/29 10:29:16 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/29 16:01:47 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ class Channel
 		const std::string getNickListStr();
 		int getUsersCount();
 		size_t getUserLimit() const;
+		std::string getMode();
 		
 		int addUser(User* newuser);
 		int addOperator(User* newuser);

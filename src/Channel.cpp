@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 12:20:50 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/29 17:57:27 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/29 16:58:29 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -280,4 +280,19 @@ void Channel::removeInvitedUser(User* user)
             break;
         }
     }
+}
+
+std::string Channel::getMode()
+{
+	std::string mode("");
+
+	if (_inviteOnly)
+		mode.append("i");
+	if (_restrictTopic)
+		mode.append("t");
+	if (_isKey)
+		mode.append("k");
+	if (userLimit > 0)
+		mode.append("l");
+	return (mode);
 }
