@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Join.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:47:21 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/29 15:52:09 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/29 18:26:47 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,17 @@ int IrcServer::ircCommandJoin(Command &command) {
       continue;
     }
 
+    if (channel && channel->isInviteOnly()) {
+      if (!channel->isUserInvited(user)) 
+      {
+          sendToFd(client_fd, ERR_INVITEONLYCHAN(user->getNickName(), channel_name));
+          continue;
+      }
+      else
+      {
+         channel->removeInvitedUser(user);
+      }
+    }
     channel = addUserToChannel(channel_name, client_fd);
     if (channel) {
       // Get the channel's topic
