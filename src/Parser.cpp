@@ -6,21 +6,25 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 01:36:07 by mratke            #+#    #+#             */
-/*   Updated: 2025/07/28 17:52:45 by mratke           ###   ########.fr       */
+/*   Updated: 2025/07/28 23:20:33 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Include/Command.hpp"
 #include <sstream>
-#include <sstream>
 
 std::string cleanString(const std::string &s) {
   size_t end = s.size();
+  size_t start = 0;
+  while (start < end && (s[start] == ' ' || s[start] == '\t' ||
+                         s[start] == '\r' || s[start] == '\n')) {
+    start++;
+  }
   while (end > 0 && (s[end - 1] == ' ' || s[end - 1] == '\t' ||
                      s[end - 1] == '\r' || s[end - 1] == '\n')) {
-    --end;
+    end--;
   }
-  return s.substr(0, end);
+  return s.substr(start, end - start);
 }
 
 Command Command::parse(const std::string &line) {
