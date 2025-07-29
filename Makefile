@@ -6,7 +6,7 @@
 #    By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2025/07/30 00:10:57 by mratke           ###   ########.fr        #
+#    Updated: 2025/07/30 00:32:09 by mratke           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,6 @@ OBJ_DIR = obj
 SRC=		main.cpp \
 			IrcServer.cpp \
 			Channel.cpp \
-			Message.cpp \
 			User.cpp \
 			Command.cpp \
 			IrcServerParser.cpp \
@@ -53,7 +52,6 @@ SRC=		main.cpp \
 HEADER=		Include/Channel.hpp \
 			Include/Command.hpp \
 			Include/IrcServer.hpp \
-			Include/Message.hpp \
 			Include/User.hpp \
 			Include/Definitions.hpp
 

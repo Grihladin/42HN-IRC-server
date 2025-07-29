@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:27:49 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/29 17:41:11 by mratke           ###   ########.fr       */
+/*   Updated: 2025/07/30 00:31:07 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include "Channel.hpp"
 # include "Command.hpp"
-# include "Message.hpp"
 # include "User.hpp"
 # include "Definitions.hpp"
 # include <cstring>
@@ -43,7 +42,6 @@ class IrcServer
 		socklen_t					client_len;
 		int							client_fd;
         std::list<User>           	users;
-        std::vector<Message>        messages;
         std::vector<Channel>        channels;
         char                        buffer[BUFFER_SIZE] = {0};
         std::string                 password;
