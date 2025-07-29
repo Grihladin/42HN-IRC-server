@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Mode.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:49:21 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/29 16:54:35 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/29 19:29:31 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ int IrcServer::ircCommandMode(Command& command)
     std::cout << "Executor: " << command.getCommand() << std::endl;
     User *user = getUserByFd(command.getUserFd());
     if (!user || !user->isRegistered())
-    {
-        std::cerr << "Error: User not registered or does not exist." << std::endl;
-        return (1);
-    }
+	{
+		sendToFd(command.getUserFd(), ERR_NOTREGISTERED());
+		return (1);
+	}
     const std::vector<paramstruct> &params = command.getParams();
     if (params.size() == 0) {
         sendToFd(user->getSocketFd(), ERR_NEEDMOREPARAMS(user->getNickName(), command.getCommand()));
