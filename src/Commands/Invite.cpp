@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 13:40:56 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/29 19:33:33 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/29 19:43:17 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,13 @@
 
 int IrcServer::ircCommandInvite(Command& command)
 {
+	int user_fd = command.getUserFd();
+    User* user = getUserByFd(user_fd);
+    if (!user || !user->isRegistered())
+	{
+		sendToFd(user_fd, ERR_NOTREGISTERED());
+		return (1);
+	}
 	if (command.paramCount() < 2)
 	{
 		sendToFd(command.getUserFd(), ERR_NEEDMOREPARAMS(getUserByFd(command.getUserFd())->getNickName(), "INVITE"));
@@ -23,15 +30,10 @@ int IrcServer::ircCommandInvite(Command& command)
 	std::string targetNick = command.getParams()[0].value;
 	std::string channelName = command.getParams()[1].value;
 
-	User* inviter = getUserByFd(command.getUserFd());
 	User* targetUser = getUserByNick(targetNick);
 	Channel* channel = getChannelByName(channelName);
+	User* inviter = getUserByFd(command.getUserFd());
 
-	if (!inviter || !inviter->isRegistered())
-	{
-		sendToFd(inviter->getSocketFd(), ERR_NOTREGISTERED());
-		return (1);
-	}
 	if (!channel)
 	{
 		sendToFd(inviter->getSocketFd(), ERR_NOSUCHCHANNEL(inviter->getNickName(), channelName));
@@ -55,6 +57,7 @@ int IrcServer::ircCommandInvite(Command& command)
 		sendToFd(inviter->getSocketFd(), ERR_USERONCHANNEL(inviter->getNickName(), targetNick, channelName));
 		return 1;
 	}
+
 	channel->addInvitedUser(targetUser);
 	sendToFd(inviter->getSocketFd(), RPL_INVITING(inviter->getNickName(), channelName, targetNick));
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Nick.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:50:32 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/29 11:14:09 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/29 19:37:11 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int IrcServer::ircCommandNick(Command &command)
 	user->setNickname(newNick);
 	if(user->isRegistered())
 	{
+		std::cout << "realname: '" << user->getRealName() << "'" << std::endl;
 		connectIsSuccesfull(getUserByFd(userFd));
 	}
     //POSSIBLY HANDLING OF SETTING NEW NICKNAME OVER NEW ONE NEEDS TO BE HANDLED

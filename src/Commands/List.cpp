@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:48:47 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/29 19:31:13 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/29 19:44:51 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int IrcServer::ircCommandList(Command& command)
 {
-    //Command: getChannelList() with or without arguments
     std::vector<Channel>::iterator iter;
     int user_fd = command.getUserFd();
     User *user = getUserByFd(command.getUserFd());

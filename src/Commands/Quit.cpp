@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:52:51 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/29 19:28:32 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/29 19:41:44 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,6 @@ int IrcServer::ircCommandQuit(Command& command)
 {
     int user_fd = command.getUserFd();
     User* user = getUserByFd(user_fd);
-    if (!user)
-        return -1;
-
     if (!user || !user->isRegistered())
 	{
 		sendToFd(user_fd, ERR_NOTREGISTERED());

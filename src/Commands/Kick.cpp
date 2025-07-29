@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:48:19 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/29 19:31:53 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/29 19:44:43 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 int IrcServer::ircCommandKick(Command& command)
 {
-    std::cout << "Executor: " << command.getCommand() << std::endl;
-
     User* kicker = getUserByFd(command.getUserFd());
     std::string yournick = kicker->getNickName();
 
