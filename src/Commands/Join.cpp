@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Join.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:47:21 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/28 22:03:33 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/29 12:53:30 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,51 +17,67 @@
 int IrcServer::ircCommandJoin(Command &command) {
   int client_fd = command.getUserFd();
   User *user = getUserByFd(client_fd);
+  std::vector<std::string> channels;
+  std::vector<std::string> keys;
+  std::string channel_str, key_str;
 
   for (auto &iter : command.getParams()) {
-    if (iter.name == std::string("last")) {
-      Channel *channel = getChannelByName(iter.value);
-      if (channel && channel->isUserOnChannel(client_fd))
-        continue;
-      if (channel && channel->isInviteOnly()) {
-          if (!channel->isUserInvited(user)) {
-              sendToFd(client_fd, ERR_INVITEONLYCHAN(user->getNickName(), iter.value));
-              continue;
-          }
-          else
-          {
-            channel->removeInvitedUser(user);
-          }
+    if (iter.name == "middle") {
+      channel_str = iter.value;
+    } else if (iter.name == "last") {
+      if (channel_str.empty()) {
+        channel_str = iter.value;
+      } else {
+        key_str = iter.value;
       }
-      channel = addUserToChannel(iter.value, client_fd);
-      if (channel) {
-        // Get the channel's topic
-        std::string topic = channel->getTopic();
-        std::string response;
+    }
+  }
+  channels = split(channel_str, ',');
+  if (!key_str.empty()) {
+    keys = split(key_str, ',');
+  }
 
-        // Send the topic to the user who just joined
-        if (topic.length() > 0) {
-          response = RPL_TOPIC(user->getNickName(), iter.value, topic);
-        } else {
-          response = RPL_NOTOPIC(user->getNickName(), iter.value);
-        }
-        sendToFd(client_fd, response);
+  for (size_t i = 0; i < channels.size(); ++i) {
+    std::string channel_name = channels[i];
+    std::string key = (i < keys.size()) ? keys[i] : "";
 
-        // Get the list of nicks in the channel and send it to the user
-        std::string user_list = getNickListStr(iter.value);
-        response =
-            RPL_NAMREPLY(user->getNickName(), "=", iter.value, user_list);
-        sendToFd(client_fd, response);
-        response = RPL_ENDOFNAMES(user->getNickName(), iter.value);
-        sendToFd(client_fd, response);
+    Channel *channel = getChannelByName(channel_name);
+    if (channel && channel->isUserOnChannel(client_fd))
+      continue;
 
-        // Notify all users in the channel that a new user has joined
-        response = "JOIN " + iter.value;
-        if (sendMessageToChannel(client_fd, iter.value, response) != 0) {
-          std::cerr << "Error: Failed to send JOIN message to channel "
-                    << iter.value << std::endl;
-          return (1);
-        }
+    if (channel && channel->isKey() && channel->getKey() != key) {
+      sendToFd(client_fd, ERR_BADCHANNELKEY(user->getNickName(), channel_name));
+      continue;
+    }
+
+    channel = addUserToChannel(channel_name, client_fd);
+    if (channel) {
+      // Get the channel's topic
+      std::string topic = channel->getTopic();
+      std::string response;
+
+      // Send the topic to the user who just joined
+      if (topic.length() > 0) {
+        response = RPL_TOPIC(user->getNickName(), channel_name, topic);
+      } else {
+        response = RPL_NOTOPIC(user->getNickName(), channel_name);
+      }
+      sendToFd(client_fd, response);
+
+      // Get the list of nicks in the channel and send it to the user
+      std::string user_list = getNickListStr(channel_name);
+      response =
+          RPL_NAMREPLY(user->getNickName(), "=", channel_name, user_list);
+      sendToFd(client_fd, response);
+      response = RPL_ENDOFNAMES(user->getNickName(), channel_name);
+      sendToFd(client_fd, response);
+
+      // Notify all users in the channel that a new user has joined
+      response = "JOIN " + channel_name;
+      if (sendMessageToChannel(client_fd, channel_name, response) != 0) {
+        std::cerr << "Error: Failed to send JOIN message to channel "
+                  << channel_name << std::endl;
+        return (1);
       }
     }
   }
