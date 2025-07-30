@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 01:36:07 by mratke            #+#    #+#             */
-/*   Updated: 2025/07/30 14:45:05 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/30 16:22:15 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,12 @@ Command Command::parse(const std::string &line) {
   Command command;
   std::string current_part = line;
 
-  {
+  if (line.length() > 2) {
     std::string rawcommand = line;
     rawcommand.pop_back();
     rawcommand.pop_back();
-    command.setRawCommand(rawcommand);
+    if (!rawcommand.empty())
+      command.setRawCommand(rawcommand);
   }
   // 1. Parse Prefix
   if (current_part.rfind(":", 0) == 0) {
