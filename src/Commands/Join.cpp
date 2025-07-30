@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Join.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:47:21 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/30 14:08:10 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/30 19:22:20 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,16 +58,6 @@ int IrcServer::ircCommandJoin(Command &command) {
       sendToFd(client_fd, ERR_BADCHANNELKEY(user->getNickName(), channel_name));
       continue;
     }
-
-    if (channel && channel->isInviteOnly()) {
-      if (!channel->isUserInvited(user)) {
-        sendToFd(client_fd,
-                 ERR_INVITEONLYCHAN(user->getNickName(), channel_name));
-        continue;
-      } else {
-        channel->removeInvitedUser(user);
-      }
-    }
     if (channel)
     {
       std::cout << "User limit: " << channel->getUserLimit() << std::endl;
@@ -80,7 +70,15 @@ int IrcServer::ircCommandJoin(Command &command) {
                 ERR_CHANNELISFULL(user->getNickName(), channel_name));
         continue;
     }
-
+    if (channel && channel->isInviteOnly()) {
+      if (!channel->isUserInvited(user)) {
+        sendToFd(client_fd,
+                 ERR_INVITEONLYCHAN(user->getNickName(), channel_name));
+        continue;
+      } else {
+        channel->removeInvitedUser(user);
+      }
+    }
     channel = addUserToChannel(channel_name, client_fd);
 
     if (channel) {
