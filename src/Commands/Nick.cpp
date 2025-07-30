@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:50:32 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/29 19:37:11 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/30 17:00:14 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int IrcServer::ircCommandNick(Command &command)
 
 	userFd = command.getUserFd();
 	user = getUserByFd(userFd);
+
+	bool wasRegistered = user->isRegistered();
 	std::string nickPrefix = user
 		&& !user->getNickName().empty() ? user->getNickName() : "*";
 	if (!user || !user->isAuthenticated())
@@ -52,11 +54,33 @@ int IrcServer::ircCommandNick(Command &command)
 	}
 	std::string oldNick = user->getNickName();
 	user->setNickname(newNick);
-	if(user->isRegistered())
+
+	if (!oldNick.empty() && oldNick != newNick)
 	{
-		std::cout << "realname: '" << user->getRealName() << "'" << std::endl;
+		std::string nickMsg = ":" + oldNick + "!" + user->getUserName() + "@" + user->getHostName() + " NICK :" + newNick + "\r\n";
+
+		std::set<int> notifiedFds;
+		for (std::vector<Channel>::iterator it = channels.begin(); it != channels.end(); ++it)
+		{
+			if (it->isUser(userFd))
+			{
+				const std::vector<User *> usersInChan = it->getUsers();
+				for (size_t i = 0; i < usersInChan.size(); ++i)
+				{
+					int targetFd = usersInChan[i]->getSocketFd();
+					if (targetFd != userFd && notifiedFds.insert(targetFd).second)
+					{
+						sendToFd(targetFd, nickMsg);
+					}
+				}
+			}
+		}
+	}
+
+	if(!wasRegistered && user->isRegistered())
+	{
 		connectIsSuccesfull(getUserByFd(userFd));
 	}
-    //POSSIBLY HANDLING OF SETTING NEW NICKNAME OVER NEW ONE NEEDS TO BE HANDLED
+    // HANDLING OF SETTING NEW NICKNAME OVER NEW ONE NEEDS TO BE HANDLED
 	return (0);
 }
