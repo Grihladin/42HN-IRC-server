@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IrcServer.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:33:58 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/30 17:19:26 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/30 17:55:54 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,12 @@ int IrcServer::closeUserFd(int user_fd)
 				;
 			close(user_fd);
 			socket_fds.erase(iter);
+			
+			std::vector<struct buffer_struct>::iterator iterBuff;
+			for (iterBuff = buffers.begin() ;
+				((*iterBuff).user_fd != user_fd) && (iterBuff != buffers.end()) ; ++iterBuff) {}
+			if (iterBuff != buffers.end())
+				buffers.erase(iterBuff);
 			break ;
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:27:49 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/30 15:38:13 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/30 17:32:06 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,18 @@
 # define MAX_CLIENTS 10240
 # define COMMANDS_COUNT 18
 
+struct buffer_struct
+{
+	int			user_fd;
+	std::string buffer = "";
+};
+
 class IrcServer
 {
 	private:
         int                         server_fd;
         std::vector<struct pollfd>  socket_fds;
+		std::vector<struct buffer_struct>  buffers;
 		int							poll_count;
 		sockaddr_in					client_addr;
 		socklen_t					client_len;

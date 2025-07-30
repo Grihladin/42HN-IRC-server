@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 09:38:31 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/30 10:12:29 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/30 17:32:13 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ void IrcServer::listenSocket(void)
 				{
 					std::cout << "New client connected. Socket: " << client_fd << std::endl;
 					socket_fds.push_back({client_fd, POLLIN, 0});
+					buffers.push_back({client_fd, ""});
+					addUser(client_fd);
 				}
 				else
 				{

@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 14:17:24 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/30 16:36:27 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/30 17:53:05 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,36 +16,28 @@ int IrcServer::handle_client(int client_socket)
 {
 	int		bytes_received;
 	size_t	spos;
-	Command	newcommand;
-	int		tries = 10;
+	std::vector<struct buffer_struct>::iterator iterBuff;
 
-	std::string result;
-	while ((result.empty() || (result.back() != '\n')) && (tries))
-	// while ((result.empty() || (result.back() != '\n')))
+	for (iterBuff = buffers.begin() ;
+		((*iterBuff).user_fd != client_socket) && (iterBuff != buffers.end()) ; ++iterBuff) {}
+	if (iterBuff == buffers.end())
+		throw std::runtime_error("Error with buffer!");
+
+	memset(buffer, 0, BUFFER_SIZE);
+	bytes_received = recv(client_socket, buffer, BUFFER_SIZE, 0);
+	if (bytes_received > 0)
+		(*iterBuff).buffer.append(buffer);
+	else if (bytes_received == 0)
 	{
-		memset(buffer, 0, BUFFER_SIZE);
-		bytes_received = recv(client_socket, buffer, BUFFER_SIZE, 0);
-		if (bytes_received > 0)
-			result.append(buffer);
-		else if (bytes_received == 0)
-		{
-			std::cout << "Client (socket " << client_socket << ") is disconnected or with error." << std::endl;
-			return (-1);
-		}
-		--tries;
+		std::cout << "Client (socket " << client_socket << ") is disconnected or with error." << std::endl;
+		return (-1);
 	}
-	std::cout << "Command from client: " << result << std::endl;
-	while (result.length() > 0)
+	spos = (*iterBuff).buffer.find("\r\n");
+	while (!(*iterBuff).buffer.empty() && (spos != std::string::npos))
 	{
 		std::string strcommand;
-		spos = result.find("\r\n");
-		if (spos == std::string::npos)
-			strcommand = result;
-		else
-		{
-			spos += 2;
-			strcommand = result.substr(0, spos);
-		}
+		spos += 2;
+		strcommand = (*iterBuff).buffer.substr(0, spos);
 		try
 		{
 			Command newcommand = commandParser(strcommand, client_socket);
@@ -55,9 +47,15 @@ int IrcServer::handle_client(int client_socket)
 		{
 			std::cerr << "Error: " << e.what() << std::endl;
 		}
-		if (spos == std::string::npos)
+		if (getUserByFd(client_socket))
+		{
+			(*iterBuff).buffer = (*iterBuff).buffer.substr(spos);
+			spos = (*iterBuff).buffer.find("\r\n");
+			if (spos == std::string::npos)
+				break ;
+		}
+		else
 			break ;
-		result = result.substr(spos);
 	}
 	return (0);
 }
