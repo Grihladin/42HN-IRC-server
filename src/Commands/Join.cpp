@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:47:21 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/30 11:06:44 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/30 14:08:10 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int IrcServer::ircCommandJoin(Command &command) {
 
       // Notify all users in the channel that a new user has joined
       sendRawMessageToChannel(channel_name,
-                              RPL_JOIN(user_nick, "", "server", channel_name));
+                              RPL_JOIN(user_nick, user->getUserName(), user->getHostName(), channel_name));
 
       // Get the list of nicks in the channel and send it to the user
       sendToFd(client_fd, RPL_NAMREPLY(user_nick, "=", channel_name,

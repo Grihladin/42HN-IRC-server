@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 00:37:03 by auplisas          #+#    #+#             */
-/*   Updated: 2025/07/30 12:02:35 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/30 14:05:41 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,9 +152,9 @@
 
 #define RPL_PRIV_MESSAGE(yournick, recipient, message)  (std::string(":" + yournick) + " PRIVMSG " + recipient + " :" + std::string(message) + "\r\n")
 #define RPL_CHANNEL_MESSAGE(yournick, channel, message)  (std::string(":" + yournick) + " PRIVMSG " + channel + " :" + std::string(message) + "\r\n")
-#define RPL_PART(nick, user, host, channel, message) (":" + nick + "!" + user + "@" + host + " PART " + channel + (message.empty() ? "" : " :" + message) + "\r\n")
-#define RPL_JOIN(nick, host, server, channel) (":" + nick + "!" + host + "@" + server + " JOIN " + channel + "\r\n")
-#define RPL_CHANGE_MODE(nick, host, server, mode) (":" + nick + "!" + host + "@" + server + " " + mode + "\r\n")
+#define RPL_PART(nick, username, host, channel, message) (":" + nick + "!" + username + "@" + host + " PART " + channel + (message.empty() ? "" : " :" + message) + "\r\n")
+#define RPL_JOIN(nick, username, host, channel) (":" + nick + "!" + username + "@" + host + " JOIN " + channel + "\r\n")
+#define RPL_CHANGE_MODE(nick, username, host, mode) (":" + nick + "!" + username + "@" + host + " " + mode + "\r\n")
 #define RPL_QUIT(prefix, message) (":" + prefix + " QUIT :" + message + "\r\n")
 #define RPL_ERROR_CLOSING_LINK(prefix, message) ("ERROR :Closing Link: " + prefix + " (" + message + ")\r\n")
 

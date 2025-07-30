@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:49:21 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/30 12:49:50 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/30 14:08:01 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int IrcServer::ircCommandMode(Command& command)
                 sendToFd(command.getUserFd(), RPL_ENDOFBANLIST(user->getNickName(), recipient));
                 return (0);
             }
-            sendRawMessageToChannel(recipient, RPL_CHANGE_MODE(user->getNickName(), "", "server", command.getRawCommand()));
+            sendRawMessageToChannel(recipient, RPL_CHANGE_MODE(user->getNickName(), user->getUserName(), user->getHostName(), command.getRawCommand()));
         }
         else if (modes[0] == 'b')
         {
