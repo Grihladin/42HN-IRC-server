@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PrivMsg.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:52:30 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/30 11:40:38 by mratke           ###   ########.fr       */
+/*   Updated: 2025/07/30 15:27:37 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,19 @@ int IrcServer::ircCommandPrivMsg(Command &command) {
     return (1);
   }
 
+  bool notice = false;
+  if (command.getCommand() == "NOTICE")
+    notice = true;
+
   if (recipient[0] == '#') {
     // It's a channel message
-    if (sendMessageToChannel(user->getSocketFd(), recipient, message) != 0) {
+    if (sendMessageToChannel(user->getSocketFd(), recipient, message, notice) != 0) {
       std::cerr << "Error: Failed to send message to channel." << std::endl;
       return (1);
     }
   } else {
     // It's a private message to a user
-    if (sendMessageToUser(user->getSocketFd(), recipient, message) != 0) {
+    if (sendMessageToUser(user->getSocketFd(), recipient, message, notice) != 0) {
       std::cerr << "Error: Failed to send private message." << std::endl;
       return (1);
     }

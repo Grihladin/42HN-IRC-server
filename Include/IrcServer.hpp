@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:27:49 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/30 12:25:44 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/30 15:19:45 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 
 # define BUFFER_SIZE 10240
 # define MAX_CLIENTS 10240
-# define COMMANDS_COUNT 17
+# define COMMANDS_COUNT 18
 
 class IrcServer
 {
@@ -59,9 +59,9 @@ class IrcServer
         int addChannel();
 		int addChannel(std::string newname);
 		int addChannel(std::string newname, int user_fd);
-        int sendMessageToChannel(int user_fd, std::string channel, std::string &message);
+        int sendMessageToChannel(int user_fd, std::string channel, std::string &message, bool notice);
 		int sendRawMessageToChannel(std::string channel, std::string reply);
-        int sendMessageToUser(int user_fd, std::string user, std::string &message);
+        int sendMessageToUser(int user_fd, std::string user, std::string &message, bool notice);
 		const Command commandParser(std::string rawdata, int client_socket);
 		void commandExecutor(Command &command);
 		// bool isUserExist(int fd);
@@ -126,6 +126,7 @@ class IrcServer
 			&IrcServer::ircCommandInvite,
 			&IrcServer::ircCommandKick,
 			&IrcServer::ircCommandPrivMsg,
+			&IrcServer::ircCommandPrivMsg,
 			&IrcServer::ircCommandWho,
 			&IrcServer::ircCommandWrong
 		};
@@ -146,6 +147,7 @@ class IrcServer
 			"INVITE",
 			"KICK",
 			"PRIVMSG",
+			"NOTICE",
 			"WHO",
 			""
 		};

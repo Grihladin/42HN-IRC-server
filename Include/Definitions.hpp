@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 00:37:03 by auplisas          #+#    #+#             */
-/*   Updated: 2025/07/30 14:05:41 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/30 15:21:17 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@
 #define ERR_USERSDONTMATCH(yournick) (std::string(":server 502 ") + yournick + " :Cannot change mode for other users\r\n")
 
 #define RPL_PRIV_MESSAGE(yournick, recipient, message)  (std::string(":" + yournick) + " PRIVMSG " + recipient + " :" + std::string(message) + "\r\n")
-#define RPL_CHANNEL_MESSAGE(yournick, channel, message)  (std::string(":" + yournick) + " PRIVMSG " + channel + " :" + std::string(message) + "\r\n")
+#define RPL_NOTICE(yournick, recipient, message)  (std::string(":" + yournick) + " NOTICE " + recipient + " :" + std::string(message) + "\r\n")
 #define RPL_PART(nick, username, host, channel, message) (":" + nick + "!" + username + "@" + host + " PART " + channel + (message.empty() ? "" : " :" + message) + "\r\n")
 #define RPL_JOIN(nick, username, host, channel) (":" + nick + "!" + username + "@" + host + " JOIN " + channel + "\r\n")
 #define RPL_CHANGE_MODE(nick, username, host, mode) (":" + nick + "!" + username + "@" + host + " " + mode + "\r\n")
