@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PrivMsg.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:52:30 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/30 10:28:23 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/30 11:40:38 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,11 @@ int IrcServer::ircCommandPrivMsg(Command &command) {
 
   std::string recipient = params[0].value;
   std::string message = params[1].value;
+
+  if (message.empty()) {
+    sendToFd(user->getSocketFd(), ERR_NOTEXTTOSEND(user->getNickName()));
+    return (1);
+  }
 
   if (recipient[0] == '#') {
     // It's a channel message
