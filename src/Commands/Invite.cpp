@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 13:40:56 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/29 19:43:17 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/30 16:01:28 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,12 @@ int IrcServer::ircCommandInvite(Command& command)
 		sendToFd(inviter->getSocketFd(), ERR_USERONCHANNEL(inviter->getNickName(), targetNick, channelName));
 		return 1;
 	}
-
+	if (channel->isInviteOnly() && !channel->isUserOperator(user_fd))
+	{
+		sendToFd(user_fd, ERR_CHANOPRIVSNEEDED(user->getNickName(),
+				channelName));
+		return (1);
+	}
 	channel->addInvitedUser(targetUser);
 	sendToFd(inviter->getSocketFd(), RPL_INVITING(inviter->getNickName(), channelName, targetNick));
 
