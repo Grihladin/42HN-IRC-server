@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IrcServer.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:33:58 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/30 10:16:35 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/30 17:19:26 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,6 @@ int IrcServer::deleteUser(int client_fd)
 		if ((*iter).getSocketFd() == client_fd)
 		{
 			users.erase(iter);
-			std::cout << "User deleted: " << client_fd << std::endl;
 			break ;
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:50:32 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/30 17:00:14 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/30 17:13:24 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int IrcServer::ircCommandNick(Command &command)
 		std::string nickMsg = ":" + oldNick + "!" + user->getUserName() + "@" + user->getHostName() + " NICK :" + newNick + "\r\n";
 
 		std::set<int> notifiedFds;
+		sendToFd(userFd, nickMsg);
 		for (std::vector<Channel>::iterator it = channels.begin(); it != channels.end(); ++it)
 		{
 			if (it->isUser(userFd))
@@ -84,3 +85,4 @@ int IrcServer::ircCommandNick(Command &command)
     // HANDLING OF SETTING NEW NICKNAME OVER NEW ONE NEEDS TO BE HANDLED
 	return (0);
 }
+
