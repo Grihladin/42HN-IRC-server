@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:27:49 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/30 09:48:24 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/30 12:25:44 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,8 @@ class IrcServer
 		int ircCommandInvite(Command& command);
 		int ircCommandKick(Command& command);
 		int ircCommandPrivMsg(Command& command);
-		int ircCommandWrong(Command& command);
 		int ircCommandWho(Command& command);
+		int ircCommandWrong(Command& command);
 		int (IrcServer::*executors[COMMANDS_COUNT])(Command &command) = {\
 			&IrcServer::ircCommandPass,
 			&IrcServer::ircCommandNick,
@@ -126,8 +126,8 @@ class IrcServer
 			&IrcServer::ircCommandInvite,
 			&IrcServer::ircCommandKick,
 			&IrcServer::ircCommandPrivMsg,
-			&IrcServer::ircCommandWrong,
-			&IrcServer::ircCommandWho
+			&IrcServer::ircCommandWho,
+			&IrcServer::ircCommandWrong
 		};
 
 		std::string irccommands[COMMANDS_COUNT] = {
@@ -146,6 +146,7 @@ class IrcServer
 			"INVITE",
 			"KICK",
 			"PRIVMSG",
+			"WHO",
 			""
 		};
 
