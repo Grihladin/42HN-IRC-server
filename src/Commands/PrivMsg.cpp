@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PrivMsg.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:52:30 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/30 00:06:23 by mratke           ###   ########.fr       */
+/*   Updated: 2025/07/30 10:28:23 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int IrcServer::ircCommandPrivMsg(Command &command) {
   User *user = getUserByFd(command.getUserFd());
 
   if (!user || !user->isRegistered()) {
-    std::cerr << "Error: User not registered or does not exist." << std::endl;
+    sendToFd(client_fd, ERR_NOTREGISTERED());
     return (1);
   }
 

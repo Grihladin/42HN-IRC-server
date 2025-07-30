@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 10:30:43 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/26 14:34:47 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/30 10:24:10 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,11 @@
 
 int IrcServer::ircCommandWrong(Command& command)
 {
-    User	*user;
-	int		fd;
-
-    fd = command.getUserFd();
+	int		fd = command.getUserFd();
+    User	*user = getUserByFd(fd);
+    
     if (fd >= 0)
     {
-        user = getUserByFd(fd);
         std::string nick = "*";
         if (user)
         {

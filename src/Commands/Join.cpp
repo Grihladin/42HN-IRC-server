@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:47:21 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/30 09:58:36 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/30 10:25:58 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int IrcServer::ircCommandJoin(Command &command) {
   std::string channel_str, key_str;
 
   if (!user || !user->isRegistered()) {
-    sendToFd(client_fd, ERR_NOTREGISTERED("*"));
+    sendToFd(client_fd, ERR_NOTREGISTERED());
     return (1);
   }
 
