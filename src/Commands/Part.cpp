@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Part.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:51:36 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/28 18:58:35 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/30 11:20:23 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,13 +82,13 @@ int IrcServer::ircCommandPart(Command &command)
 			sendToFd(fd, ERR_NOTONCHANNEL(user->getNickName(), channelName));
 			continue ;
 		}
-		channel->delUserFromChannel(fd);
 		std::string message = RPL_PART(user->getNickName(), user->getUserName(), user->getHostName(), channelName, partMessage);
         auto& users = channel->getUsers();
         for (User* u : users)
         {
             sendToFd(u->getSocketFd(), message);
         }
+		channel->delUserFromChannel(fd);
 
 		if (channel->getUsersCount() == 0)
 		{

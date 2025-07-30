@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:49:21 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/30 11:13:00 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/30 11:30:42 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,17 @@ int IrcServer::ircCommandMode(Command& command)
                     return (1);
                 }
             }
+            else if (modes[0] == 'b')
+            {
+                sendToFd(command.getUserFd(), RPL_ENDOFBANLIST(user->getNickName(), recipient));
+                return (0);
+            }
             sendToFd(command.getUserFd(), RPL_CHANNELMODEIS(user->getNickName(), recipient, getChannelByName(recipient)->getMode(), ""));
+        }
+        else if (modes[0] == 'b')
+        {
+            sendToFd(command.getUserFd(), RPL_ENDOFBANLIST(user->getNickName(), recipient));
+            return (0);
         }
         else
             sendToFd(command.getUserFd(), ERR_CHANOPRIVSNEEDED(user->getNickName(), recipient));
