@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+         #
+#    By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2025/07/30 00:32:09 by mratke           ###   ########.fr        #
+#    Updated: 2025/07/30 09:51:21 by psenko           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,13 +47,15 @@ SRC=		main.cpp \
 			IrcServer/sendToFd.cpp \
 			IrcServer/sendMessage.cpp \
 			IrcServer/handleClient.cpp \
-			IrcServer/connectIsSuccesfull.cpp
+			IrcServer/connectIsSuccesfull.cpp \
+			IrcServer/listenSocket.cpp
 
 HEADER=		Include/Channel.hpp \
 			Include/Command.hpp \
 			Include/IrcServer.hpp \
 			Include/User.hpp \
-			Include/Definitions.hpp
+			Include/Definitions.hpp \
+			Makefile
 
 SRC_FILES = $(addprefix $(SRC_DIR)/, $(SRC))
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.cpp=.o))
