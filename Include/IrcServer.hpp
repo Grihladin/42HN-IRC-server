@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:27:49 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/30 15:19:45 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/30 15:38:13 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # include <sys/socket.h>
 # include <unistd.h>
 # include <vector>
+#include <set>
 
 # define BUFFER_SIZE 10240
 # define MAX_CLIENTS 10240

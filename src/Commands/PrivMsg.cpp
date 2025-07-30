@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:52:30 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/30 15:27:37 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/30 15:37:53 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int IrcServer::ircCommandPrivMsg(Command &command) {
   User *user = getUserByFd(command.getUserFd());
 
   if (!user || !user->isRegistered()) {
-    sendToFd(client_fd, ERR_NOTREGISTERED());
+    sendToFd(command.getUserFd(), ERR_NOTREGISTERED());
     return (1);
   }
 
