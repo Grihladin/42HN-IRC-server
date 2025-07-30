@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 12:20:50 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/29 18:03:15 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/30 11:14:47 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ std::string Channel::getTopic(void) const
 	return (topic);
 }
 
-int Channel::getUsersCount()
+size_t Channel::getUsersCount()
 {
 	return (users.size());
 }

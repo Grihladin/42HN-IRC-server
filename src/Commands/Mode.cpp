@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Mode.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:49:21 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/29 19:29:31 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/30 11:13:00 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int IrcServer::ircCommandMode(Command& command)
     std::string modes;
     if (params.size() > 1)
     {
-        std::string modes = params[1].value;
+        modes = params[1].value;
         if (modes.length() > 4)
         {
             std::cerr << "No more than 3 modes at a time!" << std::endl;

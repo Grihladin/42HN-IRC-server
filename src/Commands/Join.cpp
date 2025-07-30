@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:47:21 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/30 10:25:58 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/30 11:06:44 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int IrcServer::ircCommandJoin(Command &command) {
       continue;
     }
 
-    if (channel && channel->isKey() && channel->getKey() != key) {
+    if (channel && channel->isKey() && (channel->getKey() != key)) {
       sendToFd(client_fd, ERR_BADCHANNELKEY(user->getNickName(), channel_name));
       continue;
     }
@@ -67,6 +67,18 @@ int IrcServer::ircCommandJoin(Command &command) {
       } else {
         channel->removeInvitedUser(user);
       }
+    }
+    if (channel)
+    {
+      std::cout << "User limit: " << channel->getUserLimit() << std::endl;
+      std::cout << "User count: " << channel->getUsersCount() << std::endl;
+    }
+    if (channel && (channel->getUserLimit() > 0) &&
+        (channel->getUsersCount() >= (channel->getUserLimit())))
+    {
+      sendToFd(client_fd,
+                ERR_CHANNELISFULL(user->getNickName(), channel_name));
+        continue;
     }
 
     channel = addUserToChannel(channel_name, client_fd);
