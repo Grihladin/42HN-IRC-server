@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Parser.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 01:36:07 by mratke            #+#    #+#             */
-/*   Updated: 2025/07/30 01:03:00 by mratke           ###   ########.fr       */
+/*   Updated: 2025/07/30 11:58:48 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ Command Command::parse(const std::string &line) {
   Command command;
   std::string current_part = line;
 
+  command.setRawCommand(line);
   // 1. Parse Prefix
   if (current_part.rfind(":", 0) == 0) {
     size_t prefix_end = current_part.find(' ');

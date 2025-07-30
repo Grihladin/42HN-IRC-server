@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 11:23:28 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/24 19:27:02 by mratke           ###   ########.fr       */
+/*   Updated: 2025/07/30 11:58:22 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,14 @@ void Command::setPrefix(std::string prefix)
 const std::optional<std::string>& Command::getPrefix() const
 {
 	return _prefix;
+}
+
+std::string Command::getRawCommand() const
+{
+	return (_raw_command);
+}
+
+void Command::setRawCommand(std::string rawCommand)
+{
+	_raw_command = rawCommand;
 }

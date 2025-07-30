@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 16:32:10 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/26 12:41:42 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/30 11:57:37 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,26 +25,28 @@ struct paramstruct {
 };
 
 class Command {
-public:
-  Command() = default;
-  Command(std::string rawCommand, std::vector<struct paramstruct> arguments,
-          int fd);
-  // Command& operator=(const Command&) = default;
-  const std::vector<struct paramstruct> &getParams() const;
-  size_t paramCount() const;
-  void setUserFd(int client_socket);
-  void setParams(const std::vector<paramstruct> &params);
-  void setCommand(std::string newcommand);
-  void setPrefix(std::string prefix);
-  const std::optional<std::string>& getPrefix() const;
-  void addParam(struct paramstruct &newparam);
-  const std::string &getCommand(void) const;
-  int getUserFd(void) const;
-  static Command parse(const std::string &line);
-
-private:
-  std::optional<std::string> _prefix;
-  std::string _command;
-  std::vector<struct paramstruct> _params;
-  int _user_fd;
+  private:
+    std::optional<std::string> _prefix;
+    std::string _command;
+    std::vector<struct paramstruct> _params;
+    std::string _raw_command;
+    int _user_fd;
+  public:
+    Command() = default;
+    Command(std::string rawCommand, std::vector<struct paramstruct> arguments,
+            int fd);
+    // Command& operator=(const Command&) = default;
+    const std::vector<struct paramstruct> &getParams() const;
+    size_t paramCount() const;
+    void setUserFd(int client_socket);
+    void setParams(const std::vector<paramstruct> &params);
+    void setCommand(std::string newcommand);
+    void setPrefix(std::string prefix);
+    void setRawCommand(std::string rawCommand);
+    const std::optional<std::string>& getPrefix() const;
+    void addParam(struct paramstruct &newparam);
+    const std::string &getCommand(void) const;
+    int getUserFd(void) const;
+    std::string getRawCommand() const;
+    static Command parse(const std::string &line);
 };
