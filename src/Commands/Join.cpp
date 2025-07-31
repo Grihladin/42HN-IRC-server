@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Join.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:47:21 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/30 19:22:20 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/31 18:43:51 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,10 @@ int IrcServer::ircCommandJoin(Command &command) {
     sendToFd(client_fd, ERR_NOTREGISTERED());
     return (1);
   }
-
+  if (command.paramCount() < 1) {
+    sendToFd(client_fd, ERR_NEEDMOREPARAMS(user->getNickName(), command.getCommand()));
+    return (1);
+  }
   for (auto &iter : command.getParams()) {
     if (iter.name == "middle") {
       channel_str = iter.value;
@@ -45,6 +48,10 @@ int IrcServer::ircCommandJoin(Command &command) {
 
   for (size_t i = 0; i < channels.size(); ++i) {
     std::string channel_name = channels[i];
+    if (channel_name.empty() || channel_name[0] != '#') {
+      sendToFd(client_fd, ERR_BADCHANMASK(user->getNickName(), channel_name));
+      continue;
+    }
     std::string key = (i < keys.size()) ? keys[i] : "";
 
     Channel *channel = getChannelByName(channel_name);
@@ -58,17 +65,14 @@ int IrcServer::ircCommandJoin(Command &command) {
       sendToFd(client_fd, ERR_BADCHANNELKEY(user->getNickName(), channel_name));
       continue;
     }
-    if (channel)
-    {
+    if (channel) {
       std::cout << "User limit: " << channel->getUserLimit() << std::endl;
       std::cout << "User count: " << channel->getUsersCount() << std::endl;
     }
     if (channel && (channel->getUserLimit() > 0) &&
-        (channel->getUsersCount() >= (channel->getUserLimit())))
-    {
-      sendToFd(client_fd,
-                ERR_CHANNELISFULL(user->getNickName(), channel_name));
-        continue;
+        (channel->getUsersCount() >= (channel->getUserLimit()))) {
+      sendToFd(client_fd, ERR_CHANNELISFULL(user->getNickName(), channel_name));
+      continue;
     }
     if (channel && channel->isInviteOnly()) {
       if (!channel->isUserInvited(user)) {
@@ -96,7 +100,8 @@ int IrcServer::ircCommandJoin(Command &command) {
 
       // Notify all users in the channel that a new user has joined
       sendRawMessageToChannel(channel_name,
-                              RPL_JOIN(user_nick, user->getUserName(), user->getHostName(), channel_name));
+                              RPL_JOIN(user_nick, user->getUserName(),
+                                       user->getHostName(), channel_name));
 
       // Get the list of nicks in the channel and send it to the user
       sendToFd(client_fd, RPL_NAMREPLY(user_nick, "=", channel_name,

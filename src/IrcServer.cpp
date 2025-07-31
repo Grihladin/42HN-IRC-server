@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IrcServer.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:33:58 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/30 17:55:54 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/31 19:03:22 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void IrcServer::printParams(const std::vector<struct paramstruct> &params)
 	}
 }
 
-IrcServer::IrcServer(void)
+IrcServer::IrcServer(void) //wrf?
 {
 	if (openSocket("6667"))
 	{
@@ -103,6 +103,12 @@ int IrcServer::openSocket(std::string port)
 	server_addr.sin_family = AF_INET;
 	server_addr.sin_addr.s_addr = INADDR_ANY;
 	server_addr.sin_port = htons(std::stoi(std::string(port)));
+	if (std::stoi(std::string(port)) < 1024 || std::stoi(std::string(port)) > 65535) //check for correct number
+	{
+		std::cerr << "Port number must be between 1024 and 65535." << std::endl;
+		close(server_fd);
+		return (1);
+	}
 	if (bind(server_fd, (struct sockaddr *)&server_addr,
 			sizeof(server_addr)) < 0)
 	{
