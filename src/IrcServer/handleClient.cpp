@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 14:17:24 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/30 17:53:05 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/31 09:15:15 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,10 @@ int IrcServer::handle_client(int client_socket)
 		std::cout << "Client (socket " << client_socket << ") is disconnected or with error." << std::endl;
 		return (-1);
 	}
+	else
+		return (0);
 	spos = (*iterBuff).buffer.find("\r\n");
+	// std::cout << "Buffer: " << (*iterBuff).buffer << std::endl;
 	while (!(*iterBuff).buffer.empty() && (spos != std::string::npos))
 	{
 		std::string strcommand;
