@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PrivMsg.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:52:30 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/30 15:37:53 by psenko           ###   ########.fr       */
+/*   Updated: 2025/07/31 19:44:38 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int IrcServer::ircCommandPrivMsg(Command &command) {
     return (1);
   }
 
-  std::string recipient = params[0].value;
+  std::vector<std::string> recipients = split(params[0].value, ',');
   std::string message = params[1].value;
 
   if (message.empty()) {
@@ -41,17 +41,21 @@ int IrcServer::ircCommandPrivMsg(Command &command) {
   if (command.getCommand() == "NOTICE")
     notice = true;
 
-  if (recipient[0] == '#') {
-    // It's a channel message
-    if (sendMessageToChannel(user->getSocketFd(), recipient, message, notice) != 0) {
-      std::cerr << "Error: Failed to send message to channel." << std::endl;
-      return (1);
-    }
-  } else {
-    // It's a private message to a user
-    if (sendMessageToUser(user->getSocketFd(), recipient, message, notice) != 0) {
-      std::cerr << "Error: Failed to send private message." << std::endl;
-      return (1);
+  for (auto &recipient : recipients) {
+    if (recipient[0] == '#') {
+      // It's a channel message
+      if (sendMessageToChannel(user->getSocketFd(), recipient, message,
+                               notice) != 0) {
+        std::cerr << "Error: Failed to send message to channel." << std::endl;
+        return (1);
+      }
+    } else {
+      // It's a private message to a user
+      if (sendMessageToUser(user->getSocketFd(), recipient, message, notice) !=
+          0) {
+        std::cerr << "Error: Failed to send private message." << std::endl;
+        return (1);
+      }
     }
   }
   return (0);
