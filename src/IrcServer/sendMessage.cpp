@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sendMessage.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 15:27:44 by psenko            #+#    #+#             */
-/*   Updated: 2025/08/04 20:05:37 by mratke           ###   ########.fr       */
+/*   Updated: 2025/08/19 14:53:51 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int IrcServer::sendMessageToChannel(int user_fd, std::string channel,
   }
 
   for (auto &channel_user : channelObj->getUsers()) {
+    if (channel_user->getSocketFd() != user->getSocketFd()) {
       std::string response;
       if (notice)
         response = RPL_NOTICE(user->getNickName(), channelObj->getName(),
@@ -42,6 +43,7 @@ int IrcServer::sendMessageToChannel(int user_fd, std::string channel,
         response = RPL_PRIV_MESSAGE(user->getNickName(), channelObj->getName(),
                                     message);
       sendToFd(channel_user->getSocketFd(), response);
+    }
   }
   return (0);
 }
