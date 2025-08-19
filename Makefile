@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+         #
+#    By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2025/07/30 09:51:21 by psenko           ###   ########.fr        #
+#    Updated: 2025/08/19 16:01:24 by auplisas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = ircserv
 CXX = c++
-CXXFLAGS = -Wall -Wextra -Werror -std=c++17 -g -fsanitize=address
+CXXFLAGS = -Wall -Wextra -Werror -std=c++17
 SRC_DIR = src
 OBJ_DIR = obj
 
