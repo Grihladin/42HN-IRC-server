@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:49:21 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/30 14:08:01 by psenko           ###   ########.fr       */
+/*   Updated: 2025/08/19 15:46:04 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,10 @@ int IrcServer::ircCommandMode(Command& command)
                     if (channel->isUserOnChannel(params[2].value))
                         channel->addOperator(getUserByNick(params[2].value));
                     else
+                    {
                         sendToFd(command.getUserFd(), ERR_USERNOTINCHANNEL(user->getNickName(), params[2].value, recipient));
+                        return (1);
+                    }
                 }
                 else if (modes[1] == 'l')
                     channel->setUserLimit(stoi(params[2].value));
@@ -92,7 +95,20 @@ int IrcServer::ircCommandMode(Command& command)
                 else if (modes[1] == 'k')
                     channel->unsetKey();
                 else if (modes[1] == 'o')
-                    channel->deleteOperator(params[2].value);
+                {
+                    if (params.size() < 3)
+                    {
+                        sendToFd(command.getUserFd(), ERR_NEEDMOREPARAMS(user->getNickName(), command.getCommand()));
+                        return (1);
+                    }
+                    if (channel->isUserOnChannel(params[2].value))
+                        channel->deleteOperator(params[2].value);
+                    else
+                    {
+                        sendToFd(command.getUserFd(), ERR_USERNOTINCHANNEL(user->getNickName(), params[2].value, recipient));
+                        return (1);
+                    }
+                }
                 else if (modes[1] == 'l')
                     channel->setUserLimit(0);
                 else
