@@ -6,7 +6,7 @@
 /*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 12:20:50 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/30 11:14:47 by psenko           ###   ########.fr       */
+/*   Updated: 2025/08/19 15:27:03 by psenko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,14 @@ int Channel::addOperator(User *newuser)
 	return (0);
 }
 
-int Channel::deleteOperator(std::string username)
+int Channel::deleteOperator(std::string usernickname)
 {
 	if (operators.size() > 0)
 	{
 		std::vector<User *>::iterator iter;
 		for (iter = operators.begin(); iter != operators.end(); ++iter)
 		{
-			if ((*iter)->getUserName() == username)
+			if ((*iter)->getNickName() == usernickname)
 			{
 				operators.erase(iter);
 				break ;
