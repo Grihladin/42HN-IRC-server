@@ -3,21 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   getChannel.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 15:56:08 by psenko            #+#    #+#             */
-/*   Updated: 2025/07/25 15:58:35 by psenko           ###   ########.fr       */
+/*   Updated: 2025/10/02 16:45:00 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Include/IrcServer.hpp"
+#include "../../inc/IrcServer.hpp"
 
-Channel* IrcServer::getChannelByName(std::string channelname)
-{
-    for (std::vector<Channel>::iterator iter = channels.begin() ; iter != channels.end() ; ++iter)
-    {
-        if (iter->getName() == channelname)
-            return (&(*iter));
-    }
-    return (nullptr);
+Channel *IrcServer::getChannelByName(std::string channelname) {
+  for (std::vector<Channel>::iterator iter = channels.begin();
+       iter != channels.end(); ++iter) {
+    if (iter->getName() == channelname)
+      return (&(*iter));
+  }
+  return (nullptr);
 }

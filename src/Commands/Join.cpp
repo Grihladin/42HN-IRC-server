@@ -6,11 +6,11 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:47:21 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/31 18:43:51 by mratke           ###   ########.fr       */
+/*   Updated: 2025/10/02 16:45:00 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Include/IrcServer.hpp"
+#include "../../inc/IrcServer.hpp"
 
 // Parameters: <channel>{,<channel>} [<key>{,<key>}]
 
@@ -26,7 +26,8 @@ int IrcServer::ircCommandJoin(Command &command) {
     return (1);
   }
   if (command.paramCount() < 1) {
-    sendToFd(client_fd, ERR_NEEDMOREPARAMS(user->getNickName(), command.getCommand()));
+    sendToFd(client_fd,
+             ERR_NEEDMOREPARAMS(user->getNickName(), command.getCommand()));
     return (1);
   }
   for (auto &iter : command.getParams()) {

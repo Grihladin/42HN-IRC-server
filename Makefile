@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+         #
+#    By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2025/08/19 16:01:24 by auplisas         ###   ########.fr        #
+#    Updated: 2025/10/02 17:02:36 by mratke           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,13 +16,13 @@ CXXFLAGS = -Wall -Wextra -Werror -std=c++17
 SRC_DIR = src
 OBJ_DIR = obj
 
-SRC=		main.cpp \
-			IrcServer.cpp \
-			Channel.cpp \
-			User.cpp \
-			Command.cpp \
-			IrcServerParser.cpp \
-			IrcServerCommandExecutor.cpp \
+SRC=		Core/main.cpp \
+			Core/IrcServer.cpp \
+			Core/Channel.cpp \
+			Core/User.cpp \
+			Core/Command.cpp \
+			Core/IrcServerParser.cpp \
+			Core/IrcServerCommandExecutor.cpp \
 			Commands/Invite.cpp \
 			Commands/Join.cpp \
 			Commands/Kick.cpp \
@@ -40,21 +40,21 @@ SRC=		main.cpp \
 			Commands/Pass.cpp \
 			Commands/Wrong.cpp \
 			Commands/Who.cpp \
-			Parser.cpp \
-			IrcServer/getNickList.cpp \
-			IrcServer/getChannel.cpp \
-			IrcServer/DeleteUserFromChannel.cpp \
-			IrcServer/sendToFd.cpp \
-			IrcServer/sendMessage.cpp \
-			IrcServer/handleClient.cpp \
-			IrcServer/connectIsSuccesfull.cpp \
-			IrcServer/listenSocket.cpp
+			Core/Parser.cpp \
+			Core/getNickList.cpp \
+			Core/getChannel.cpp \
+			Core/DeleteUserFromChannel.cpp \
+			Core/sendToFd.cpp \
+			Core/sendMessage.cpp \
+			Core/handleClient.cpp \
+			Core/connectIsSuccesfull.cpp \
+			Core/listenSocket.cpp
 
-HEADER=		Include/Channel.hpp \
-			Include/Command.hpp \
-			Include/IrcServer.hpp \
-			Include/User.hpp \
-			Include/Definitions.hpp \
+HEADER=		inc/Channel.hpp \
+			inc/Command.hpp \
+			inc/IrcServer.hpp \
+			inc/User.hpp \
+			inc/Definitions.hpp \
 			Makefile
 
 SRC_FILES = $(addprefix $(SRC_DIR)/, $(SRC))

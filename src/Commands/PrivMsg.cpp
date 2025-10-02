@@ -6,13 +6,13 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:52:30 by macbook           #+#    #+#             */
-/*   Updated: 2025/07/31 19:44:38 by mratke           ###   ########.fr       */
+/*   Updated: 2025/10/02 16:45:00 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Include/Channel.hpp"
-#include "../../Include/IrcServer.hpp"
-#include "../../Include/User.hpp"
+#include "../../inc/Channel.hpp"
+#include "../../inc/IrcServer.hpp"
+#include "../../inc/User.hpp"
 
 int IrcServer::ircCommandPrivMsg(Command &command) {
   User *user = getUserByFd(command.getUserFd());

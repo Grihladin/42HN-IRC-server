@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   Parser.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 01:36:07 by mratke            #+#    #+#             */
-/*   Updated: 2025/07/30 16:22:15 by psenko           ###   ########.fr       */
+/*   Updated: 2025/10/02 17:03:46 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Include/Command.hpp"
+#include "../../inc/Command.hpp"
 
 std::string cleanString(const std::string &s) {
   size_t end = s.size();
@@ -63,7 +63,7 @@ Command Command::parse(const std::string &line) {
     command.setCommand(cleanString(cmd));
     return command;
   }
-  
+
   std::string cmd = current_part.substr(0, command_end);
   for (size_t i = 0; i < cmd.size(); ++i) {
     cmd[i] = std::toupper(static_cast<unsigned char>(cmd[i]));

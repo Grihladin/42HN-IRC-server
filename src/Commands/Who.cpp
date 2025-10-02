@@ -6,15 +6,15 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 17:08:41 by mratke            #+#    #+#             */
-/*   Updated: 2025/07/29 23:26:21 by mratke           ###   ########.fr       */
+/*   Updated: 2025/10/02 16:45:00 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Include/Channel.hpp"
-#include "../../Include/Command.hpp"
-#include "../../Include/Definitions.hpp"
-#include "../../Include/IrcServer.hpp"
-#include "../../Include/User.hpp"
+#include "../../inc/Channel.hpp"
+#include "../../inc/Command.hpp"
+#include "../../inc/Definitions.hpp"
+#include "../../inc/IrcServer.hpp"
+#include "../../inc/User.hpp"
 
 int IrcServer::ircCommandWho(Command &command) {
   int userFd = command.getUserFd();
@@ -37,11 +37,11 @@ int IrcServer::ircCommandWho(Command &command) {
       return 1;
     }
     for (auto &channel_user : channel->getUsers()) {
-        sendToFd(userFd, RPL_WHOREPLY(user->getNickName(), channel->getName(),
-                                      channel_user->getUserName(),
-                                      channel_user->getHostName(), "server",
-                                      channel_user->getNickName(), "H", "0",
-                                      channel_user->getRealName()));
+      sendToFd(userFd, RPL_WHOREPLY(user->getNickName(), channel->getName(),
+                                    channel_user->getUserName(),
+                                    channel_user->getHostName(), "server",
+                                    channel_user->getNickName(), "H", "0",
+                                    channel_user->getRealName()));
     }
   } else {
     // If mask is not a channel, we assume it's a user nickname

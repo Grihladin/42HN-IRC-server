@@ -6,12 +6,12 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 13:42:52 by mratke            #+#    #+#             */
-/*   Updated: 2025/07/30 00:08:27 by mratke           ###   ########.fr       */
+/*   Updated: 2025/10/02 16:45:00 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Include/IrcServer.hpp"
-#include "../../Include/User.hpp"
+#include "../../inc/IrcServer.hpp"
+#include "../../inc/User.hpp"
 
 int IrcServer::ircCommandPing(Command &command) {
   User *user = getUserByFd(command.getUserFd());

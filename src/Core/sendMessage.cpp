@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   sendMessage.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psenko <psenko@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 15:27:44 by psenko            #+#    #+#             */
-/*   Updated: 2025/08/19 14:53:51 by psenko           ###   ########.fr       */
+/*   Updated: 2025/10/02 16:45:00 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Include/IrcServer.hpp"
+#include "../../inc/IrcServer.hpp"
 
 int IrcServer::sendMessageToChannel(int user_fd, std::string channel,
                                     std::string &message, bool notice) {
@@ -37,8 +37,8 @@ int IrcServer::sendMessageToChannel(int user_fd, std::string channel,
     if (channel_user->getSocketFd() != user->getSocketFd()) {
       std::string response;
       if (notice)
-        response = RPL_NOTICE(user->getNickName(), channelObj->getName(),
-                              message);
+        response =
+            RPL_NOTICE(user->getNickName(), channelObj->getName(), message);
       else
         response = RPL_PRIV_MESSAGE(user->getNickName(), channelObj->getName(),
                                     message);
